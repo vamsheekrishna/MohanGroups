@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="salesModel"
+            type="com.example.mybusinesstracker.viewmodels.SalesViewModel" />
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/backgroundwhite">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
+
+
+            <LinearLayout
+                android:id="@+id/linear_sal_date"
+                style="@style/cabin_linear_style">
+
+                <TextView
+                    android:id="@+id/sal_date_tv"
+                    style="@style/cabin_left_text_style"
+                    android:text="@string/cus_date" />
+
+                <TextView
+                    android:id="@+id/sal_date_ed"
+                    style="@style/cabin_left_text_style"
+                    android:text="@={salesModel.dateString}"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_sal_cab_name"
+                style="@style/cabin_linear_style">
+
+                <TextView
+                    android:id="@+id/sal_cab_name_tv"
+                    style="@style/cabin_left_text_style"
+                    android:text="@string/c_name" />
+
+                <Spinner
+                    android:id="@+id/cab_name_sp"
+                    style="@style/cabin_left_text_style"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_sal_cu"
+                style="@style/cabin_linear_style">
+
+                <TextView
+                    android:id="@+id/sal_cus_tv"
+                    style="@style/cabin_left_text_style"
+                    android:text="@string/cus_name" />
+
+                <Spinner
+                    android:id="@+id/sal_cus_ed"
+                    style="@style/cabin_left_text_style"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_sal_type"
+                style="@style/cabin_linear_style">
+
+                <TextView
+                    android:id="@+id/entry_type_tv"
+                    style="@style/cabin_left_text_style"
+                    android:text="Sale Type" />
+
+                <Spinner
+                    android:id="@+id/entry_type_sp"
+                    style="@style/cabin_left_text_style"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/total_blocks_root"
+                style="@style/cabin_linear_style">
+
+                <TextView
+                    android:id="@+id/total_blocks_text"
+                    style="@style/cabin_left_text_style"
+                    android:text="@string/c_total_blocks" />
+
+                <EditText
+                    android:id="@+id/total_blocks_value"
+                    style="@style/cabin_right_text_style"
+                    android:background="@drawable/textlines_bottom"
+                    android:hint="0"
+                    android:inputType="numberDecimal"
+                    android:text="@={``+salesModel.totalBlocks}"
+                    android:padding="8dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_amnt_cu"
+                style="@style/cabin_linear_style">
+
+                <TextView
+                    android:id="@+id/sal_amnt_tv"
+                    style="@style/cabin_left_text_style"
+                    android:text="@string/ice_amount" />
+
+                <EditText
+                    android:id="@+id/ice_amount_ed"
+                    style="@style/cabin_right_text_style"
+                    android:hint="0"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:text="@={``+salesModel.iceAmount}"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_labour_cu"
+                style="@style/cabin_linear_style">
+
+                <TextView
+                    android:id="@+id/sal_lab_tv"
+                    style="@style/cabin_left_text_style"
+                    android:text="@string/cus_labour_char" />
+
+                <EditText
+                    android:id="@+id/labour_charge_ed"
+                    style="@style/cabin_right_text_style"
+                    android:hint="0"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:text="@={``+salesModel.labourCharges}"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_other_cu"
+                style="@style/cabin_linear_style">
+
+                <TextView
+                    android:id="@+id/sal_other_tv"
+                    style="@style/cabin_left_text_style"
+                    android:text="@string/cus_other_char" />
+
+                <EditText
+                    android:id="@+id/other_charge_ed"
+                    style="@style/cabin_right_text_style"
+                    android:hint="0"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:text="@={``+salesModel.otherAmount}"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/total_amount_root"
+                style="@style/cabin_linear_style">
+
+                <TextView
+                    android:id="@+id/total_amount_tv"
+                    style="@style/cabin_left_text_style"
+                    android:text="@string/c_total_amount" />
+
+                <EditText
+                    android:id="@+id/total_amount_et"
+                    style="@style/cabin_right_text_style"
+                    android:background="@drawable/textlines_bottom"
+                    android:hint="0"
+                    android:padding="8dp"
+                    android:text="@={``+salesModel.totalAmount}"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_paid_cu"
+                style="@style/cabin_linear_style"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:id="@+id/sal_paid_tv"
+                    style="@style/cabin_left_text_style"
+                    android:text="@string/cus_paid" />
+
+                <EditText
+                    android:id="@+id/sal_paid_ed"
+                    style="@style/cabin_right_text_style"
+                    android:hint="0"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:text="@={``+salesModel.paidAmount}"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_sal_due"
+                style="@style/cabin_linear_style">
+
+                <TextView
+                    android:id="@+id/sal_due_tv"
+                    style="@style/cabin_left_text_style"
+                    android:text="@string/cus_due" />
+
+                <TextView
+                    android:id="@+id/sal_due_ed"
+                    style="@style/cabin_right_text_style"
+                    android:background="@drawable/textlines_bottom"
+                    android:hint="0"
+                    android:padding="8dp"
+                    android:text="@={``+salesModel.dueAmount}"/>
+            </LinearLayout>
+
+           <!-- <LinearLayout
+                android:id="@+id/date_time_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:weightSum="30">
+
+                <CheckBox
+                    android:id="@+id/check_box"
+                    style="@style/cabin_left_text_style"
+                    android:layout_marginStart="-7dp"
+                    android:layout_weight="15"
+                    android:checked="true"
+                    android:text="@string/start_production"
+                    android:layout_marginLeft="-7dp" />
+
+                <Button
+                    android:id="@+id/select_date"
+                    style="@style/cabin_right_text_style"
+                    android:layout_gravity="start"
+                    android:layout_weight="9"
+                    android:drawableEnd="@android:drawable/ic_menu_my_calendar"
+                    android:drawablePadding="-8dp"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text=""
+                    android:textSize="12sp"
+                    android:drawableRight="@android:drawable/ic_menu_my_calendar" />
+
+                <Button
+                    android:id="@+id/select_time"
+                    style="@style/cabin_right_text_style"
+                    android:layout_gravity="start"
+                    android:layout_weight="6"
+                    android:drawableEnd="@android:drawable/ic_menu_my_calendar"
+                    android:drawablePadding="-8dp"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text=""
+                    android:textSize="12sp"
+                    android:drawableRight="@android:drawable/ic_menu_my_calendar" />
+
+            </LinearLayout>-->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/sub_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:text="@string/sub_btn"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

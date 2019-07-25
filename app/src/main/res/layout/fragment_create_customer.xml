@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="customer"
+            type="com.example.mybusinesstracker.customer.ui.customer.Customer" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/coustomer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".customer.ui.customer.CreateCustomer">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/backgroundwhite">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|top"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin"
+                tools:context="in.icecoldstorage.srisai.com.myicefactory.core.fragments.CreateCabinFragment">
+
+                <LinearLayout
+                    android:id="@+id/linear_cus_name"
+                    style="@style/cabin_linear_style">
+
+                    <TextView
+                        android:id="@+id/cus_name_tv"
+                        style="@style/cabin_left_text_style"
+                        android:text="@string/cus_name" />
+
+                    <EditText
+                        android:id="@+id/cus_name_ed"
+                        style="@style/cabin_left_text_style"
+                        android:hint="@string/cus_name_hint"
+                        android:text="@={customer.customerName}"
+                        android:inputType="text" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_cus_phne"
+                    style="@style/cabin_linear_style">
+
+                    <TextView
+                        android:id="@+id/cus_phne_txt"
+                        style="@style/cabin_left_text_style"
+                        android:text="@string/cus_ph_no" />
+
+                    <EditText
+                        android:id="@+id/cus_phne_ed"
+                        style="@style/cabin_left_text_style"
+                        android:hint="@string/cus_ph_no_hint"
+                        android:text="@={customer.phoneNumber}"
+                        android:inputType="phone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_cus_email"
+                    style="@style/cabin_linear_style">
+
+                    <TextView
+                        android:id="@+id/cus_email_txt"
+                        style="@style/cabin_left_text_style"
+                        android:text="@string/cus_email" />
+
+                    <EditText
+                        android:id="@+id/cus_email_ed"
+                        style="@style/cabin_left_text_style"
+                        android:hint="@string/cus_email_hint"
+                        android:inputType="textEmailAddress"
+                        android:text="@={customer.emailID}"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_ice_charge"
+                    style="@style/cabin_linear_style">
+
+                    <TextView
+                        android:id="@+id/cus_ice_txt"
+                        style="@style/cabin_left_text_style"
+                        android:text="@string/ice_amount" />
+
+                    <EditText
+                        android:id="@+id/cus_ice_ed"
+                        style="@style/cabin_left_text_style"
+                        android:hint="@string/cus_ice_charge_hint"
+                        android:text="@={`` + customer.amount}"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_lab_charge"
+                    style="@style/cabin_linear_style">
+
+                    <TextView
+                        android:id="@+id/cus_lab_txt"
+                        style="@style/cabin_left_text_style"
+                        android:text="@string/cus_labour_char" />
+
+                    <EditText
+                        android:id="@+id/cus_lab_ed"
+                        style="@style/cabin_left_text_style"
+                        android:hint="@string/cus_lab_charge_hint"
+                        android:inputType="number"
+                        android:text="@={`` + customer.laborCharge}"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_cus_address"
+                    style="@style/cabin_linear_style">
+
+                    <TextView
+                        android:id="@+id/cus_add_txt"
+                        style="@style/cabin_left_text_style"
+                        android:text="@string/cus_address_txt" />
+
+                    <EditText
+                        android:id="@+id/cus_add_ed"
+                        style="@style/cabin_left_text_style"
+                        android:hint="@string/cus_address_hint"
+                        android:inputType="textPostalAddress"
+                        android:text="@={customer.address}"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/linear_color_pic_bottom"
+                    style="@style/cabin_linear_style">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/color_picker_img"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/color_pic"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerInside"
+                        android:adjustViewBounds="true"
+                        android:visibility="visible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_hor_image"
+                    style="@style/cabin_linear_style">
+
+                    <TextView
+                        android:id="@+id/color_sel_txt"
+                        style="@style/cabin_left_text_style"
+                        android:text="@string/colorpicselection" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image_bg"
+                        style="@style/cabin_right_text_style"
+                        android:background="@drawable/textlines_bottom"
+                        android:padding="8dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="64dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <Button
+                        android:layout_marginEnd="16dp"
+                        android:id="@+id/insert_customer"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cus_create_btn"
+                        android:layout_marginRight="16dp" />
+                    <Button
+                        android:visibility="gone"
+                        android:id="@+id/delete_customer"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cus_delete_btn"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginEnd="16dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
