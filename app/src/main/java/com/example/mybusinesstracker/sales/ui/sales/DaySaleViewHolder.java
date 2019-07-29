@@ -1,6 +1,7 @@
 package com.example.mybusinesstracker.sales.ui.sales;
 
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,8 +18,10 @@ public class DaySaleViewHolder extends RecyclerView.ViewHolder {
     TextView mTotalAmount;
     TextView mTotalPaid;
     TextView mTotalDue;
+    LinearLayout rowInfo;
     DaySaleViewHolder(@NonNull View itemView) {
         super(itemView);
+        rowInfo = itemView.findViewById(R.id.row_info);
         mCustomerName = itemView.findViewById(R.id.customer_name);
         mTotalBlocksString = itemView.findViewById(R.id.blocks);
         mTotalBlocksString.setVisibility(View.VISIBLE);

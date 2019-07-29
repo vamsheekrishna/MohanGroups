@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,8 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
     private ArrayAdapter<String> spinnerCustomerAdapter;
     private ArrayAdapter<String> spinnerCabinAdapter;
     private OnSalesInteractionListener mListener;
+    private int testValue = 0;
+
     public static AddSaleFragment newInstance() {
         return new AddSaleFragment();
     }
@@ -163,6 +166,16 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         mViewModel.setDate(Calendar.getInstance().getTimeInMillis());
         SalesTable salesTable = new SalesTable();
         salesTable.addDataField(mViewModel,this, this);
+    }
+    private void saveTestData() {
+        int previousCount = 0;
+        for(long i = 0; i < 1000; i++) {
+            mViewModel.setDate(i+previousCount);
+            SalesTable salesTable = new SalesTable();
+            salesTable.addDataField(mViewModel,this, this);
+            //Toast.makeText(getActivity(),"Created "+i,Toast.LENGTH_SHORT)
+
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

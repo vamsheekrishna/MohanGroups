@@ -17,7 +17,9 @@ public interface OnSalesInteractionListener {
     HashMap<Long, SalesViewModel> getDaySales();
 
     void gotToAddSaleFragment();
+    void gotToMonthlyFragment();
 
     ArrayList<CustomerSaleModel> getSalesList();
-    void getAllSalesList(Calendar calendar);
+    void getSalesListFromCloud(Calendar calendar);
+    CustomerSaleModel getCustomerSales(String customerID);
 }

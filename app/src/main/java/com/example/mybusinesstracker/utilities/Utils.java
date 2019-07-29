@@ -1,6 +1,7 @@
 package com.example.mybusinesstracker.utilities;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -21,5 +22,12 @@ public class Utils {
         int day = calendar.get(Calendar.DATE);
         calendar.set(year, month, day, 23, 59, 59);
         return calendar.getTime();
+    }
+    public static String getStringFromDate(Calendar calendar, String pattern) {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String date = simpleDateFormat.format(calendar.getTime());
+        return date;
     }
 }

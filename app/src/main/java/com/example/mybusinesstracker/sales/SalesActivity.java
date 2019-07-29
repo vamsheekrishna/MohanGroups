@@ -2,6 +2,9 @@ package com.example.mybusinesstracker.sales;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 
@@ -13,6 +16,7 @@ import com.example.mybusinesstracker.factory.FactoryBaseActivity;
 import com.example.mybusinesstracker.sales.ui.sales.AddSaleFragment;
 import com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel;
 import com.example.mybusinesstracker.sales.ui.sales.DaySalesFragment;
+import com.example.mybusinesstracker.sales.ui.sales.MonthSaleFragment;
 import com.example.mybusinesstracker.utilities.Utils;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,19 +40,38 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
     protected HashMap<Long, SalesViewModel> mAllSales = new HashMap<>();
     private HashMap<String, CustomerSaleModel> saleModelHashMap = new HashMap<>();
     private ArrayList<CustomerSaleModel> listOfCustomerSaleModel = new ArrayList<>();
+    private int testValue = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         customerTable = new CustomerTable();
         getCustomerList();
-        getAllSalesList(Calendar.getInstance());
+        getSalesListFromCloud(Calendar.getInstance());
 
         getSupportActionBar().setTitle("Day Sales");
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.container, DaySalesFragment.newInstance("",""), "DaySalesFragment").commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.container, DaySalesFragment.newInstance(Utils.getStringFromDate(Calendar.getInstance(), "dd/MM/yyyy")), "DaySalesFragment").commit();
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_sales, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_sales_month:
+                gotToMonthlyFragment();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     protected void getCustomerList() {
         if(null == mAllCustomers || mAllCustomers.size()<=0) {
             customerTable.getCustomerList(new OnCompleteListener<QuerySnapshot>() {
@@ -71,7 +94,7 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
         }
     }
     @Override
-    public void getAllSalesList(Calendar calendar) {
+    public void getSalesListFromCloud(Calendar calendar) {
         if(null == mAllSales || mAllSales.size() <=0) {
             SalesTable salesTable = new SalesTable();
             salesTable.getSalesList(new OnCompleteListener<QuerySnapshot>() {
@@ -104,6 +127,13 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
             }, String.valueOf(Utils.getStartOfDay(calendar).getTime()), String.valueOf(Utils.getEndOfDay(calendar).getTime()));
         }
     }
+
+    @Override
+    public CustomerSaleModel getCustomerSales(String customerID) {
+
+        return saleModelHashMap.get(customerID);
+    }
+
     protected void addCustomer(Customer customer) {
         mAllCustomers.put(customer.getCustomerName(), customer);
     }
@@ -140,9 +170,15 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
     public void gotToAddSaleFragment() {
         replaceFragment("Add Sale", AddSaleFragment.newInstance(), "add_sale");
     }
+    @Override
+    public void gotToMonthlyFragment() {
+        getSupportActionBar().setTitle("Month Sales");
+        replaceFragment("Month Sale Fragment", MonthSaleFragment.newInstance("",""), "month_sale_fragment");
+    }
 
     public void generateSalesHashMap() {
         listOfCustomerSaleModel.clear();
+        saleModelHashMap.clear();
         Set it = getDaySales().entrySet();
         for (Object o : it) {
             Map.Entry entry = (Map.Entry) o;
@@ -162,6 +198,12 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
 
     @Override
     public ArrayList<CustomerSaleModel> getSalesList() {
+        generateSalesHashMap();
         return listOfCustomerSaleModel;
     }
+
+    /*@Override
+    public void getSalesListFromCloud(Calendar calendar) {
+
+    }*/
 }

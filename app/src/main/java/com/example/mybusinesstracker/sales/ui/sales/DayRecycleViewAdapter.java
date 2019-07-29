@@ -13,8 +13,11 @@ import java.util.ArrayList;
 
 public class DayRecycleViewAdapter extends RecyclerView.Adapter<DaySaleViewHolder> {
     private ArrayList<CustomerSaleModel> listOfCustomerSaleModel;
-    DayRecycleViewAdapter(ArrayList<CustomerSaleModel> saleModelHashMap) {
+    private View.OnClickListener mOnItemClickListener;
+
+    DayRecycleViewAdapter(ArrayList<CustomerSaleModel> saleModelHashMap, View.OnClickListener onItemClickListener) {
         listOfCustomerSaleModel = saleModelHashMap;
+        mOnItemClickListener = onItemClickListener;
     }
 
     /*private void getCustomerSaleList(HashMap<String, CustomerSaleModel> saleModelHashMap) {
@@ -27,12 +30,15 @@ public class DayRecycleViewAdapter extends RecyclerView.Adapter<DaySaleViewHolde
     public DaySaleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem= layoutInflater.inflate(R.layout.include_row_item_recycleview_name, parent, false);
-        return new DaySaleViewHolder(listItem);
+        DaySaleViewHolder daySaleViewHolder = new DaySaleViewHolder(listItem);;
+        daySaleViewHolder.rowInfo.setOnClickListener(mOnItemClickListener);
+        return daySaleViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull DaySaleViewHolder holder, int position) {
-        CustomerSaleModel.CustomerSaleInfo temp = listOfCustomerSaleModel.get(position).getCustomerSale();
+        CustomerSaleInfo temp = listOfCustomerSaleModel.get(position).getCustomerSale();
+        holder.rowInfo.setTag(temp);
         holder.mCustomerName.setText(String.valueOf(temp.name));
         holder.mTotalBlocksString.setText(String.valueOf(temp.totalBlocksString));
         holder.mTotalIceBlocks.setText(String.valueOf(temp.totalBlock));

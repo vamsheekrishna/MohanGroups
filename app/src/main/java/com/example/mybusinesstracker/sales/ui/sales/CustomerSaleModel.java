@@ -28,15 +28,4 @@ public class CustomerSaleModel {
         }
         return customerSaleInfo;
     }
-
-    class CustomerSaleInfo {
-        int totalDue;
-        int totalPaid;
-        int totalICEAmount;
-        int totalLabourCharges;
-        int totalAmount;
-        float totalBlock;
-        String totalBlocksString= "";
-        String name= "";
-    }
 }

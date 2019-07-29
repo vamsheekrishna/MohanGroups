@@ -17,7 +17,8 @@ public class SalesTable extends DBInstance {
     public void addDataField(SalesViewModel data, OnFailureListener error_writing_document, OnSuccessListener<Void> onSuccessListener) {
 
         getCollection().document(BASE_DIRECTORY_DETAILS)
-                .collection(BASE_DIRECTORY_SALES).document(String.valueOf(data.getDate())).set(data.getHashMap())
+        //String.valueOf(data.getDate())
+                .collection(BASE_DIRECTORY_SALES).document(String.format("%05d", data.getDate())).set(data.getHashMap())
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(error_writing_document);
 
@@ -36,8 +37,8 @@ public class SalesTable extends DBInstance {
 
     public void getSalesList(OnCompleteListener<QuerySnapshot> onCompleteListener, OnFailureListener onFailure, String startDate, String endDate) {
         getCollection().document(BASE_DIRECTORY_DETAILS).collection(BASE_DIRECTORY_SALES)
-                .whereGreaterThan("date", startDate)
-                .whereLessThan("date", endDate)
+                .whereGreaterThanOrEqualTo("date", startDate)
+                .whereLessThanOrEqualTo("date", endDate)
                 .get().addOnCompleteListener(onCompleteListener).addOnFailureListener(onFailure);
     }
 }

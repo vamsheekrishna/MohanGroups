@@ -1,13 +1,13 @@
 <resources>
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">8dp</dimen>
+    <dimen name="activity_vertical_margin">8dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="header_1">25sp</dimen>
-    <dimen name="header_2">24sp</dimen>
-    <dimen name="header_3">23sp</dimen>
-    <dimen name="header_4">19sp</dimen>
+    <dimen name="header_1">24sp</dimen>
+    <dimen name="header_2">20sp</dimen>
+    <dimen name="header_3">16sp</dimen>
+    <dimen name="header_4">12sp</dimen>
     <dimen name="sales_header_count">35sp</dimen>
     <dimen name="item_margin">8dp</dimen>
     <dimen name="item_margin_hor">5dp</dimen>

@@ -21,13 +21,13 @@ public class Customer extends BaseObservable implements Serializable, Parcelable
     public static final String KEY_AMOUNT = "amount";
     public static final String KEY_LABOR_CHARGE = "laborCharge";
     public static final String KEY_COLOR_ID = "colorID";
-    private String customerName = "Depot";
-    private String address = "Miryalguda";
-    private String phoneNumber = "9246966692";
-    private String emailID = "v@v.v";
-    private int amount = 10;
-    private int laborCharge = 10;
-    private int colorID = 102221212;
+    private String customerName = "";
+    private String address = "";
+    private String phoneNumber = "";
+    private String emailID = "";
+    private int amount;
+    private int laborCharge;
+    private int colorID;
 
     public Customer() {
 
