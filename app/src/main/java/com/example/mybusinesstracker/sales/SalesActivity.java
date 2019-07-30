@@ -14,6 +14,7 @@ import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
 import com.example.mybusinesstracker.factory.FactoryBaseActivity;
 import com.example.mybusinesstracker.sales.ui.sales.AddSaleFragment;
+import com.example.mybusinesstracker.sales.ui.sales.CustomerBasedSalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel;
 import com.example.mybusinesstracker.sales.ui.sales.DaySalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.MonthSaleFragment;
@@ -134,6 +135,14 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
         return saleModelHashMap.get(customerID);
     }
 
+    @Override
+    public void goToCustomerBasedSalesFragment(String name) {
+        CustomerSaleModel customerSaleModel = saleModelHashMap.get(name);
+        getSupportActionBar().setTitle(name+" Sales");
+        replaceFragment("Month Sale Fragment", CustomerBasedSalesFragment.newInstance(customerSaleModel,""), "customer_based_sales_fragment");
+        //Toast.makeText(getActivity(),"CustomerSaleInfo: "+temp.name, Toast.LENGTH_SHORT).show();
+    }
+
     protected void addCustomer(Customer customer) {
         mAllCustomers.put(customer.getCustomerName(), customer);
     }
@@ -152,12 +161,15 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
     }
 
     @Override
-    public void onUpdateSaleRecordSuccess() {
+    public void onUpdateSaleRecordSuccess(SalesViewModel mViewModel) {
         SalesActivity.this.onBackPressed();
     }
 
     @Override
-    public void onDeleteSaleRecordSuccess() {
+    public void onDeleteSaleRecordSuccess(SalesViewModel mSalesViewModel) {
+        mAllSales.remove(mSalesViewModel.getDate());
+        CustomerSaleModel customerSaleModel = saleModelHashMap.get(mSalesViewModel.getCustomerID());
+        customerSaleModel.salesViewModels.remove(mSalesViewModel);
         SalesActivity.this.onBackPressed();
     }
 
@@ -167,8 +179,8 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
     }
 
     @Override
-    public void gotToAddSaleFragment() {
-        replaceFragment("Add Sale", AddSaleFragment.newInstance(), "add_sale");
+    public void gotToAddSaleFragment(SalesViewModel salesViewModel) {
+        replaceFragment("Add Sale", AddSaleFragment.newInstance(salesViewModel), "add_sale");
     }
     @Override
     public void gotToMonthlyFragment() {
@@ -201,9 +213,4 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
         generateSalesHashMap();
         return listOfCustomerSaleModel;
     }
-
-    /*@Override
-    public void getSalesListFromCloud(Calendar calendar) {
-
-    }*/
 }

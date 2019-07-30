@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="myAdapter"
+            type="com.example.mybusinesstracker.sales.ui.sales.CustomerBaseSalesAdapter" />
+        <variable
+            name="customerinfo"
+            type="com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel" />
+    </data>
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".sales.ui.sales.CustomerBasedSalesFragment">
@@ -28,7 +37,7 @@
                     android:layout_gravity="top|left"
                     android:textStyle="bold"
                     android:textColor="@android:color/white"
-                    android:text="Depot"/>
+                    android:text="@={customerinfo.customerSaleInfo.name}"/>
                 <TextView
                     android:layout_below="@+id/customer_name"
                     android:layout_alignParentStart="true"
@@ -37,9 +46,10 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/header_1"
                     android:layout_gravity="center|left"
+                    android:paddingStart="4dp"
                     android:textStyle="bold|italic"
                     android:textColor="@android:color/white"
-                    android:text="12/04/2018"/>
+                    android:text="27/04/2018"/>
                 <LinearLayout
                     android:layout_toLeftOf="@+id/header_right"
                     android:orientation="vertical"
@@ -62,7 +72,7 @@
                         android:textSize="@dimen/header_1"
                         android:textColor="@android:color/white"
                         android:textStyle="bold"
-                        android:text="20"/>
+                        android:text="@={``+customerinfo.customerSaleInfo.totalBlock}"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -87,7 +97,7 @@
                         android:textSize="@dimen/header_1"
                         android:textColor="@android:color/white"
                         android:textStyle="bold"
-                        android:text="200000000"/>
+                        android:text="@={``+customerinfo.customerSaleInfo.totalAmount}"/>
                 </LinearLayout>
             </RelativeLayout>
         <LinearLayout
@@ -95,15 +105,6 @@
             android:layout_height="wrap_content"
             android:weightSum="2"
             android:orientation="horizontal">
-            <!--<TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/header_3"
-                android:gravity="center|left"
-                android:textStyle="bold|italic"
-                android:textColor="@color/white"
-                android:text="@string/total_amount"/>-->
             <TextView
                 android:paddingLeft="8dp"
                 android:layout_width="0dp"
@@ -140,9 +141,9 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sales_header_count"
+                android:textSize="@dimen/sales_header_count_size_big"
                 android:gravity="center|left"
-                android:text="800008888"/>
+                android:text="@={``+customerinfo.customerSaleInfo.totalPaid}"/>
             <TextView
                 android:background="@color/dark_pink"
                 android:id="@+id/total_due"
@@ -151,16 +152,26 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sales_header_count"
+                android:textSize="@dimen/sales_header_count_size_big"
                 android:gravity="center|left"
-                android:text="800008888"/>
+                android:text="@={``+customerinfo.customerSaleInfo.totalDue}"/>
         </LinearLayout>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:adapter="@{myAdapter}"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_alignParentBottom="true"/>
+    <TextView
+        android:id="@+id/labour_amount"
+        android:gravity="center|right"
+        android:padding="8dp"
+        android:textSize="@dimen/header_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Labor charge : 350"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>
+</layout>

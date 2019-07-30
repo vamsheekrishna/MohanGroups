@@ -138,7 +138,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
             android:textColor="@color/white"
-            android:textSize="@dimen/sales_header_count"
+            android:textSize="@dimen/sales_header_count_size_big"
             android:gravity="center|left"
             android:text="800008888"/>
         <TextView
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
             android:textColor="@color/white"
-            android:textSize="@dimen/sales_header_count"
+            android:textSize="@dimen/sales_header_count_size_big"
             android:gravity="center|left"
             android:text="800008888"/>
     </LinearLayout>

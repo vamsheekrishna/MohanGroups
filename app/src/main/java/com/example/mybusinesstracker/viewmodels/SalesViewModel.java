@@ -4,9 +4,11 @@ import androidx.databinding.BaseObservable;
 
 import com.example.mybusinesstracker.cloud_firestore.OnCloudFireStoreInteraction;
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
+import com.example.mybusinesstracker.utilities.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +45,7 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     private ArrayList<Integer> blockIDs = new ArrayList<>();
 
     public SalesViewModel( Map<String, Object> hashMap) {
-        date = Long.valueOf((String) requireNonNull(hashMap.get(DATE)));
+        setDate(Long.valueOf((String) requireNonNull(hashMap.get(DATE))));// ;
         cabinID = (String) hashMap.get(CABIN_ID);
         customerID = (String) hashMap.get(CUSTOMER_ID);
         salesType = (String) hashMap.get(SALES_TYPE);
@@ -99,7 +101,10 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     }
 
     public void setDate(Long date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
         this.date = date;
+        dateString = Utils.getStringFromDate(calendar,"yyyy-MM-dd 'T'HH:mm");
     }
 
     public String getCabinID() {

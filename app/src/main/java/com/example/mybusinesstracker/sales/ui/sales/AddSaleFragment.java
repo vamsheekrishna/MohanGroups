@@ -5,12 +5,12 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -40,7 +40,8 @@ import java.util.Objects;
 
 public class AddSaleFragment extends BaseFragment implements View.OnClickListener, OnFailureListener, OnSuccessListener<Void> {
 
-    private SalesViewModel mViewModel;
+    private static final String ARG_SALES_MODEL = "SalesViewModel";
+    //private SalesViewModel mViewModel;
     private ArrayList<String> mSalesTypes = new ArrayList<>();
     private ArrayList<String> mCabinNames = new ArrayList<>();
     private ArrayList<String> mCustomerNames = new ArrayList<>();
@@ -50,39 +51,54 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
     private ArrayAdapter<String> spinnerCabinAdapter;
     private OnSalesInteractionListener mListener;
     private int testValue = 0;
+    private SalesViewModel mSalesViewModel;
 
-    public static AddSaleFragment newInstance() {
-        return new AddSaleFragment();
+    public static AddSaleFragment newInstance(SalesViewModel salesViewModel) {
+        AddSaleFragment fragment = new AddSaleFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_SALES_MODEL, salesViewModel);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mSalesViewModel = (SalesViewModel) getArguments().getSerializable(ARG_SALES_MODEL);
+        }
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         mSalesTypes.add("Sale");
         mSalesTypes.add("Due");
         mSalesTypes.add("Due Paid");
         mCabinNames.add("Frick");
         mCabinNames.add("kirloskar");
 
-        mViewModel = new SalesViewModel();
         SalesFragmentBinding binder = DataBindingUtil.inflate(inflater, R.layout.sales_fragment, container, false);
         View view = binder.getRoot();
-        binder.setSalesModel(mViewModel);
         Spinner mSpinnerEntryType = view.findViewById(R.id.entry_type_sp);
         Spinner mSpinnerCabin = view.findViewById(R.id.cab_name_sp);
         Spinner mSpinnerCustomerName = view.findViewById(R.id.sal_cus_ed);
         TextView mDateTextView = view.findViewById(R.id.sal_date_ed);
+
         mDateTextView.setOnClickListener(this);
         view.findViewById(R.id.sub_btn).setOnClickListener(this);
+        view.findViewById(R.id.del_btn).setOnClickListener(this);
+
         mSpinnerCustomerName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mViewModel.setCustomerID(mCustomerNames.get(position));
-                mViewModel.setSelectedCustomer(mListener.getCustomers().get(mViewModel.getCustomerID()));
-                if(mViewModel.getTotalBlocks()>0) {
-                    mViewModel.setIceAmount((int) (mViewModel.getTotalBlocks()*mViewModel.getSelectedCustomer().getAmount()));
-                    mViewModel.setLabourCharges((int) (mViewModel.getTotalBlocks()*mViewModel.getSelectedCustomer().getLaborCharge()));
+                mSalesViewModel.setCustomerID(mCustomerNames.get(position));
+                mSalesViewModel.setSelectedCustomer(mListener.getCustomers().get(mSalesViewModel.getCustomerID()));
+                if(mSalesViewModel.getTotalBlocks()>0) {
+                    mSalesViewModel.setIceAmount((int) (mSalesViewModel.getTotalBlocks()*mSalesViewModel.getSelectedCustomer().getAmount()));
+                    mSalesViewModel.setLabourCharges((int) (mSalesViewModel.getTotalBlocks()*mSalesViewModel.getSelectedCustomer().getLaborCharge()));
                 }
             }
 
@@ -94,7 +110,7 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         mSpinnerCabin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mViewModel.setCabinID(mCabinNames.get(position));
+                mSalesViewModel.setCabinID(mCabinNames.get(position));
             }
 
             @Override
@@ -105,7 +121,7 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         mSpinnerEntryType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mViewModel.setSalesType(mSalesTypes.get(position));
+                mSalesViewModel.setSalesType(mSalesTypes.get(position));
             }
 
             @Override
@@ -121,9 +137,27 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         mSpinnerCabin.setAdapter(spinnerCabinAdapter);
         mSpinnerCustomerName.setAdapter(spinnerCustomerAdapter);
         mSpinnerEntryType.setAdapter(salesTypeAdapter);
-
         updateCustomerSpinner(mListener.getCustomers());
-        setTimeText(Calendar.getInstance());
+
+        if(null == mSalesViewModel){
+            mSalesViewModel = new SalesViewModel();
+            setTimeText(Calendar.getInstance());
+            binder.setSalesModel(mSalesViewModel);
+            ((Button)view.findViewById(R.id.sub_btn)).setText(R.string.cus_create_btn);
+            view.findViewById(R.id.del_btn).setVisibility(View.GONE);
+        } else {
+            binder.setSalesModel(mSalesViewModel);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(mSalesViewModel.getDate());
+            setTimeText(calendar);
+            mSpinnerCabin.setSelection(mCabinNames.indexOf(mSalesViewModel.getCabinID()));
+            mSpinnerCustomerName.setSelection(mCustomerNames.indexOf(mSalesViewModel.getCustomerID()));
+            mSpinnerEntryType.setSelection(mSalesTypes.indexOf(mSalesViewModel.getSalesType()));
+            ((Button)view.findViewById(R.id.sub_btn)).setText(R.string.cus_update_btn);
+            ((Button)view.findViewById(R.id.del_btn)).setText(R.string.cus_delete_btn);
+            view.findViewById(R.id.del_btn).setVisibility(View.VISIBLE);
+        }
+
         return view;
     }
 
@@ -157,22 +191,50 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
                 showDatePicker(v);
                 break;
             case R.id.sub_btn:
-                onSaveClicked();
+                if(((TextView)v).getText().equals(R.string.cus_update_btn))
+                    onUpdateClicked();
+                else
+                    onSaveClicked();
+                break;
+            case R.id.del_btn:
+                onDeleteClicked();
                 break;
         }
     }
 
-    private void onSaveClicked() {
-        mViewModel.setDate(Calendar.getInstance().getTimeInMillis());
+    private void onDeleteClicked() {
         SalesTable salesTable = new SalesTable();
-        salesTable.addDataField(mViewModel,this, this);
+        salesTable.deleteRecord(mSalesViewModel, this, new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                mListener.onDeleteSaleRecordSuccess(mSalesViewModel);
+            }
+        });
+    }
+
+    private void onSaveClicked() {
+        if(null == mSalesViewModel.getDate()) {
+            mSalesViewModel.setDate(Calendar.getInstance().getTimeInMillis());
+        }
+        SalesTable salesTable = new SalesTable();
+        salesTable.addDataField(mSalesViewModel,this, this);
+    }
+
+    private void onUpdateClicked() {
+        SalesTable salesTable = new SalesTable();
+        salesTable.updateFields(mSalesViewModel, this, new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                mListener.onUpdateSaleRecordSuccess(mSalesViewModel);
+            }
+        });
     }
     private void saveTestData() {
         int previousCount = 0;
         for(long i = 0; i < 1000; i++) {
-            mViewModel.setDate(i+previousCount);
+            mSalesViewModel.setDate(i+previousCount);
             SalesTable salesTable = new SalesTable();
-            salesTable.addDataField(mViewModel,this, this);
+            salesTable.addDataField(mSalesViewModel,this, this);
             //Toast.makeText(getActivity(),"Created "+i,Toast.LENGTH_SHORT)
 
         }
@@ -199,8 +261,8 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String today = formatter.format(calender.getTime());
         System.out.println("Today : " + today);
-        mViewModel.setDateString(today);
-        mViewModel.setDate(calender.getTimeInMillis());
+        mSalesViewModel.setDate(calender.getTimeInMillis());
+        mSalesViewModel.setDateString(today);
     }
 
     @Override
@@ -210,7 +272,7 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void onSuccess(Void aVoid) {
-        mListener.onAddSaleRecordSuccess(mViewModel);
+        mListener.onAddSaleRecordSuccess(mSalesViewModel);
     }
 }
 

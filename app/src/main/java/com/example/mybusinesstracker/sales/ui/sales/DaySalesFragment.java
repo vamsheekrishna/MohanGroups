@@ -90,7 +90,7 @@ public class DaySalesFragment extends BaseFragment implements View.OnClickListen
         view.findViewById(R.id.add_new).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.gotToAddSaleFragment();
+                mListener.gotToAddSaleFragment(null);
             }
         });
         dayRecycleViewAdapter = new DayRecycleViewAdapter(temp, this);
@@ -203,7 +203,6 @@ public class DaySalesFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         CustomerSaleInfo temp = (CustomerSaleInfo) v.getTag();
-        CustomerSaleModel customerSaleModel = mListener.getCustomerSales(temp.name);
-        Toast.makeText(getActivity(),"CustomerSaleInfo: "+temp.name, Toast.LENGTH_SHORT).show();
+        mListener.goToCustomerBasedSalesFragment(temp.name);
     }
 }

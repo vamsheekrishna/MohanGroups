@@ -29,7 +29,7 @@ public class CustomerTable extends DBInstance {
     }
     public void deleteRecord(Customer data, OnFailureListener error_writing_document, OnSuccessListener<Void> onSuccessListener) {
         getCollection().document(BASE_DIRECTORY_DETAILS).collection(BASE_DIRECTORY_CUSTOMER).document(data.getCustomerName()).delete().addOnSuccessListener(onSuccessListener)
-                .addOnFailureListener(error_writing_document);;
+                .addOnFailureListener(error_writing_document);
     }
 
     public void getCustomerList(OnCompleteListener<QuerySnapshot> onCompleteListener) {

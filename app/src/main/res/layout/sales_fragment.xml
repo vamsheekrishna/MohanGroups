@@ -252,25 +252,33 @@
                     android:drawableRight="@android:drawable/ic_menu_my_calendar" />
 
             </LinearLayout>-->
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="64dp"
+                android:gravity="center"
                 android:orientation="horizontal">
-
                 <Button
                     android:id="@+id/sub_btn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center"
                     android:text="@string/sub_btn"
                     android:textStyle="bold"
                     android:background="@color/colorPrimary"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
+                <Button
+                    android:id="@+id/del_btn"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cus_delete_btn"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:layout_marginStart="16dp" />
             </LinearLayout>
-
 
         </LinearLayout>
     </ScrollView>

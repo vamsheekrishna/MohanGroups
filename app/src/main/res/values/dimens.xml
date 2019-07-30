@@ -8,7 +8,8 @@
     <dimen name="header_2">20sp</dimen>
     <dimen name="header_3">16sp</dimen>
     <dimen name="header_4">12sp</dimen>
-    <dimen name="sales_header_count">35sp</dimen>
+    <dimen name="sales_header_count_size_big">35sp</dimen>
+    <dimen name="sales_header_count_size_small">24sp</dimen>
     <dimen name="item_margin">8dp</dimen>
     <dimen name="item_margin_hor">5dp</dimen>
     <dimen name="column_width">80dp</dimen>

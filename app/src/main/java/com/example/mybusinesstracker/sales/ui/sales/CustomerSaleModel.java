@@ -1,18 +1,23 @@
 package com.example.mybusinesstracker.sales.ui.sales;
 
+import androidx.databinding.BaseObservable;
+
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CustomerSaleModel {
+public class CustomerSaleModel extends BaseObservable implements Serializable {
     public Customer customer;
     public ArrayList<SalesViewModel> salesViewModels = new ArrayList<>();
-    private CustomerSaleInfo customerSaleInfo;
+    public CustomerSaleInfo customerSaleInfo;
     CustomerSaleInfo getCustomerSale() {
         if(null == customerSaleInfo && salesViewModels.size()>0) {
             customerSaleInfo = new CustomerSaleInfo();
-            customerSaleInfo.name = customer.getCustomerName();
+            if(null != customer.getCustomerName()) {
+                customerSaleInfo.name = customer.getCustomerName();
+            }
             StringBuilder nameBuilder = new StringBuilder();
             for (SalesViewModel salesViewModel : salesViewModels) {
                 nameBuilder.append(salesViewModel.getTotalBlocks()).append(" + ");
