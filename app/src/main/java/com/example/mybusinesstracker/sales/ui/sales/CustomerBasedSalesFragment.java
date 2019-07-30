@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mybusinesstracker.BaseCalsses.BaseFragment;
@@ -55,6 +56,7 @@ public class CustomerBasedSalesFragment extends BaseFragment implements View.OnC
         FragmentCustomerBasedSalesBinding binder = DataBindingUtil.inflate(inflater, R.layout.fragment_customer_based_sales, container, false);
         binder.setCustomerinfo(mCustomerSaleModel);
         View view =  binder.getRoot();//inflater.inflate(R.layout.fragment_customer_based_sales, fragmet, false);
+        ((TextView)view.findViewById(R.id.selected_date)).setText(mParam2);
         CustomerBaseSalesAdapter customerBaseSalesAdapter = new CustomerBaseSalesAdapter(mCustomerSaleModel.salesViewModels, this);
         binder.setMyAdapter(customerBaseSalesAdapter);
         return view;

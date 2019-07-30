@@ -22,6 +22,6 @@ public interface OnSalesInteractionListener {
     ArrayList<CustomerSaleModel> getSalesList();
     void getSalesListFromCloud(Calendar calendar);
     CustomerSaleModel getCustomerSales(String customerID);
-    void goToCustomerBasedSalesFragment(String name);
+    void goToCustomerBasedSalesFragment(String name, String date);
 
 }

@@ -136,10 +136,10 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
     }
 
     @Override
-    public void goToCustomerBasedSalesFragment(String name) {
+    public void goToCustomerBasedSalesFragment(String name, String date) {
         CustomerSaleModel customerSaleModel = saleModelHashMap.get(name);
         getSupportActionBar().setTitle(name+" Sales");
-        replaceFragment("Month Sale Fragment", CustomerBasedSalesFragment.newInstance(customerSaleModel,""), "customer_based_sales_fragment");
+        replaceFragment("Month Sale Fragment", CustomerBasedSalesFragment.newInstance(customerSaleModel,date), "customer_based_sales_fragment");
         //Toast.makeText(getActivity(),"CustomerSaleInfo: "+temp.name, Toast.LENGTH_SHORT).show();
     }
 

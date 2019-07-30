@@ -95,46 +95,6 @@ public class DaySalesFragment extends BaseFragment implements View.OnClickListen
         });
         dayRecycleViewAdapter = new DayRecycleViewAdapter(temp, this);
         recyclerView.setAdapter(dayRecycleViewAdapter);
-
-        /*TimerTask doAsynchronousTask = new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    public void run() {
-                        try {
-                            SalesTable salesTable = new SalesTable();
-                            salesTable.getSalesList(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    int value = 0;
-                                    if(null != task.getResult()) {
-                                        for (DocumentSnapshot document : task.getResult()) {
-                                            Map<String, Object> data = document.getData();
-                                            assert data != null;
-                                            SalesViewModel temp = new SalesViewModel(data);
-                                            value+=1;
-                                        }
-                                    }
-                                    Log.d("saveTestData","Present count: "+value);
-                                    Toast.makeText(getActivity(),"Present count: "+value ,Toast.LENGTH_SHORT).show();
-                                }
-                            }, new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d("Exception: ", "saveTestData onFailure "+e.getMessage());
-                                    Toast.makeText(getActivity(),"saveTestData onFailure "+e.getMessage() ,Toast.LENGTH_SHORT).show();
-
-                                }
-                            }, String.valueOf(0), String.valueOf(50000));
-
-                        } catch (Exception e) {
-                        }
-                    }
-                });
-            }
-        };
-        timer.schedule(doAsynchronousTask, 0, 10000);*/
-
         return view;
     }
 
@@ -193,7 +153,6 @@ public class DaySalesFragment extends BaseFragment implements View.OnClickListen
                 selectedDate.set(year, monthOfYear, dayOfMonth);
                 mTVDate.setText(Utils.getStringFromDate(selectedDate,"dd/mm/yyyy"));
                 mListener.getSalesListFromCloud(selectedDate);
-                //setTimeText(selectedDate);
 
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -203,6 +162,6 @@ public class DaySalesFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         CustomerSaleInfo temp = (CustomerSaleInfo) v.getTag();
-        mListener.goToCustomerBasedSalesFragment(temp.name);
+        mListener.goToCustomerBasedSalesFragment(temp.name, String.valueOf(mTVDate.getText()));
     }
 }

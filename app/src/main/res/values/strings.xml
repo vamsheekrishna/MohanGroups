@@ -57,6 +57,7 @@
     <string name="total_blocks">Blocks</string>
     <string name="labour_charges"><![CDATA[Labour \u20B9]]></string>
     <string name="total_amount"><![CDATA[ Total \u20B9]]></string>
+    <string name="ice"><![CDATA[ICE \u20B9]]></string>
     <string name="paid_amount"><![CDATA[Paid \u20B9]]></string>
     <string name="due_amount"><![CDATA[Due \u20B9]]></string>
     <string name="_5_5_5">5+5+5</string>

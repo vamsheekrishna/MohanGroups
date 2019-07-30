@@ -36,7 +36,7 @@
                     android:textSize="@dimen/header_1"
                     android:layout_gravity="top|left"
                     android:textStyle="bold"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/blue"
                     android:text="@={customerinfo.customerSaleInfo.name}"/>
                 <TextView
                     android:layout_below="@+id/customer_name"
@@ -63,7 +63,8 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:text="@string/total_blocks"
-                        android:textColor="@android:color/white"/>
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"/>
                     <TextView
                         android:paddingStart="8sp"
                         android:id="@+id/ice_count"
@@ -71,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/header_1"
                         android:textColor="@android:color/white"
-                        android:textStyle="bold"
+                        android:textStyle="bold|italic"
                         android:text="@={``+customerinfo.customerSaleInfo.totalBlock}"/>
                 </LinearLayout>
 
@@ -88,7 +89,8 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:text="@string/total_amount"
-                        android:textColor="@android:color/white"/>
+                        android:textStyle="bold"
+                        android:textColor="@color/blue"/>
                     <TextView
                         android:id="@+id/total_amount"
                         android:paddingLeft="8sp"
@@ -96,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/header_1"
                         android:textColor="@android:color/white"
-                        android:textStyle="bold"
+                        android:textStyle="bold|italic"
                         android:text="@={``+customerinfo.customerSaleInfo.totalAmount}"/>
                 </LinearLayout>
             </RelativeLayout>
@@ -157,21 +159,41 @@
                 android:text="@={``+customerinfo.customerSaleInfo.totalDue}"/>
         </LinearLayout>
     </LinearLayout>
+    <include layout="@layout/customer_base_sales_row_header"
+        android:id="@+id/row_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"/>
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@+id/header"
+        android:layout_below="@+id/row_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adapter="@{myAdapter}"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_alignParentBottom="true"/>
-    <TextView
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
         android:id="@+id/labour_amount"
         android:gravity="center|right"
-        android:padding="8dp"
-        android:textSize="@dimen/header_2"
+        android:layout_marginEnd="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Labor charge : 350"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:padding="8dp"
+            android:textSize="@dimen/header_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_gray"
+            android:text="Labor charge:" />
+        <TextView
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/header_2"
+            android:textColor="@color/dark_pink"
+            android:textStyle="bold|italic"
+            android:text="@={``+customerinfo.customerSaleInfo.totalLabourCharges}" />
+    </LinearLayout>
 </RelativeLayout>
 </layout>
