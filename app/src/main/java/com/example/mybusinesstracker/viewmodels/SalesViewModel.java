@@ -45,7 +45,7 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     private ArrayList<Integer> blockIDs = new ArrayList<>();
 
     public SalesViewModel( Map<String, Object> hashMap) {
-        setDate(Long.valueOf((String) requireNonNull(hashMap.get(DATE))));// ;
+        setDate(Long.valueOf((String) requireNonNull(hashMap.get(DATE))), "yyyy-MM-dd 'T'HH:mm");// ;
         cabinID = (String) hashMap.get(CABIN_ID);
         customerID = (String) hashMap.get(CUSTOMER_ID);
         salesType = (String) hashMap.get(SALES_TYPE);
@@ -90,6 +90,7 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
 
     public void setDateString(String dateString) {
         this.dateString = dateString;
+        notifyChange();
     }
 
     public void setID(int ID) {
@@ -100,11 +101,11 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
         return date;
     }
 
-    public void setDate(Long date) {
+    public void setDate(Long date, String pattern) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(date);
         this.date = date;
-        dateString = Utils.getStringFromDate(calendar,"yyyy-MM-dd 'T'HH:mm");
+        dateString = Utils.getStringFromDate(calendar, pattern);
     }
 
     public String getCabinID() {
@@ -214,5 +215,21 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
 
     public void setSelectedCustomer(Customer selectedCustomer) {
         this.selectedCustomer = selectedCustomer;
+    }
+
+    private Calendar getCalendarObject() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+        return calendar;
+    }
+
+    public int getYear(){
+        return getCalendarObject().get(Calendar.YEAR);
+    }
+    public int getMonth(){
+        return getCalendarObject().get(Calendar.MONTH);
+    }
+    public int getDay(){
+        return getCalendarObject().get(Calendar.DAY_OF_MONTH);
     }
 }

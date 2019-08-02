@@ -10,13 +10,18 @@ import java.util.ArrayList;
 
 public class CustomerSaleModel extends BaseObservable implements Serializable {
     public Customer customer;
-    public ArrayList<SalesViewModel> salesViewModels = new ArrayList<>();
-    public CustomerSaleInfo customerSaleInfo;
-    CustomerSaleInfo getCustomerSale() {
+    private ArrayList<SalesViewModel> salesViewModels = new ArrayList<>();
+    public TotalSalesInfo customerSaleInfo;
+
+    public ArrayList<SalesViewModel> getSalesViewModels() {
+        return salesViewModels;
+    }
+
+    TotalSalesInfo getCustomerSale() {
         if(null == customerSaleInfo && salesViewModels.size()>0) {
-            customerSaleInfo = new CustomerSaleInfo();
+            customerSaleInfo = new TotalSalesInfo();
             if(null != customer.getCustomerName()) {
-                customerSaleInfo.name = customer.getCustomerName();
+                customerSaleInfo.headerText = customer.getCustomerName();
             }
             StringBuilder nameBuilder = new StringBuilder();
             for (SalesViewModel salesViewModel : salesViewModels) {

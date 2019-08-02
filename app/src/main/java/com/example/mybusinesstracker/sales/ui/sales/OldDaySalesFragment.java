@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.Objects;
 import java.util.Timer;
 
-public class DaySalesFragment extends BaseFragment implements View.OnClickListener {
+public class OldDaySalesFragment extends BaseFragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -37,17 +37,17 @@ public class DaySalesFragment extends BaseFragment implements View.OnClickListen
     private OnSalesInteractionListener mListener;
     private DayRecycleViewAdapter dayRecycleViewAdapter;
 
-    CustomerSaleInfo mTotalSalesInfo = new CustomerSaleInfo();
+    TotalSalesInfo mTotalSalesInfo = new TotalSalesInfo();
     private TextView mTVDate, mTVTotalBlock, mTotalAmount, mTotalPaid, mTotalDue;
 
     final Handler handler = new Handler();
     Timer timer = new Timer();
 
-    public DaySalesFragment() {
+    public OldDaySalesFragment() {
         // Required empty public constructor
     }
-    public static DaySalesFragment newInstance(String param1) {
-        DaySalesFragment fragment = new DaySalesFragment();
+    public static OldDaySalesFragment newInstance(String param1) {
+        OldDaySalesFragment fragment = new OldDaySalesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -107,9 +107,9 @@ public class DaySalesFragment extends BaseFragment implements View.OnClickListen
 
     private ArrayList<CustomerSaleModel> getCustomerSaleModels() {
         ArrayList<CustomerSaleModel> temp = mListener.getSalesList();
-        mTotalSalesInfo = new CustomerSaleInfo();
+        mTotalSalesInfo = new TotalSalesInfo();
         for (CustomerSaleModel customerSaleModel : temp) {
-            for (SalesViewModel salesViewModel : customerSaleModel.salesViewModels) {
+            for (SalesViewModel salesViewModel : customerSaleModel.getSalesViewModels()) {
                 mTotalSalesInfo.totalBlock += salesViewModel.getTotalBlocks();
                 mTotalSalesInfo.totalAmount += salesViewModel.getTotalAmount();
                 mTotalSalesInfo.totalPaid += salesViewModel.getPaidAmount();
@@ -161,7 +161,7 @@ public class DaySalesFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        CustomerSaleInfo temp = (CustomerSaleInfo) v.getTag();
-        mListener.goToCustomerBasedSalesFragment(temp.name, String.valueOf(mTVDate.getText()));
+        TotalSalesInfo temp = (TotalSalesInfo) v.getTag();
+        mListener.goToCustomerBasedSalesFragment(temp.headerText, String.valueOf(mTVDate.getText()));
     }
 }

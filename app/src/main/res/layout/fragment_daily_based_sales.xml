@@ -8,7 +8,7 @@
             type="com.example.mybusinesstracker.sales.ui.sales.CustomerBaseSalesAdapter" />
         <variable
             name="customerinfo"
-            type="com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel" />
+            type="com.example.mybusinesstracker.sales.ui.sales.DailySaleModel" />
     </data>
 <RelativeLayout
     android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                     android:layout_gravity="top|left"
                     android:textStyle="bold"
                     android:textColor="@color/blue"
-                    android:text="@={customerinfo.customerSaleInfo.headerText}"/>
+                    android:text="@={customerinfo.totalSalesInfo.headerText}"/>
                 <TextView
                     android:layout_below="@+id/customer_name"
                     android:layout_alignParentStart="true"
@@ -73,7 +73,7 @@
                         android:textSize="@dimen/header_1"
                         android:textColor="@android:color/white"
                         android:textStyle="bold|italic"
-                        android:text="@={``+customerinfo.customerSaleInfo.totalBlock}"/>
+                        android:text="@={``+customerinfo.totalSalesInfo.totalBlock}"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -99,7 +99,7 @@
                         android:textSize="@dimen/header_1"
                         android:textColor="@android:color/white"
                         android:textStyle="bold|italic"
-                        android:text="@={``+customerinfo.customerSaleInfo.totalAmount}"/>
+                        android:text="@={``+customerinfo.totalSalesInfo.totalAmount}"/>
                 </LinearLayout>
             </RelativeLayout>
         <LinearLayout
@@ -145,7 +145,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sales_header_count_size_big"
                 android:gravity="center|left"
-                android:text="@={``+customerinfo.customerSaleInfo.totalPaid}"/>
+                android:text="@={``+customerinfo.totalSalesInfo.totalPaid}"/>
             <TextView
                 android:background="@color/dark_pink"
                 android:id="@+id/total_due"
@@ -156,7 +156,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sales_header_count_size_big"
                 android:gravity="center|left"
-                android:text="@={``+customerinfo.customerSaleInfo.totalDue}"/>
+                android:text="@={``+customerinfo.totalSalesInfo.totalDue}"/>
         </LinearLayout>
     </LinearLayout>
     <include layout="@layout/customer_base_sales_row_header"
@@ -193,7 +193,7 @@
             android:textSize="@dimen/header_2"
             android:textColor="@color/dark_pink"
             android:textStyle="bold|italic"
-            android:text="@={``+customerinfo.customerSaleInfo.totalLabourCharges}" />
+            android:text="@={``+customerinfo.totalSalesInfo.totalLabourCharges}" />
     </LinearLayout>
 </RelativeLayout>
 </layout>

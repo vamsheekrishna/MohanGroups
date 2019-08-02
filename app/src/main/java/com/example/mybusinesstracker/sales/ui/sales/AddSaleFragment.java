@@ -214,7 +214,7 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
 
     private void onSaveClicked() {
         if(null == mSalesViewModel.getDate()) {
-            mSalesViewModel.setDate(Calendar.getInstance().getTimeInMillis());
+            mSalesViewModel.setDate(Calendar.getInstance().getTimeInMillis(), "yyyy-MM-dd 'T'HH:mm");
         }
         SalesTable salesTable = new SalesTable();
         salesTable.addDataField(mSalesViewModel,this, this);
@@ -232,7 +232,7 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
     private void saveTestData() {
         int previousCount = 0;
         for(long i = 0; i < 1000; i++) {
-            mSalesViewModel.setDate(i+previousCount);
+            mSalesViewModel.setDate(i+previousCount, "yyyy-MM-dd 'T'HH:mm");
             SalesTable salesTable = new SalesTable();
             salesTable.addDataField(mSalesViewModel,this, this);
             //Toast.makeText(getActivity(),"Created "+i,Toast.LENGTH_SHORT)
@@ -261,7 +261,7 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String today = formatter.format(calender.getTime());
         System.out.println("Today : " + today);
-        mSalesViewModel.setDate(calender.getTimeInMillis());
+        mSalesViewModel.setDate(calender.getTimeInMillis(), "yyyy-MM-dd 'T'HH:mm");
         mSalesViewModel.setDateString(today);
     }
 

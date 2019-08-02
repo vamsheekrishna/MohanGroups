@@ -16,7 +16,7 @@ import com.example.mybusinesstracker.factory.FactoryBaseActivity;
 import com.example.mybusinesstracker.sales.ui.sales.AddSaleFragment;
 import com.example.mybusinesstracker.sales.ui.sales.CustomerBasedSalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel;
-import com.example.mybusinesstracker.sales.ui.sales.DaySalesFragment;
+import com.example.mybusinesstracker.sales.ui.sales.DailySalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.MonthSaleFragment;
 import com.example.mybusinesstracker.utilities.Utils;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
@@ -52,7 +52,7 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
 
         getSupportActionBar().setTitle("Day Sales");
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.container, DaySalesFragment.newInstance(Utils.getStringFromDate(Calendar.getInstance(), "dd/MM/yyyy")), "DaySalesFragment").commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.container, DailySalesFragment.newInstance()).commit();
         }
     }
 
@@ -113,12 +113,14 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
                     if (myFragment != null) {
                         myFragment.updateCustomerSpinner(mAllCustomers);
                     }
-                    generateSalesHashMap();
-                    DaySalesFragment fragment = (DaySalesFragment) getSupportFragmentManager().findFragmentByTag("DaySalesFragment");
-                    // add your code here
-                    if (fragment != null) {
-                        fragment.updateAdapter();
-                    }
+                    /*
+                        generateSalesHashMap();
+                        DailySalesFragment fragment = (DailySalesFragment) getSupportFragmentManager().findFragmentByTag("DailySalesFragment");
+                        // add your code here
+                        if (fragment != null) {
+                                                                                                        fragment.updateAdapter();
+                        }
+                    */
                 }
             }, new OnFailureListener() {
                 @Override
@@ -140,7 +142,7 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
         CustomerSaleModel customerSaleModel = saleModelHashMap.get(name);
         getSupportActionBar().setTitle(name+" Sales");
         replaceFragment("Month Sale Fragment", CustomerBasedSalesFragment.newInstance(customerSaleModel,date), "customer_based_sales_fragment");
-        //Toast.makeText(getActivity(),"CustomerSaleInfo: "+temp.name, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(),"TotalSalesInfo: "+temp.name, Toast.LENGTH_SHORT).show();
     }
 
     protected void addCustomer(Customer customer) {
@@ -167,9 +169,9 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
 
     @Override
     public void onDeleteSaleRecordSuccess(SalesViewModel mSalesViewModel) {
-        mAllSales.remove(mSalesViewModel.getDate());
+        /*mAllSales.remove(mSalesViewModel.getDate());
         CustomerSaleModel customerSaleModel = saleModelHashMap.get(mSalesViewModel.getCustomerID());
-        customerSaleModel.salesViewModels.remove(mSalesViewModel);
+        customerSaleModel.salesViewModels.remove(mSalesViewModel);*/
         SalesActivity.this.onBackPressed();
     }
 
@@ -189,7 +191,7 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
     }
 
     public void generateSalesHashMap() {
-        listOfCustomerSaleModel.clear();
+        /*listOfCustomerSaleModel.clear();
         saleModelHashMap.clear();
         Set it = getDaySales().entrySet();
         for (Object o : it) {
@@ -205,7 +207,7 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
             }
         }
         Collection<CustomerSaleModel> demoValues = saleModelHashMap.values();
-        listOfCustomerSaleModel.addAll(demoValues);
+        listOfCustomerSaleModel.addAll(demoValues);*/
     }
 
     @Override

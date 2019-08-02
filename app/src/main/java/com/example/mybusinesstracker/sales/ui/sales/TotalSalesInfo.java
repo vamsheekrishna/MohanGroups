@@ -2,7 +2,7 @@ package com.example.mybusinesstracker.sales.ui.sales;
 
 import androidx.databinding.BaseObservable;
 
-public class CustomerSaleInfo extends BaseObservable {
+public class TotalSalesInfo extends BaseObservable {
     int totalDue;
     int totalPaid;
     int totalICEAmount;
@@ -10,7 +10,7 @@ public class CustomerSaleInfo extends BaseObservable {
     int totalAmount;
     float totalBlock;
     String totalBlocksString;
-    String name;
+    String headerText;
 
     public int getTotalDue() {
         return totalDue;
@@ -68,11 +68,11 @@ public class CustomerSaleInfo extends BaseObservable {
         this.totalBlocksString = totalBlocksString;
     }
 
-    public String getName() {
-        return name;
+    public String getHeaderText() {
+        return headerText;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setHeaderText(String headerText) {
+        this.headerText = headerText;
     }
 }
