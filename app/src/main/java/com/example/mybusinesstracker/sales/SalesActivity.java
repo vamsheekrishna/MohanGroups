@@ -49,7 +49,7 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
         getCustomerList();
         getSalesListFromCloud(Calendar.getInstance());
 
-        getSupportActionBar().setTitle("Day Sales");
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.container, GroupBasedSalesFragment.newInstance()).commit();
         }
@@ -140,14 +140,14 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
     public void goToCustomerBasedSalesFragment(String name, String date) {
         CustomerSaleModel customerSaleModel = saleModelHashMap.get(name);
         getSupportActionBar().setTitle(name+" Sales");
-        replaceFragment("Month Sale Fragment", CustomerBasedSalesFragment.newInstance(customerSaleModel,date), "customer_based_sales_fragment");
+        replaceFragment(CustomerBasedSalesFragment.newInstance(customerSaleModel,date), "customer_based_sales_fragment");
         //Toast.makeText(getActivity(),"TotalSalesInfo: "+temp.name, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void goToDiscreteBasedSalesFragment(TotalSalesInfo totalSalesInfo) {
-        getSupportActionBar().setTitle("Header"+" Sales");
-        replaceFragment("Month Sale Fragment", DiscreteBasedSalesFragment.newInstance(totalSalesInfo), "discrete_based_sales_fragment");
+    public void goToDiscreteBasedSalesFragment(TotalSalesInfo totalSalesInfo, String header) {
+        getSupportActionBar().setTitle(totalSalesInfo.getName().toUpperCase()+ " "+header.toLowerCase());
+        replaceFragment(DiscreteBasedSalesFragment.newInstance(totalSalesInfo), "discrete_based_sales_fragment");
 
     }
 
@@ -188,37 +188,12 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
 
     @Override
     public void gotToAddSaleFragment(SalesViewModel salesViewModel) {
-        replaceFragment("Add Sale", AddSaleFragment.newInstance(salesViewModel), "add_sale");
+        replaceFragment(AddSaleFragment.newInstance(salesViewModel), "add_sale");
     }
     @Override
     public void gotToMonthlyFragment() {
         getSupportActionBar().setTitle("Month Sales");
-        replaceFragment("Month Sale Fragment", MonthSaleFragment.newInstance("",""), "month_sale_fragment");
+        replaceFragment(MonthSaleFragment.newInstance("",""), "month_sale_fragment");
     }
 
-    public void generateSalesHashMap() {
-        /*listOfCustomerSaleModel.clear();
-        saleModelHashMap.clear();
-        Set it = getDaySales().entrySet();
-        for (Object o : it) {
-            Map.Entry entry = (Map.Entry) o;
-            SalesViewModel salesViewModel = (SalesViewModel) entry.getValue();
-            if (saleModelHashMap.containsKey(salesViewModel.getCustomerID())) {
-                Objects.requireNonNull(saleModelHashMap.get(salesViewModel.getCustomerID())).salesViewModels.add(salesViewModel);
-            } else {
-                CustomerSaleModel customerSaleModel = new CustomerSaleModel();
-                customerSaleModel.salesViewModels.add(salesViewModel);
-                customerSaleModel.customer = getCustomers().get(salesViewModel.getCustomerID());
-                saleModelHashMap.put(salesViewModel.getCustomerID(), customerSaleModel);
-            }
-        }
-        Collection<CustomerSaleModel> demoValues = saleModelHashMap.values();
-        listOfCustomerSaleModel.addAll(demoValues);*/
-    }
-
-    @Override
-    public ArrayList<CustomerSaleModel> getSalesList() {
-        generateSalesHashMap();
-        return listOfCustomerSaleModel;
-    }
 }

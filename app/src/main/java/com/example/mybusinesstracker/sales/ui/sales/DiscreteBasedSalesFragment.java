@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,9 @@ public class DiscreteBasedSalesFragment extends BaseFragment implements View.OnC
         binder.setDiscreteSalesModel(mTotalSalesInfo);
         View view =  binder.getRoot();//inflater.inflate(R.layout.fragment_customer_based_sales, fragmet, false);
         ((TextView)view.findViewById(R.id.selected_date)).setText(mParam2);
+        LinearLayout header = view.findViewById(R.id.row_header);
+        ((TextView)header.findViewById(R.id.customer_name)).setText("Time");
+
         mDiscreteBaseSalesAdapter = new DiscreteBaseSalesAdapter(mTotalSalesInfo.getSalesModels(), this);
         binder.setDiscreteSalesAdapter(mDiscreteBaseSalesAdapter);
         view.findViewById(R.id.add_new).setOnClickListener(new View.OnClickListener() {

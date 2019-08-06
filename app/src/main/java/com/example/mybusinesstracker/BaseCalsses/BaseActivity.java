@@ -233,7 +233,7 @@ public class BaseActivity extends AppCompatActivity implements OnBaseAppListener
         return true;
     }
 
-    protected void replaceFragment(String fragment_header_name, BaseFragment baseFragment, String fragment_id) {
+    protected void replaceFragment(BaseFragment baseFragment, String fragment_id) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.container, baseFragment, fragment_id);

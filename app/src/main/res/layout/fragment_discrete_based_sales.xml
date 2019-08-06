@@ -50,7 +50,7 @@
                     android:paddingStart="4dp"
                     android:textStyle="bold|italic"
                     android:textColor="@android:color/white"
-                    android:text="27/04/2018"/>
+                    android:text="@={discreteSalesModel.headerSubText}"/>
                 <LinearLayout
                     android:layout_toLeftOf="@+id/header_right"
                     android:orientation="vertical"

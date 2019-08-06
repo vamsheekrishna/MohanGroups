@@ -16,7 +16,7 @@
                 android:id="@+id/customer_name"
                 android:layout_weight="2.1"
                 style="@style/sales_header_rows_txt"
-                android:text="@string/date"
+                android:text="@string/names"
                 />
             <TextView
                 android:id="@+id/total_blocks"

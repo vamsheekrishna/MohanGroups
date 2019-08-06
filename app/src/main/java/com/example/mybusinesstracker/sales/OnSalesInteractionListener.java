@@ -5,7 +5,6 @@ import com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel;
 import com.example.mybusinesstracker.sales.ui.sales.TotalSalesInfo;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -20,10 +19,9 @@ public interface OnSalesInteractionListener {
     void gotToAddSaleFragment(SalesViewModel salesViewModel);
     void gotToMonthlyFragment();
 
-    ArrayList<CustomerSaleModel> getSalesList();
     void getSalesListFromCloud(Calendar calendar);
     CustomerSaleModel getCustomerSales(String customerID);
     void goToCustomerBasedSalesFragment(String name, String date);
-    void goToDiscreteBasedSalesFragment(TotalSalesInfo totalSalesInfo);
-
+    void goToDiscreteBasedSalesFragment(TotalSalesInfo totalSalesInfo, String day_sales);
+    void setTitle(String name);
 }

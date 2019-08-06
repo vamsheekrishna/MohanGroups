@@ -60,7 +60,9 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
+        mListener.setTitle("Day Sales");
         FragmentGroupBasedSalesBinding binder = DataBindingUtil.inflate(inflater, R.layout.fragment_group_based_sales, container, false);
         getSalesGroupArray();
         binder.setGroupTotalSalesModel(mGroupBasedSalesModel.totalSalesInfo);
@@ -69,12 +71,6 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
         groupBasedSalesAdapter = new GroupSalesAdapter(mGroupBasedSalesModel.getNameSales(), this);
         binder.setTotalSales(groupBasedSalesAdapter);
 
-        /*if(isSingleSaleData) {
-            mDiscreteBaseSalesAdapter = new DiscreteBaseSalesAdapter(mGroupBasedSalesModel.totalSalesInfo.getSalesModels(), this);
-            //binder.setMyAdapter(mDiscreteBaseSalesAdapter);
-        } else {
-
-        }*/
         view.findViewById(R.id.add_new).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,10 +99,6 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
                     }
                     groupBasedSalesAdapter.setSalesViewModels(mGroupBasedSalesModel.getNameSales().values());
                     groupBasedSalesAdapter.notifyDataSetChanged();
-                    /*if(isSingleSaleData) {
-                        mDiscreteBaseSalesAdapter.notifyDataSetChanged();
-                    } else {
-                    }*/
                 }
 
             }
@@ -138,10 +130,6 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     @Override
     public void onClick(View v) {
         TotalSalesInfo dataModel = (TotalSalesInfo) v.getTag();
-        mListener.goToDiscreteBasedSalesFragment(dataModel);
-        //dataModel.getSalesModels();
-        /*SalesViewModel salesViewModel = (SalesViewModel) v.getTag();
-        Toast.makeText(getActivity(),"SalesViewModel: "+salesViewModel.getCustomerID(), Toast.LENGTH_SHORT).show();
-        mListener.gotToAddSaleFragment(salesViewModel);*/
+        mListener.goToDiscreteBasedSalesFragment(dataModel, "Day Sales");
     }
 }

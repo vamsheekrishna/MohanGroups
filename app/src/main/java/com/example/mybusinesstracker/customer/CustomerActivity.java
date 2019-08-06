@@ -104,13 +104,13 @@ public class CustomerActivity extends FactoryBaseActivity implements CustomerFra
 
     @Override
     public void goToCreateCustomer() {
-        replaceFragment("Create Customer", CreateCustomer.newInstance(null), "create_customer");
+        replaceFragment(CreateCustomer.newInstance(null), "create_customer");
     }
 
 
 
     @Override
     public void goToUpdateCustomer(Customer customer) {
-        replaceFragment("", CreateCustomer.newInstance(customer), "update_customer");
+        replaceFragment(CreateCustomer.newInstance(customer), "update_customer");
     }
 }
