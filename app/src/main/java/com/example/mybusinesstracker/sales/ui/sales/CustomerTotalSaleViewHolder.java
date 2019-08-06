@@ -6,18 +6,19 @@ import android.view.View;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mybusinesstracker.databinding.CustomerBaseSalesRowItemBinding;
+import com.example.mybusinesstracker.databinding.CustomerTotalSalesRowItemBinding;
 
-class CustomerBaseSaleViewHolder extends RecyclerView.ViewHolder {
+
+class CustomerTotalSaleViewHolder extends RecyclerView.ViewHolder {
     public final View view;
-    public CustomerBaseSalesRowItemBinding mItemView;
-    public CustomerBaseSaleViewHolder(CustomerBaseSalesRowItemBinding itemView) {
+    public CustomerTotalSalesRowItemBinding mItemView;
+    public CustomerTotalSaleViewHolder(CustomerTotalSalesRowItemBinding itemView) {
         super(itemView.getRoot());
         view = itemView.getRoot();
         mItemView = itemView;
     }
     public void bind(Object obj) {
-        mItemView.setVariable(BR.sale, obj);
+        mItemView.setVariable(BR.totalsale, obj);
         view.setTag(obj);
         //mItemView.setVariable(BR.sale, obj );
     }

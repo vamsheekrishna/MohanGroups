@@ -13,16 +13,15 @@ import com.example.mybusinesstracker.databinding.CustomerBaseSalesRowItemBinding
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CustomerBaseSalesAdapter extends RecyclerView.Adapter<CustomerBaseSaleViewHolder> {
-    ArrayList<SalesViewModel> mSalesViewModels;
+    private ArrayList<SalesViewModel> mSalesViewModels;
     private View.OnClickListener mOnItemClick;
-
     public CustomerBaseSalesAdapter(ArrayList<SalesViewModel> salesViewModels, View.OnClickListener onItemClick) {
         setmSalesViewModels(salesViewModels);
         mOnItemClick = onItemClick;
     }
-
     @NonNull
     @Override
     public CustomerBaseSaleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

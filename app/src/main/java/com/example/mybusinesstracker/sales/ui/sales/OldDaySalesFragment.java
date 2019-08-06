@@ -99,10 +99,10 @@ public class OldDaySalesFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void updateHeader() {
-        mTVTotalBlock.setText(String.valueOf(mTotalSalesInfo.totalBlock));
-        mTotalAmount.setText(String.valueOf(mTotalSalesInfo.totalAmount));
-        mTotalPaid.setText(String.valueOf(mTotalSalesInfo.totalPaid));
-        mTotalDue.setText(String.valueOf(mTotalSalesInfo.totalDue));
+        mTVTotalBlock.setText(String.valueOf(mTotalSalesInfo.getTotalBlock()));
+        mTotalAmount.setText(String.valueOf(mTotalSalesInfo.getTotalAmount()));
+        mTotalPaid.setText(String.valueOf(mTotalSalesInfo.getTotalPaid()));
+        mTotalDue.setText(String.valueOf(mTotalSalesInfo.getTotalDue()));
     }
 
     private ArrayList<CustomerSaleModel> getCustomerSaleModels() {
@@ -110,10 +110,10 @@ public class OldDaySalesFragment extends BaseFragment implements View.OnClickLis
         mTotalSalesInfo = new TotalSalesInfo();
         for (CustomerSaleModel customerSaleModel : temp) {
             for (SalesViewModel salesViewModel : customerSaleModel.getSalesViewModels()) {
-                mTotalSalesInfo.totalBlock += salesViewModel.getTotalBlocks();
-                mTotalSalesInfo.totalAmount += salesViewModel.getTotalAmount();
-                mTotalSalesInfo.totalPaid += salesViewModel.getPaidAmount();
-                mTotalSalesInfo.totalDue += salesViewModel.getDueAmount();
+                mTotalSalesInfo.setTotalBlock(salesViewModel.getTotalBlocks());
+                mTotalSalesInfo.setTotalAmount(salesViewModel.getTotalAmount());
+                mTotalSalesInfo.setTotalPaid(salesViewModel.getPaidAmount());
+                mTotalSalesInfo.setTotalDue(salesViewModel.getDueAmount());
             }
         }
         return temp;
@@ -162,6 +162,6 @@ public class OldDaySalesFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         TotalSalesInfo temp = (TotalSalesInfo) v.getTag();
-        mListener.goToCustomerBasedSalesFragment(temp.headerText, String.valueOf(mTVDate.getText()));
+        mListener.goToCustomerBasedSalesFragment(temp.getHeaderText(), String.valueOf(mTVDate.getText()));
     }
 }

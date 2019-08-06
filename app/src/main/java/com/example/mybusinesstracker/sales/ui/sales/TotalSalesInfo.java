@@ -2,15 +2,20 @@ package com.example.mybusinesstracker.sales.ui.sales;
 
 import androidx.databinding.BaseObservable;
 
+import com.example.mybusinesstracker.viewmodels.SalesViewModel;
+
+import java.util.ArrayList;
+
 public class TotalSalesInfo extends BaseObservable {
-    int totalDue;
-    int totalPaid;
-    int totalICEAmount;
-    int totalLabourCharges;
-    int totalAmount;
-    float totalBlock;
-    String totalBlocksString;
-    String headerText;
+    public int totalDue;
+    public int totalPaid;
+    public int totalICEAmount;
+    public int totalLabourCharges;
+    public int totalAmount;
+    public float totalBlock;
+    public String totalBlocksString = "";
+    public String headerText = "";
+    public ArrayList<SalesViewModel> salesModels = new ArrayList<>();
 
     public int getTotalDue() {
         return totalDue;
@@ -18,6 +23,7 @@ public class TotalSalesInfo extends BaseObservable {
 
     public void setTotalDue(int totalDue) {
         this.totalDue = totalDue;
+        notifyChange();
     }
 
     public int getTotalPaid() {
@@ -26,14 +32,16 @@ public class TotalSalesInfo extends BaseObservable {
 
     public void setTotalPaid(int totalPaid) {
         this.totalPaid = totalPaid;
+        notifyChange();
     }
 
-    public int getTotalICEAmount() {
+    int getTotalICEAmount() {
         return totalICEAmount;
     }
 
-    public void setTotalICEAmount(int totalICEAmount) {
+    void setTotalICEAmount(int totalICEAmount) {
         this.totalICEAmount = totalICEAmount;
+        notifyChange();
     }
 
     public int getTotalLabourCharges() {
@@ -42,6 +50,7 @@ public class TotalSalesInfo extends BaseObservable {
 
     public void setTotalLabourCharges(int totalLabourCharges) {
         this.totalLabourCharges = totalLabourCharges;
+        notifyChange();
     }
 
     public int getTotalAmount() {
@@ -50,6 +59,7 @@ public class TotalSalesInfo extends BaseObservable {
 
     public void setTotalAmount(int totalAmount) {
         this.totalAmount = totalAmount;
+        notifyChange();
     }
 
     public float getTotalBlock() {
@@ -58,14 +68,20 @@ public class TotalSalesInfo extends BaseObservable {
 
     public void setTotalBlock(float totalBlock) {
         this.totalBlock = totalBlock;
+        notifyChange();
     }
 
-    public String getTotalBlocksString() {
+    String getTotalBlocksString() {
         return totalBlocksString;
     }
 
-    public void setTotalBlocksString(String totalBlocksString) {
-        this.totalBlocksString = totalBlocksString;
+    void setTotalBlocksString(float totalBlocksString) {
+        if(getTotalBlocksString().length()>0) {
+            this.totalBlocksString =this.totalBlocksString +" + "+ totalBlocksString;
+        } else {
+            this.totalBlocksString = String.valueOf(totalBlocksString);
+        }
+        notifyChange();
     }
 
     public String getHeaderText() {
@@ -74,5 +90,21 @@ public class TotalSalesInfo extends BaseObservable {
 
     public void setHeaderText(String headerText) {
         this.headerText = headerText;
+    }
+
+    void addSale(SalesViewModel temp) {
+        salesModels.add(temp);
+        setHeaderText(temp.getCustomerID());
+        setTotalBlock(getTotalBlock()+temp.getTotalBlocks());
+        setTotalAmount(getTotalAmount()+temp.getTotalAmount());
+        setTotalICEAmount(getTotalICEAmount()+temp.getIceAmount());
+        setTotalLabourCharges(getTotalLabourCharges()+temp.getLabourCharges());
+        setTotalPaid(getTotalPaid()+temp.getPaidAmount());
+        setTotalDue(getTotalDue()+temp.getDueAmount());
+        setTotalBlocksString(temp.getTotalBlocks());
+    }
+
+    public ArrayList<SalesViewModel> getSalesModels() {
+        return salesModels;
     }
 }

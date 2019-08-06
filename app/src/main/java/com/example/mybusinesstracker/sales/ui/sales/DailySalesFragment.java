@@ -13,22 +13,31 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.mybusinesstracker.BaseCalsses.BaseFragment;
 import com.example.mybusinesstracker.R;
-import com.example.mybusinesstracker.databinding.FragmentCustomerBasedSalesBinding;
+import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
 import com.example.mybusinesstracker.databinding.FragmentDailyBasedSalesBinding;
 import com.example.mybusinesstracker.sales.OnSalesInteractionListener;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Map;
 
 public class DailySalesFragment extends BaseFragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private DailySaleModel mCustomerSaleModel;
+    private DailySaleModel mDailySaleModel = new DailySaleModel();;
     private String mParam2;
 
     private OnSalesInteractionListener mListener;
-
+    CustomerBaseSalesAdapter customerBaseSalesAdapter;
+    CustomerTotalSalesAdapter customerTotalSalesAdapter;
+    boolean isSingleSaleData = false;
     public DailySalesFragment() {
         // Required empty public constructor
     }
@@ -46,7 +55,7 @@ public class DailySalesFragment extends BaseFragment implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            //mCustomerSaleModel = (CustomerSaleModel) getArguments().getSerializable(ARG_PARAM1);
+            //mDailySaleModel = (CustomerSaleModel) getArguments().getSerializable(ARG_PARAM1);
             //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -56,12 +65,54 @@ public class DailySalesFragment extends BaseFragment implements View.OnClickList
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         FragmentDailyBasedSalesBinding binder = DataBindingUtil.inflate(inflater, R.layout.fragment_daily_based_sales, container, false);
-        binder.setCustomerinfo(mCustomerSaleModel);
+        getDailySales();
+        binder.setCustomerinfo(mDailySaleModel);
         View view =  binder.getRoot();//inflater.inflate(R.layout.fragment_customer_based_sales, fragmet, false);
         ((TextView)view.findViewById(R.id.selected_date)).setText(mParam2);
-        CustomerBaseSalesAdapter customerBaseSalesAdapter = new CustomerBaseSalesAdapter(new ArrayList<SalesViewModel>(), this);
-        binder.setMyAdapter(customerBaseSalesAdapter);
+        if(isSingleSaleData) {
+            customerBaseSalesAdapter = new CustomerBaseSalesAdapter(mDailySaleModel.totalSalesInfo.getSalesModels(), this);
+            //binder.setMyAdapter(customerBaseSalesAdapter);
+        } else {
+            customerTotalSalesAdapter = new CustomerTotalSalesAdapter(mDailySaleModel.getNameSales(), this);
+            binder.setTotalSales(customerTotalSalesAdapter);
+        }
+        view.findViewById(R.id.add_new).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.gotToAddSaleFragment(null);
+            }
+        });
         return view;
+    }
+
+    private void getDailySales() {
+        mDailySaleModel.clearAllData();
+        mDailySaleModel.setCalendar(Calendar.getInstance().getTimeInMillis());
+        SalesTable salesTable = new SalesTable();
+        salesTable.getDaySales(mDailySaleModel.getCalendar(), "Frick", new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(null != task.getResult()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        Map<String, Object> data = document.getData();
+                        assert data != null;
+                        mDailySaleModel.addSale(new SalesViewModel(data));
+                    }
+                    if(isSingleSaleData) {
+                        customerBaseSalesAdapter.notifyDataSetChanged();
+                    } else {
+                        customerTotalSalesAdapter.setSalesViewModels(mDailySaleModel.getNameSales().values());
+                        customerTotalSalesAdapter.notifyDataSetChanged();
+                    }
+                }
+
+            }
+        }, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
     }
 
     @Override

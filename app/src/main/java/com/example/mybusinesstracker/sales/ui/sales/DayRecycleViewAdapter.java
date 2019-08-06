@@ -39,14 +39,14 @@ public class DayRecycleViewAdapter extends RecyclerView.Adapter<DaySaleViewHolde
     public void onBindViewHolder(@NonNull DaySaleViewHolder holder, int position) {
         TotalSalesInfo temp = listOfCustomerSaleModel.get(position).getCustomerSale();
         holder.rowInfo.setTag(temp);
-        holder.mCustomerName.setText(String.valueOf(temp.headerText));
-        holder.mTotalBlocksString.setText(String.valueOf(temp.totalBlocksString));
-        holder.mTotalIceBlocks.setText(String.valueOf(temp.totalBlock));
-        holder.mTotalIceAmount.setText(String.valueOf(temp.totalICEAmount));
-        holder.mTotalLabourCharges.setText(String.valueOf(temp.totalLabourCharges));
-        holder.mTotalAmount.setText(String.valueOf(temp.totalAmount));
-        holder.mTotalPaid.setText(String.valueOf(temp.totalPaid));
-        holder.mTotalDue.setText(String.valueOf(temp.totalDue));
+        holder.mCustomerName.setText(String.valueOf(temp.getHeaderText()));
+        holder.mTotalBlocksString.setText(String.valueOf(temp.getTotalBlocksString()));
+        holder.mTotalIceBlocks.setText(String.valueOf(temp.getTotalBlock()));
+        holder.mTotalIceAmount.setText(String.valueOf(temp.getTotalICEAmount()));
+        holder.mTotalLabourCharges.setText(String.valueOf(temp.getTotalLabourCharges()));
+        holder.mTotalAmount.setText(String.valueOf(temp.getTotalAmount()));
+        holder.mTotalPaid.setText(String.valueOf(temp.getTotalPaid()));
+        holder.mTotalDue.setText(String.valueOf(temp.getTotalDue()));
 
     }
 
