@@ -15,18 +15,18 @@ import java.util.Map;
 import static java.util.Objects.requireNonNull;
 
 public class SalesViewModel extends BaseObservable implements Serializable, OnCloudFireStoreInteraction {
-    public static final String DATE = "date";
-    public static final String CABIN_ID = "cabinID";
-    public static final String CUSTOMER_ID = "customerID";
-    public static final String SALES_TYPE = "salesType";
-    public static final String TOTAL_BLOCKS = "totalBlocks";
-    public static final String ICE_AMOUNT = "iceAmount";
-    public static final String LABOUR_CHARGES = "labourCharges";
-    public static final String OTHER_AMOUNT = "otherAmount";
-    public static final String TOTAL_AMOUNT = "totalAmount";
-    public static final String PAID_AMOUNT = "paidAmount";
-    public static final String DUE_AMOUNT = "dueAmount";
-    public static final String NOTE = "note";
+    private static final String DATE = "date";
+    private static final String CABIN_ID = "cabinID";
+    private static final String CUSTOMER_ID = "customerID";
+    private static final String SALES_TYPE = "salesType";
+    private static final String TOTAL_BLOCKS = "totalBlocks";
+    private static final String ICE_AMOUNT = "iceAmount";
+    private static final String LABOUR_CHARGES = "labourCharges";
+    private static final String OTHER_AMOUNT = "otherAmount";
+    private static final String TOTAL_AMOUNT = "totalAmount";
+    private static final String PAID_AMOUNT = "paidAmount";
+    private static final String DUE_AMOUNT = "dueAmount";
+    private static final String NOTE = "note";
     private int ID;
     private Long date ;
     private String cabinID = null;
@@ -42,10 +42,9 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     private String note = null;
     private String dateString;
     private Customer selectedCustomer;
-    private ArrayList<Integer> blockIDs = new ArrayList<>();
 
     public SalesViewModel( Map<String, Object> hashMap) {
-        setDate(Long.valueOf((String) requireNonNull(hashMap.get(DATE))), "yyyy-MM-dd 'T'HH:mm");// ;
+        setDate(Long.valueOf((String) requireNonNull(hashMap.get(DATE))), "dd-MM-YYYY HH:mm");
         cabinID = (String) hashMap.get(CABIN_ID);
         customerID = (String) hashMap.get(CUSTOMER_ID);
         salesType = (String) hashMap.get(SALES_TYPE);

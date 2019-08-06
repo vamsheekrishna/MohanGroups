@@ -40,7 +40,7 @@
                     android:id="@+id/customer_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{totalsale.headerText}"
+                    android:text="@{totalsale.name}"
                     android:textColor="@android:color/black" />
 
                 <TextView

@@ -57,7 +57,7 @@ public class CustomerBasedSalesFragment extends BaseFragment implements View.OnC
         binder.setCustomerinfo(mCustomerSaleModel);
         View view =  binder.getRoot();//inflater.inflate(R.layout.fragment_customer_based_sales, fragmet, false);
         ((TextView)view.findViewById(R.id.selected_date)).setText(mParam2);
-        CustomerBaseSalesAdapter customerBaseSalesAdapter = new CustomerBaseSalesAdapter(mCustomerSaleModel.getSalesViewModels(), this);
+        DiscreteBaseSalesAdapter customerBaseSalesAdapter = new DiscreteBaseSalesAdapter(mCustomerSaleModel.getSalesViewModels(), this);
         binder.setMyAdapter(customerBaseSalesAdapter);
         return view;
     }

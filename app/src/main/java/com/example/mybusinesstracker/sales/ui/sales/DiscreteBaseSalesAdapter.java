@@ -13,13 +13,12 @@ import com.example.mybusinesstracker.databinding.CustomerBaseSalesRowItemBinding
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class CustomerBaseSalesAdapter extends RecyclerView.Adapter<CustomerBaseSaleViewHolder> {
+public class DiscreteBaseSalesAdapter extends RecyclerView.Adapter<CustomerBaseSaleViewHolder> {
     private ArrayList<SalesViewModel> mSalesViewModels;
     private View.OnClickListener mOnItemClick;
-    public CustomerBaseSalesAdapter(ArrayList<SalesViewModel> salesViewModels, View.OnClickListener onItemClick) {
-        setmSalesViewModels(salesViewModels);
+    public DiscreteBaseSalesAdapter(ArrayList<SalesViewModel> salesViewModels, View.OnClickListener onItemClick) {
+        setSalesViewModels(salesViewModels);
         mOnItemClick = onItemClick;
     }
     @NonNull
@@ -43,11 +42,11 @@ public class CustomerBaseSalesAdapter extends RecyclerView.Adapter<CustomerBaseS
         return mSalesViewModels.size();
     }
 
-    public ArrayList<SalesViewModel> getmSalesViewModels() {
+    public ArrayList<SalesViewModel> getSalesViewModels() {
         return mSalesViewModels;
     }
 
-    public void setmSalesViewModels(ArrayList<SalesViewModel> mSalesViewModels) {
-        this.mSalesViewModels = mSalesViewModels;
+    public void setSalesViewModels(ArrayList<SalesViewModel> salesViewModels) {
+        this.mSalesViewModels = salesViewModels;
     }
 }

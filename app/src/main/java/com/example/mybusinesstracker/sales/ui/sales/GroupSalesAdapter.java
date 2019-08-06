@@ -9,14 +9,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybusinesstracker.R;
-import com.example.mybusinesstracker.databinding.CustomerBaseSalesRowItemBinding;
 import com.example.mybusinesstracker.databinding.CustomerTotalSalesRowItemBinding;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class GroupSalesAdapter extends RecyclerView.Adapter<CustomerTotalSaleViewHolder> {
+public class GroupSalesAdapter extends RecyclerView.Adapter<GroupBasedSalesViewHolder> {
     private ArrayList<TotalSalesInfo> mSalesViewModels;
     private View.OnClickListener mOnItemClick;
     public GroupSalesAdapter(HashMap<String, TotalSalesInfo> salesViewModels, View.OnClickListener onItemClick) {
@@ -25,16 +24,16 @@ public class GroupSalesAdapter extends RecyclerView.Adapter<CustomerTotalSaleVie
     }
     @NonNull
     @Override
-    public CustomerTotalSaleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GroupBasedSalesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
           CustomerTotalSalesRowItemBinding binding = DataBindingUtil.inflate( LayoutInflater.from(parent.getContext()),
                 R.layout.customer_total_sales_row_item, parent, false);
-        CustomerTotalSaleViewHolder customerTotalSaleViewHolder = new CustomerTotalSaleViewHolder(binding);
+        GroupBasedSalesViewHolder customerTotalSaleViewHolder = new GroupBasedSalesViewHolder(binding);
         customerTotalSaleViewHolder.view.setOnClickListener(mOnItemClick);
         return customerTotalSaleViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomerTotalSaleViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GroupBasedSalesViewHolder holder, int position) {
         TotalSalesInfo dataModel = mSalesViewModels.get(position);
         holder.view.setTag(dataModel);
         holder.bind(dataModel);

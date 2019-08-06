@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mybusinesstracker.databinding.CustomerTotalSalesRowItemBinding;
 
 
-class CustomerTotalSaleViewHolder extends RecyclerView.ViewHolder {
+class GroupBasedSalesViewHolder extends RecyclerView.ViewHolder {
     public final View view;
     public CustomerTotalSalesRowItemBinding mItemView;
-    public CustomerTotalSaleViewHolder(CustomerTotalSalesRowItemBinding itemView) {
+    public GroupBasedSalesViewHolder(CustomerTotalSalesRowItemBinding itemView) {
         super(itemView.getRoot());
         view = itemView.getRoot();
         mItemView = itemView;

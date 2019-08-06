@@ -33,9 +33,8 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     private String mParam2;
 
     private OnSalesInteractionListener mListener;
-    CustomerBaseSalesAdapter customerBaseSalesAdapter;
     private GroupSalesAdapter groupBasedSalesAdapter;
-    boolean isSingleSaleData = false;
+    //boolean isSingleSaleData = false;
     public GroupBasedSalesFragment() {
         // Required empty public constructor
     }
@@ -64,16 +63,18 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
         // Inflate the layout for this fragment
         FragmentGroupBasedSalesBinding binder = DataBindingUtil.inflate(inflater, R.layout.fragment_group_based_sales, container, false);
         getSalesGroupArray();
-        binder.setCustomerinfo(mGroupBasedSalesModel);
+        binder.setGroupTotalSalesModel(mGroupBasedSalesModel.totalSalesInfo);
         View view =  binder.getRoot();//inflater.inflate(R.layout.fragment_customer_based_sales, fragmet, false);
         ((TextView)view.findViewById(R.id.selected_date)).setText(mParam2);
-        if(isSingleSaleData) {
-            customerBaseSalesAdapter = new CustomerBaseSalesAdapter(mGroupBasedSalesModel.totalSalesInfo.getSalesModels(), this);
-            //binder.setMyAdapter(customerBaseSalesAdapter);
+        groupBasedSalesAdapter = new GroupSalesAdapter(mGroupBasedSalesModel.getNameSales(), this);
+        binder.setTotalSales(groupBasedSalesAdapter);
+
+        /*if(isSingleSaleData) {
+            mDiscreteBaseSalesAdapter = new DiscreteBaseSalesAdapter(mGroupBasedSalesModel.totalSalesInfo.getSalesModels(), this);
+            //binder.setMyAdapter(mDiscreteBaseSalesAdapter);
         } else {
-            groupBasedSalesAdapter = new GroupSalesAdapter(mGroupBasedSalesModel.getNameSales(), this);
-            binder.setTotalSales(groupBasedSalesAdapter);
-        }
+
+        }*/
         view.findViewById(R.id.add_new).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +87,8 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     private void getSalesGroupArray() {
         mGroupBasedSalesModel.clearAllData();
         mGroupBasedSalesModel.setCalendar(Calendar.getInstance().getTimeInMillis());
+        mGroupBasedSalesModel.totalSalesInfo.setHeaderSubText("27/08/2019");
+        mGroupBasedSalesModel.totalSalesInfo.setHeaderText("Frick");
         SalesTable salesTable = new SalesTable();
         salesTable.getDaySales(mGroupBasedSalesModel.getCalendar(), "Frick", new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -94,14 +97,16 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
                     for (DocumentSnapshot document : task.getResult()) {
                         Map<String, Object> data = document.getData();
                         assert data != null;
-                        mGroupBasedSalesModel.addSale(new SalesViewModel(data));
+                        SalesViewModel salesViewModel = new SalesViewModel(data);
+                        mGroupBasedSalesModel.addSale(salesViewModel,"Frick", "27/08/2019");
+                        mGroupBasedSalesModel.totalSalesInfo.setName(salesViewModel.getCustomerID());
                     }
-                    if(isSingleSaleData) {
-                        customerBaseSalesAdapter.notifyDataSetChanged();
+                    groupBasedSalesAdapter.setSalesViewModels(mGroupBasedSalesModel.getNameSales().values());
+                    groupBasedSalesAdapter.notifyDataSetChanged();
+                    /*if(isSingleSaleData) {
+                        mDiscreteBaseSalesAdapter.notifyDataSetChanged();
                     } else {
-                        groupBasedSalesAdapter.setSalesViewModels(mGroupBasedSalesModel.getNameSales().values());
-                        groupBasedSalesAdapter.notifyDataSetChanged();
-                    }
+                    }*/
                 }
 
             }

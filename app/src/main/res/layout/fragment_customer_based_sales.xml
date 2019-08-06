@@ -5,7 +5,7 @@
     <data>
         <variable
             name="myAdapter"
-            type="com.example.mybusinesstracker.sales.ui.sales.CustomerBaseSalesAdapter" />
+            type="com.example.mybusinesstracker.sales.ui.sales.DiscreteBaseSalesAdapter" />
         <variable
             name="customerinfo"
             type="com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel" />

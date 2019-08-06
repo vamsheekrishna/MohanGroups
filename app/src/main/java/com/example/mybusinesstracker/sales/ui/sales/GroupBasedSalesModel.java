@@ -11,7 +11,6 @@ public class GroupBasedSalesModel {
     private Calendar calendar = Calendar.getInstance();
     public TotalSalesInfo totalSalesInfo = new TotalSalesInfo();
     private ArrayList<SalesViewModel> allSales = new ArrayList<>();
-    //TotalSalesInfo byDateSales = new TotalSalesInfo();
     private HashMap<String, TotalSalesInfo> byNameSales = new HashMap<>();
 
 
@@ -20,11 +19,14 @@ public class GroupBasedSalesModel {
         byNameSales.clear();
         totalSalesInfo = new TotalSalesInfo();
     }
-    void addSale(SalesViewModel salesViewModel) {
+    void addSale(SalesViewModel salesViewModel,String header, String subHeader) {
         allSales.add(salesViewModel);
         totalSalesInfo.addSale(salesViewModel);
         if(!byNameSales.containsKey(salesViewModel.getCustomerID())) {
             TotalSalesInfo totalSalesInfo =  new TotalSalesInfo();
+            totalSalesInfo.setHeaderText(header);
+            totalSalesInfo.setHeaderSubText(subHeader);
+            totalSalesInfo.setName(salesViewModel.getCustomerID());
             totalSalesInfo.addSale(salesViewModel);
             //ArrayList<Integer> saleIDs = new ArrayList<>();
             //saleIDs.add(temp);
