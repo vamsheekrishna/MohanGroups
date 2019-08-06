@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class CustomerTotalSalesAdapter extends RecyclerView.Adapter<CustomerTotalSaleViewHolder> {
+public class GroupSalesAdapter extends RecyclerView.Adapter<CustomerTotalSaleViewHolder> {
     private ArrayList<TotalSalesInfo> mSalesViewModels;
     private View.OnClickListener mOnItemClick;
-    public CustomerTotalSalesAdapter(HashMap<String, TotalSalesInfo> salesViewModels, View.OnClickListener onItemClick) {
+    public GroupSalesAdapter(HashMap<String, TotalSalesInfo> salesViewModels, View.OnClickListener onItemClick) {
         setSalesViewModels(salesViewModels.values());
         mOnItemClick = onItemClick;
     }

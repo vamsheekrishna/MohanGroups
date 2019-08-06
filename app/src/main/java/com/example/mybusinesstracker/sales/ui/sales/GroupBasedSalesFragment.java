@@ -30,12 +30,12 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private DailySaleModel mDailySaleModel = new DailySaleModel();;
+    private DailySaleModel mDailySaleModel = new DailySaleModel();
     private String mParam2;
 
     private OnSalesInteractionListener mListener;
     CustomerBaseSalesAdapter customerBaseSalesAdapter;
-    CustomerTotalSalesAdapter customerTotalSalesAdapter;
+    private GroupSalesAdapter groupBasedSalesAdapter;
     boolean isSingleSaleData = false;
     public GroupBasedSalesFragment() {
         // Required empty public constructor
@@ -72,8 +72,8 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
             customerBaseSalesAdapter = new CustomerBaseSalesAdapter(mDailySaleModel.totalSalesInfo.getSalesModels(), this);
             //binder.setMyAdapter(customerBaseSalesAdapter);
         } else {
-            customerTotalSalesAdapter = new CustomerTotalSalesAdapter(mDailySaleModel.getNameSales(), this);
-            binder.setTotalSales(customerTotalSalesAdapter);
+            groupBasedSalesAdapter = new GroupSalesAdapter(mDailySaleModel.getNameSales(), this);
+            binder.setTotalSales(groupBasedSalesAdapter);
         }
         view.findViewById(R.id.add_new).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,8 +100,8 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
                     if(isSingleSaleData) {
                         customerBaseSalesAdapter.notifyDataSetChanged();
                     } else {
-                        customerTotalSalesAdapter.setSalesViewModels(mDailySaleModel.getNameSales().values());
-                        customerTotalSalesAdapter.notifyDataSetChanged();
+                        groupBasedSalesAdapter.setSalesViewModels(mDailySaleModel.getNameSales().values());
+                        groupBasedSalesAdapter.notifyDataSetChanged();
                     }
                 }
 

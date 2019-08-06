@@ -8,7 +8,7 @@
             type="com.example.mybusinesstracker.sales.ui.sales.CustomerBaseSalesAdapter" />-->
         <variable
             name="totalSales"
-            type="com.example.mybusinesstracker.sales.ui.sales.CustomerTotalSalesAdapter" />
+            type="com.example.mybusinesstracker.sales.ui.sales.GroupSalesAdapter" />
         <variable
             name="customerinfo"
             type="com.example.mybusinesstracker.sales.ui.sales.DailySaleModel" />
@@ -16,7 +16,8 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".sales.ui.sales.CustomerBasedSalesFragment">
+    tools:context=".sales.ui.sales.CustomerBasedSalesFragment"
+    android:background="@drawable/backgroundwhite">
     <LinearLayout
         android:id="@+id/header"
         android:layout_alignParentTop="true"
