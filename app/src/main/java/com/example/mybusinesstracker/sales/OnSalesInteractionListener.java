@@ -2,6 +2,7 @@ package com.example.mybusinesstracker.sales;
 
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
 import com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel;
+import com.example.mybusinesstracker.sales.ui.sales.TotalSalesInfo;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 
 import java.util.ArrayList;
@@ -23,5 +24,6 @@ public interface OnSalesInteractionListener {
     void getSalesListFromCloud(Calendar calendar);
     CustomerSaleModel getCustomerSales(String customerID);
     void goToCustomerBasedSalesFragment(String name, String date);
+    void goToDiscreteBasedSalesFragment(TotalSalesInfo totalSalesInfo);
 
 }

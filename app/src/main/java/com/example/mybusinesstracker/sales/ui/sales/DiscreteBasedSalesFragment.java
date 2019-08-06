@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -13,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import com.example.mybusinesstracker.BaseCalsses.BaseFragment;
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
+import com.example.mybusinesstracker.databinding.FragmentDiscreteBasedSalesBinding;
 import com.example.mybusinesstracker.databinding.FragmentGroupBasedSalesBinding;
 import com.example.mybusinesstracker.sales.OnSalesInteractionListener;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
@@ -25,27 +27,26 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Calendar;
 import java.util.Map;
 
-public class GroupBasedSalesFragment extends BaseFragment implements View.OnClickListener {
+public class DiscreteBasedSalesFragment extends BaseFragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private GroupBasedSalesModel mGroupBasedSalesModel = new GroupBasedSalesModel();
+    private TotalSalesInfo mTotalSalesInfo = new TotalSalesInfo();
     private String mParam2;
 
     private OnSalesInteractionListener mListener;
     CustomerBaseSalesAdapter customerBaseSalesAdapter;
     private GroupSalesAdapter groupBasedSalesAdapter;
-    boolean isSingleSaleData = false;
-    public GroupBasedSalesFragment() {
+    boolean isSingleSaleData = true;
+    public DiscreteBasedSalesFragment() {
         // Required empty public constructor
     }
 
-    public static GroupBasedSalesFragment newInstance() {
-        GroupBasedSalesFragment fragment = new GroupBasedSalesFragment();
-        /*Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);*/
+    public static DiscreteBasedSalesFragment newInstance(TotalSalesInfo totalSalesInfo) {
+        DiscreteBasedSalesFragment fragment = new DiscreteBasedSalesFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_PARAM1, totalSalesInfo);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -53,7 +54,7 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            //mGroupBasedSalesModel = (CustomerSaleModel) getArguments().getSerializable(ARG_PARAM1);
+            mTotalSalesInfo = (TotalSalesInfo) getArguments().getSerializable(ARG_PARAM1);
             //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -62,18 +63,13 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        FragmentGroupBasedSalesBinding binder = DataBindingUtil.inflate(inflater, R.layout.fragment_group_based_sales, container, false);
-        getSalesGroupArray();
-        binder.setCustomerinfo(mGroupBasedSalesModel);
+        FragmentDiscreteBasedSalesBinding binder = DataBindingUtil.inflate(inflater, R.layout.fragment_discrete_based_sales, container, false);
+        //getSalesGroupArray();
+        binder.setDiscreteSalesModel(mTotalSalesInfo);
         View view =  binder.getRoot();//inflater.inflate(R.layout.fragment_customer_based_sales, fragmet, false);
         ((TextView)view.findViewById(R.id.selected_date)).setText(mParam2);
-        if(isSingleSaleData) {
-            customerBaseSalesAdapter = new CustomerBaseSalesAdapter(mGroupBasedSalesModel.totalSalesInfo.getSalesModels(), this);
-            //binder.setMyAdapter(customerBaseSalesAdapter);
-        } else {
-            groupBasedSalesAdapter = new GroupSalesAdapter(mGroupBasedSalesModel.getNameSales(), this);
-            binder.setTotalSales(groupBasedSalesAdapter);
-        }
+        customerBaseSalesAdapter = new CustomerBaseSalesAdapter(mTotalSalesInfo.getSalesModels(), this);
+        binder.setDiscreteSalesAdapter(customerBaseSalesAdapter);
         view.findViewById(R.id.add_new).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +79,7 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
         return view;
     }
 
-    private void getSalesGroupArray() {
+    /*private void getSalesGroupArray() {
         mGroupBasedSalesModel.clearAllData();
         mGroupBasedSalesModel.setCalendar(Calendar.getInstance().getTimeInMillis());
         SalesTable salesTable = new SalesTable();
@@ -111,7 +107,7 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
 
             }
         });
-    }
+    }*/
 
     @Override
     public void onAttach(Context context) {
@@ -132,11 +128,8 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        TotalSalesInfo dataModel = (TotalSalesInfo) v.getTag();
-        mListener.goToDiscreteBasedSalesFragment(dataModel);
-        //dataModel.getSalesModels();
-        /*SalesViewModel salesViewModel = (SalesViewModel) v.getTag();
+        SalesViewModel salesViewModel = (SalesViewModel) v.getTag();
         Toast.makeText(getActivity(),"SalesViewModel: "+salesViewModel.getCustomerID(), Toast.LENGTH_SHORT).show();
-        mListener.gotToAddSaleFragment(salesViewModel);*/
+        mListener.gotToAddSaleFragment(salesViewModel);
     }
 }

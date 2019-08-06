@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class DailySaleModel {
+public class GroupBasedSalesModel {
     private Calendar calendar = Calendar.getInstance();
     public TotalSalesInfo totalSalesInfo = new TotalSalesInfo();
     private ArrayList<SalesViewModel> allSales = new ArrayList<>();

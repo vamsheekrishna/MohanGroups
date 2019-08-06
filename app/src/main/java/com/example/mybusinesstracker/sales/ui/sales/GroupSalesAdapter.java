@@ -36,6 +36,7 @@ public class GroupSalesAdapter extends RecyclerView.Adapter<CustomerTotalSaleVie
     @Override
     public void onBindViewHolder(@NonNull CustomerTotalSaleViewHolder holder, int position) {
         TotalSalesInfo dataModel = mSalesViewModels.get(position);
+        holder.view.setTag(dataModel);
         holder.bind(dataModel);
     }
 

@@ -16,8 +16,10 @@ import com.example.mybusinesstracker.factory.FactoryBaseActivity;
 import com.example.mybusinesstracker.sales.ui.sales.AddSaleFragment;
 import com.example.mybusinesstracker.sales.ui.sales.CustomerBasedSalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel;
+import com.example.mybusinesstracker.sales.ui.sales.DiscreteBasedSalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.GroupBasedSalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.MonthSaleFragment;
+import com.example.mybusinesstracker.sales.ui.sales.TotalSalesInfo;
 import com.example.mybusinesstracker.utilities.Utils;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -140,6 +142,13 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
         getSupportActionBar().setTitle(name+" Sales");
         replaceFragment("Month Sale Fragment", CustomerBasedSalesFragment.newInstance(customerSaleModel,date), "customer_based_sales_fragment");
         //Toast.makeText(getActivity(),"TotalSalesInfo: "+temp.name, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void goToDiscreteBasedSalesFragment(TotalSalesInfo totalSalesInfo) {
+        getSupportActionBar().setTitle("Header"+" Sales");
+        replaceFragment("Month Sale Fragment", DiscreteBasedSalesFragment.newInstance(totalSalesInfo), "discrete_based_sales_fragment");
+
     }
 
     protected void addCustomer(Customer customer) {

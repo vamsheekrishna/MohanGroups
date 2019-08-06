@@ -4,9 +4,10 @@ import androidx.databinding.BaseObservable;
 
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TotalSalesInfo extends BaseObservable {
+public class TotalSalesInfo extends BaseObservable implements Serializable {
     public int totalDue;
     public int totalPaid;
     public int totalICEAmount;
@@ -15,6 +16,7 @@ public class TotalSalesInfo extends BaseObservable {
     public float totalBlock;
     public String totalBlocksString = "";
     public String headerText = "";
+    public String headerSubText = "";
     public ArrayList<SalesViewModel> salesModels = new ArrayList<>();
 
     public int getTotalDue() {
@@ -106,5 +108,13 @@ public class TotalSalesInfo extends BaseObservable {
 
     public ArrayList<SalesViewModel> getSalesModels() {
         return salesModels;
+    }
+
+    public String getHeaderSubText() {
+        return headerSubText;
+    }
+
+    public void setHeaderSubText(String headerSubText) {
+        this.headerSubText = headerSubText;
     }
 }
