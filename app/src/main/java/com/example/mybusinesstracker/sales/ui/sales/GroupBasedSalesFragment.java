@@ -14,7 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import com.example.mybusinesstracker.BaseCalsses.BaseFragment;
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
-import com.example.mybusinesstracker.databinding.FragmentDailyBasedSalesBinding;
+import com.example.mybusinesstracker.databinding.FragmentGroupBasedSalesBinding;
 import com.example.mybusinesstracker.sales.OnSalesInteractionListener;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -63,7 +63,7 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        FragmentDailyBasedSalesBinding binder = DataBindingUtil.inflate(inflater, R.layout.fragment_daily_based_sales, container, false);
+        FragmentGroupBasedSalesBinding binder = DataBindingUtil.inflate(inflater, R.layout.fragment_group_based_sales, container, false);
         getDailySales();
         binder.setCustomerinfo(mDailySaleModel);
         View view =  binder.getRoot();//inflater.inflate(R.layout.fragment_customer_based_sales, fragmet, false);
