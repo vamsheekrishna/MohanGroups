@@ -60,6 +60,14 @@ public class SalesTable extends DBInstance {
                 .addOnCompleteListener(onCompleteListener)
                 .addOnFailureListener(onFailure);
     }
+    public void getDaySales(Calendar calendar, OnCompleteListener<DocumentSnapshot> onCompleteListener, OnFailureListener onFailure) {
+        getCollection().document(BASE_DIRECTORY_DETAILS)
+                .collection(BASE_DIRECTORY_SALES).document(String.valueOf(calendar.get(Calendar.YEAR)))
+                .collection(String.valueOf(calendar.get(Calendar.MONTH))).document(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)))
+                .get()
+                .addOnCompleteListener(onCompleteListener)
+                .addOnFailureListener(onFailure);
+    }
     public void getMonthSales(Calendar calendar, OnCompleteListener<QuerySnapshot> onCompleteListener, OnFailureListener onFailure) {
         getCollection().document(BASE_DIRECTORY_DETAILS)
                 .collection(BASE_DIRECTORY_SALES).document(String.valueOf(calendar.get(Calendar.YEAR)))

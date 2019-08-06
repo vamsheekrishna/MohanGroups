@@ -18,6 +18,8 @@ import com.example.mybusinesstracker.databinding.FragmentDiscreteBasedSalesBindi
 import com.example.mybusinesstracker.sales.OnSalesInteractionListener;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 
+import java.util.ArrayList;
+
 public class DiscreteBasedSalesFragment extends BaseFragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -26,7 +28,6 @@ public class DiscreteBasedSalesFragment extends BaseFragment implements View.OnC
     private String mParam2;
 
     private OnSalesInteractionListener mListener;
-    private DiscreteBaseSalesAdapter mDiscreteBaseSalesAdapter;
 
     public DiscreteBasedSalesFragment() {
         // Required empty public constructor
@@ -61,9 +62,13 @@ public class DiscreteBasedSalesFragment extends BaseFragment implements View.OnC
         View view =  binder.getRoot();//inflater.inflate(R.layout.fragment_customer_based_sales, fragmet, false);
         ((TextView)view.findViewById(R.id.selected_date)).setText(mParam2);
         LinearLayout header = view.findViewById(R.id.row_header);
-        ((TextView)header.findViewById(R.id.customer_name)).setText("Time");
-
-        mDiscreteBaseSalesAdapter = new DiscreteBaseSalesAdapter(mTotalSalesInfo.getSalesModels(), this);
+        ((TextView)header.findViewById(R.id.customer_name)).setText(getString(R.string.time));
+        ArrayList<SalesViewModel> temp = mTotalSalesInfo.getSalesModels();//mCustomerSaleModel.getSalesViewModels();
+        for (SalesViewModel salesViewModel :
+                temp) {
+            salesViewModel.setDate(salesViewModel.getDate(), "HH:mm");
+        }
+        DiscreteBaseSalesAdapter mDiscreteBaseSalesAdapter = new DiscreteBaseSalesAdapter(temp, this);
         binder.setDiscreteSalesAdapter(mDiscreteBaseSalesAdapter);
         view.findViewById(R.id.add_new).setOnClickListener(new View.OnClickListener() {
             @Override

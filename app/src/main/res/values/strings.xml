@@ -2,38 +2,16 @@
     <string name="app_name">My Business Tracker</string>
     <string name="action_sales_month">Monthly</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="menu_current_day">Current Day</string>
-    <string name="menu_daily">Daily</string>
-    <string name="menu_monthly">Monthly</string>
-    <string name="menu_yearly">Yearly</string>
-    <string name="action_sales_add_sale">Add record</string>
-    <string name="title_activity_cabin">CabinActivity</string>
     <string name="c_name">Cabin Name:</string>
 
     <string name="c_total_blocks">Total Blocks:</string>
-    <string name="c_sales_blocks">Selling Blocks:</string>
-    <string name="c_out_side_store">Out side store:</string>
-    <string name="c_salt_blocks">Salt Blocks:</string>
 
-    <string name="total_columns">Total Columns:</string>
-    <string name="total_rows">Total Rows:</string>
-    <string name="c_name_hint">Enter Cabin Name</string>
-    <string name="c_total_blocks_hint">Enter Total Blocks</string>
-    <string name="c_total_columns_hint">Enter Total Columns</string>
-    <string name="c_total_rows_hint">Enter Total Rows</string>
     <string name="cus_name">Customer Name:</string>
     <string name="cus_name_hint">Enter Name</string>
     <string name="cus_ph_no">PhoneNumber:</string>
     <string name="cus_ph_no_hint">Enter PhoneNumber</string>
     <string name="cus_email">EmailID:</string>
     <string name="cus_email_hint">Enter EmailID</string>
-    <string name="cus_amount">Amount:</string>
-    <string name="cus_amount_hint">Enter Amount</string>
     <string name="cus_labour_char">Labour Charge:</string>
     <string name="cus_other_char">Other Charge:</string>
     <string name="cus_lab_charge_hint">Enter Labour Charge</string>
@@ -43,17 +21,13 @@
     <string name="cus_delete_btn">DELETE</string>
     <string name="cus_address_txt">Address:</string>
     <string name="cus_address_hint">Enter Address</string>
-    <string name="cabin_create_btn">Create Cabin</string>
     <string name="cus_date">Date:</string>
-    <string name="cus_type">Entry Type:</string>
     <string name="c_total_amount">Total Amount:</string>
     <string name="ice_amount">Ice Amount:</string>
     <string name="cus_paid">Paid Amount:</string>
     <string name="cus_due">Due Amount:</string>
     <string name="sub_btn">Submit</string>
-    <string name="s_no">S.No.</string>
     <string name="names">Name</string>
-    <string name="date">DATE</string>
     <string name="total_blocks">Blocks</string>
     <string name="labour_charges"><![CDATA[Labour \u20B9]]></string>
     <string name="total_amount"><![CDATA[ Total \u20B9]]></string>
@@ -63,69 +37,18 @@
     <string name="_5_5_5">5+5+5</string>
     <string name="ice_amount_header"><![CDATA[Ice(\u20B9)]]></string>
 
-    <string name="sales_add_customer">New Customer</string>
-    <string name="sales_add_cabin">New Cabin</string>
-    <string name="cabin_name">Cabin Name: %1$s</string>
-    <string name="available_blocks">Available BLocks: %1$s</string>
-    <string name="block_cabin_name_">Cabin Name: </string>
-    <string name="cabin_construct_rows">Cabin Rows: %1$d</string>
-    <string name="cabin_construct_column">Cabin Columns: %1$d</string>
-    <string name="cabin_construct_total_blocks">Total Blocks: %1$d</string>
-    <string name="sales_update_customer">Update/Delete Customer</string>
-    <string name="sales_update_cabin">Update/Delete  Cabin</string>
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_create_cabin">CreateCabinActivity</string>
-    <string name="startdate">StartDate</string>
-    <string name="enddate">EndDate</string>
-    <string name="fragment">showFragment</string>
-    <string name="id">id</string>
-    <string name="create_cabin">CREATE_CABIN</string>
-    <string name="create_customer">CREATE_CUSTOMER</string>
-    <string name="construce_cabin">CONSTRUCT_CABIN</string>
-    <string name="all">ALL</string>
-    <string name="nav_source">Source</string>
-    <string name="nav_cabin">Cabin</string>
-    <string name="nav_expenditure">Expenditure</string>
     <string name="nav_sales">Sales</string>
     <string name="nav_customer">Customers</string>
-    <string name="nav_dashboard">Dashboard</string>
-    <string name="next">NEXT</string>
-    <string name="create_new_cabin">CREATE NEW CABIN</string>
-    <string name="update_cabin">UPDATE CABIN</string>
-    <string name="delete_cabin">DELETE CABIN</string>
-    <string name="create_new_customer">CREATE NEW CUSTOMER</string>
-    <string name="update_customer">UPDATE CUSTOMER</string>
-    <string name="delete_customer">DELETE CUSTOMER</string>
-    <string name="can">Cancel</string>
-    <string name="ok">OK</string>
-    <string name="_75">75%</string>
-    <string name="_50">50%</string>
-    <string name="_25">25%</string>
-    <string name="_empty">EMPTY</string>
-    <string name="add_as_salt">Add remaining %1$s as Salt block</string>
-    <string name="start_production">Start production</string>
-    <string name="stop_production">Stop production</string>
-    <string name="start_production_time">12 MAY 2018</string>
-    <string name="selected_blocks">selectedBlocks</string>
-    <string name="one_by_fourth"><![CDATA[&#188;]]></string>
-    <string name="one_by_two"><![CDATA[&#189;]]></string>
-    <string name="three_by_fourth"><![CDATA[&#190;]]></string>
     <string name="colorpicselection">ColorPicSelection</string>
     <string name="message">MESSAGE</string>
     <string name="call">CALL</string>
     <string name="add_customer">Add Customer</string>
-    <string name="open_nav_panel">Open</string>
-    <string name="close_nav_panel">Close</string>
     <string name="Open">Open</string>
     <string name="Close">Close</string>
     <string name="current_bill">Current Bill</string>
 
-    <string-array name="entry_type">
-        <item>Sale</item>
-        <item>Due Receive</item>
-    </string-array>
-
     <string name="WEBSITE_ADDRESS">https://www.tssouthernpower.com/CPDCL_Home.portal;jsessionid=Fs8xbGTBtJPnnFyF9VrcQyGSPyChhQVmGBQh28fv03QNdSFLMHvN!-1374925354?_nfpb=true&amp;_pageLabel=CPDCL_Home_portal_page_289</string>
+    <string name="time">Time</string>
 
 </resources>

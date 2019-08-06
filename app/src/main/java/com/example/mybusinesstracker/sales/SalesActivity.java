@@ -14,7 +14,6 @@ import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
 import com.example.mybusinesstracker.factory.FactoryBaseActivity;
 import com.example.mybusinesstracker.sales.ui.sales.AddSaleFragment;
-import com.example.mybusinesstracker.sales.ui.sales.CustomerBasedSalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel;
 import com.example.mybusinesstracker.sales.ui.sales.DiscreteBasedSalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.GroupBasedSalesFragment;
@@ -112,14 +111,7 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
                     if (myFragment != null) {
                         myFragment.updateCustomerSpinner(mAllCustomers);
                     }
-                    /*
-                        generateSalesHashMap();
-                        GroupBasedSalesFragment fragment = (GroupBasedSalesFragment) getSupportFragmentManager().findFragmentByTag("GroupBasedSalesFragment");
-                        // add your code here
-                        if (fragment != null) {
-                                                                                                        fragment.updateAdapter();
-                        }
-                    */
+
                 }
             }, new OnFailureListener() {
                 @Override
@@ -138,9 +130,9 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
 
     @Override
     public void goToCustomerBasedSalesFragment(String name, String date) {
-        CustomerSaleModel customerSaleModel = saleModelHashMap.get(name);
-        getSupportActionBar().setTitle(name+" Sales");
-        replaceFragment(CustomerBasedSalesFragment.newInstance(customerSaleModel,date), "customer_based_sales_fragment");
+        //CustomerSaleModel customerSaleModel = saleModelHashMap.get(name);
+        //getSupportActionBar().setTitle(name+" Sales");
+        //replaceFragment(CustomerBasedSalesFragment.newInstance(customerSaleModel,date), "customer_based_sales_fragment");
         //Toast.makeText(getActivity(),"TotalSalesInfo: "+temp.name, Toast.LENGTH_SHORT).show();
     }
 

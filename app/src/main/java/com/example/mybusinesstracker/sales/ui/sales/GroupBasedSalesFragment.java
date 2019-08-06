@@ -2,6 +2,7 @@ package com.example.mybusinesstracker.sales.ui.sales;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +16,18 @@ import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
 import com.example.mybusinesstracker.databinding.FragmentGroupBasedSalesBinding;
 import com.example.mybusinesstracker.sales.OnSalesInteractionListener;
+import com.example.mybusinesstracker.utilities.Utils;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SnapshotMetadata;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 public class GroupBasedSalesFragment extends BaseFragment implements View.OnClickListener {
@@ -83,31 +88,56 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     private void getSalesGroupArray() {
         mGroupBasedSalesModel.clearAllData();
         mGroupBasedSalesModel.setCalendar(Calendar.getInstance().getTimeInMillis());
-        mGroupBasedSalesModel.totalSalesInfo.setHeaderSubText("27/08/2019");
         mGroupBasedSalesModel.totalSalesInfo.setHeaderText("Frick");
+        mGroupBasedSalesModel.totalSalesInfo.setHeaderSubText(Utils.getStringFromDate(mGroupBasedSalesModel.getCalendar(),"dd MMM yyyy"));
         SalesTable salesTable = new SalesTable();
-        salesTable.getDaySales(mGroupBasedSalesModel.getCalendar(), "Frick", new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(null != task.getResult()) {
-                    for (DocumentSnapshot document : task.getResult()) {
-                        Map<String, Object> data = document.getData();
-                        assert data != null;
-                        SalesViewModel salesViewModel = new SalesViewModel(data);
-                        mGroupBasedSalesModel.addSale(salesViewModel,"Frick", "27/08/2019");
-                        mGroupBasedSalesModel.totalSalesInfo.setName(salesViewModel.getCustomerID());
+        if(null !=mGroupBasedSalesModel.totalSalesInfo.getHeaderText()&&mGroupBasedSalesModel.totalSalesInfo.getHeaderText().length()>0) {
+            salesTable.getDaySales(mGroupBasedSalesModel.getCalendar(), mGroupBasedSalesModel.totalSalesInfo.getHeaderText(), new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (null != task.getResult()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            Map<String, Object> data = document.getData();
+                            assert data != null;
+                            SalesViewModel salesViewModel = new SalesViewModel(data);
+                            mGroupBasedSalesModel.addSale(salesViewModel, mGroupBasedSalesModel.totalSalesInfo.getHeaderText(), mGroupBasedSalesModel.totalSalesInfo.getHeaderSubText());
+                            mGroupBasedSalesModel.totalSalesInfo.setName(salesViewModel.getCustomerID());
+                        }
+                        groupBasedSalesAdapter.setSalesViewModels(mGroupBasedSalesModel.getNameSales().values());
+                        groupBasedSalesAdapter.notifyDataSetChanged();
                     }
-                    groupBasedSalesAdapter.setSalesViewModels(mGroupBasedSalesModel.getNameSales().values());
-                    groupBasedSalesAdapter.notifyDataSetChanged();
+
                 }
+            }, new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
 
-            }
-        }, new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+                }
+            });
+        } else {
+            salesTable.getDaySales(mGroupBasedSalesModel.getCalendar(), new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-            }
-        });
+                    DocumentSnapshot document = task.getResult();
+                    SnapshotMetadata getMetadata = document.getMetadata();
+                    Date getDate = document.getDate("Frick");
+                    assert document != null;
+                    DocumentReference temp = document.getReference();
+                    Map<String, Object> temp1 = document.getData();
+                    if (document.exists()) {
+                        Log.d("result", "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d("result", "No such document");
+                    }
+                }
+            }, new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }
     }
 
     @Override
