@@ -146,8 +146,8 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
 
     @Override
     public void goToDiscreteBasedSalesFragment(TotalSalesInfo totalSalesInfo, String header) {
-        getSupportActionBar().setTitle(totalSalesInfo.getName().toUpperCase()+ " "+header.toLowerCase());
-        replaceFragment(DiscreteBasedSalesFragment.newInstance(totalSalesInfo), "discrete_based_sales_fragment");
+        //getSupportActionBar().setTitle();
+        replaceFragment(DiscreteBasedSalesFragment.newInstance(totalSalesInfo, totalSalesInfo.getName().toUpperCase()+ " "+header.toLowerCase()), "discrete_based_sales_fragment");
 
     }
 

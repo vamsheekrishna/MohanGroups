@@ -9,12 +9,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybusinesstracker.R;
-import com.example.mybusinesstracker.databinding.CustomerBaseSalesRowItemBinding;
+import com.example.mybusinesstracker.databinding.DiscreteBaseSalesRowItemBinding;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 
 import java.util.ArrayList;
 
-public class DiscreteBaseSalesAdapter extends RecyclerView.Adapter<CustomerBaseSaleViewHolder> {
+public class DiscreteBaseSalesAdapter extends RecyclerView.Adapter<DiscreteBaseSaleViewHolder> {
     private ArrayList<SalesViewModel> mSalesViewModels;
     private View.OnClickListener mOnItemClick;
     public DiscreteBaseSalesAdapter(ArrayList<SalesViewModel> salesViewModels, View.OnClickListener onItemClick) {
@@ -23,16 +23,16 @@ public class DiscreteBaseSalesAdapter extends RecyclerView.Adapter<CustomerBaseS
     }
     @NonNull
     @Override
-    public CustomerBaseSaleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-          CustomerBaseSalesRowItemBinding binding = DataBindingUtil.inflate( LayoutInflater.from(parent.getContext()),
-                R.layout.customer_base_sales_row_item, parent, false);
-        CustomerBaseSaleViewHolder customerBaseSaleViewHolder = new CustomerBaseSaleViewHolder(binding);
-        customerBaseSaleViewHolder.view.setOnClickListener(mOnItemClick);
-        return customerBaseSaleViewHolder;
+    public DiscreteBaseSaleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+          DiscreteBaseSalesRowItemBinding binding = DataBindingUtil.inflate( LayoutInflater.from(parent.getContext()),
+                R.layout.discrete_base_sales_row_item, parent, false);
+        DiscreteBaseSaleViewHolder discreteBaseSaleViewHolder = new DiscreteBaseSaleViewHolder(binding);
+        discreteBaseSaleViewHolder.view.setOnClickListener(mOnItemClick);
+        return discreteBaseSaleViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomerBaseSaleViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DiscreteBaseSaleViewHolder holder, int position) {
         SalesViewModel dataModel = mSalesViewModels.get(position);
         holder.bind(dataModel);
     }

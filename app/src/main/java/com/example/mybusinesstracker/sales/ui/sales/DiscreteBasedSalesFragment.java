@@ -26,16 +26,17 @@ public class DiscreteBasedSalesFragment extends BaseFragment implements View.OnC
     private String mParam2;
 
     private OnSalesInteractionListener mListener;
-    DiscreteBaseSalesAdapter mDiscreteBaseSalesAdapter;
+    private DiscreteBaseSalesAdapter mDiscreteBaseSalesAdapter;
 
     public DiscreteBasedSalesFragment() {
         // Required empty public constructor
     }
 
-    public static DiscreteBasedSalesFragment newInstance(TotalSalesInfo totalSalesInfo) {
+    public static DiscreteBasedSalesFragment newInstance(TotalSalesInfo totalSalesInfo, String action_text) {
         DiscreteBasedSalesFragment fragment = new DiscreteBasedSalesFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, totalSalesInfo);
+        args.putString(ARG_PARAM2, action_text);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,13 +46,14 @@ public class DiscreteBasedSalesFragment extends BaseFragment implements View.OnC
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mTotalSalesInfo = (TotalSalesInfo) getArguments().getSerializable(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mListener.setTitle(mParam2);
         // Inflate the layout for this fragment
         FragmentDiscreteBasedSalesBinding binder = DataBindingUtil.inflate(inflater, R.layout.fragment_discrete_based_sales, container, false);
         //getSalesGroupArray();
