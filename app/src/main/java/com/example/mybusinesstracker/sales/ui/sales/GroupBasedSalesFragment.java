@@ -23,11 +23,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 
-public class DailySalesFragment extends BaseFragment implements View.OnClickListener {
+public class GroupBasedSalesFragment extends BaseFragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -38,12 +37,12 @@ public class DailySalesFragment extends BaseFragment implements View.OnClickList
     CustomerBaseSalesAdapter customerBaseSalesAdapter;
     CustomerTotalSalesAdapter customerTotalSalesAdapter;
     boolean isSingleSaleData = false;
-    public DailySalesFragment() {
+    public GroupBasedSalesFragment() {
         // Required empty public constructor
     }
 
-    public static DailySalesFragment newInstance() {
-        DailySalesFragment fragment = new DailySalesFragment();
+    public static GroupBasedSalesFragment newInstance() {
+        GroupBasedSalesFragment fragment = new GroupBasedSalesFragment();
         /*Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

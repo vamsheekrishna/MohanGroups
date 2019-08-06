@@ -16,7 +16,7 @@ import com.example.mybusinesstracker.factory.FactoryBaseActivity;
 import com.example.mybusinesstracker.sales.ui.sales.AddSaleFragment;
 import com.example.mybusinesstracker.sales.ui.sales.CustomerBasedSalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel;
-import com.example.mybusinesstracker.sales.ui.sales.DailySalesFragment;
+import com.example.mybusinesstracker.sales.ui.sales.GroupBasedSalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.MonthSaleFragment;
 import com.example.mybusinesstracker.utilities.Utils;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
@@ -28,11 +28,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 public class SalesActivity extends FactoryBaseActivity implements OnSalesInteractionListener{
 
@@ -52,7 +49,7 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
 
         getSupportActionBar().setTitle("Day Sales");
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.container, DailySalesFragment.newInstance()).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.container, GroupBasedSalesFragment.newInstance()).commit();
         }
     }
 
@@ -115,7 +112,7 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
                     }
                     /*
                         generateSalesHashMap();
-                        DailySalesFragment fragment = (DailySalesFragment) getSupportFragmentManager().findFragmentByTag("DailySalesFragment");
+                        GroupBasedSalesFragment fragment = (GroupBasedSalesFragment) getSupportFragmentManager().findFragmentByTag("GroupBasedSalesFragment");
                         // add your code here
                         if (fragment != null) {
                                                                                                         fragment.updateAdapter();
