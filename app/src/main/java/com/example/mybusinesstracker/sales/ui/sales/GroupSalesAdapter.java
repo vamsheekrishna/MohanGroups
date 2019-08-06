@@ -9,7 +9,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybusinesstracker.R;
-import com.example.mybusinesstracker.databinding.CustomerTotalSalesRowItemBinding;
+import com.example.mybusinesstracker.databinding.GroupSalesRowItemBinding;
+
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,8 +26,8 @@ public class GroupSalesAdapter extends RecyclerView.Adapter<GroupBasedSalesViewH
     @NonNull
     @Override
     public GroupBasedSalesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-          CustomerTotalSalesRowItemBinding binding = DataBindingUtil.inflate( LayoutInflater.from(parent.getContext()),
-                R.layout.customer_total_sales_row_item, parent, false);
+          GroupSalesRowItemBinding binding = DataBindingUtil.inflate( LayoutInflater.from(parent.getContext()),
+                R.layout.group_sales_row_item, parent, false);
         GroupBasedSalesViewHolder customerTotalSaleViewHolder = new GroupBasedSalesViewHolder(binding);
         customerTotalSaleViewHolder.view.setOnClickListener(mOnItemClick);
         return customerTotalSaleViewHolder;
