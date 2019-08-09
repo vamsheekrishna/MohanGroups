@@ -5,8 +5,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cloud_firestore.tables.CustomerTable;
@@ -31,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SalesActivity extends FactoryBaseActivity implements OnSalesInteractionListener{
 
@@ -54,23 +58,6 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_sales, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.action_sales_month:
-                gotToMonthlyFragment();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
     protected void getCustomerList() {
         if(null == mAllCustomers || mAllCustomers.size()<=0) {
             customerTable.getCustomerList(new OnCompleteListener<QuerySnapshot>() {
@@ -188,4 +175,10 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
         replaceFragment(MonthSaleFragment.newInstance("",""), "month_sale_fragment");
     }
 
+    public void myFancyMethod(View view) {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+        if(f instanceof GroupBasedSalesFragment)
+            // do something with f
+            ((GroupBasedSalesFragment) f).myFancyMethod(view);
+    }
 }

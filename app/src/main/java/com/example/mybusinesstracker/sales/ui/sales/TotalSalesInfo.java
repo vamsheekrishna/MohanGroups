@@ -93,6 +93,7 @@ public class TotalSalesInfo extends BaseObservable implements Serializable {
 
     public void setHeaderText(String headerText) {
         this.headerText = headerText;
+        notifyChange();
     }
 
     void addSale(SalesViewModel temp) {
@@ -106,7 +107,17 @@ public class TotalSalesInfo extends BaseObservable implements Serializable {
         setTotalDue(getTotalDue()+temp.getDueAmount());
         setTotalBlocksString(temp.getTotalBlocks());
     }
-
+    void resetValues() {
+        salesModels.clear();
+        //
+        setTotalBlock(0);
+        setTotalAmount(0);
+        setTotalICEAmount(0);
+        setTotalLabourCharges(0);
+        setTotalPaid(0);
+        setTotalDue(0);
+        setTotalBlocksString(0);
+    }
     public ArrayList<SalesViewModel> getSalesModels() {
         return salesModels;
     }
@@ -117,6 +128,7 @@ public class TotalSalesInfo extends BaseObservable implements Serializable {
 
     public void setHeaderSubText(String headerSubText) {
         this.headerSubText = headerSubText;
+        notifyChange();
     }
 
     public String getName() {

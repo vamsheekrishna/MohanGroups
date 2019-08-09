@@ -6,6 +6,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Utils {
+
+    public static final String DD_MMM_YYYY = "dd MMM yyyy";
+    public static final String MMM_YYYY = "MMM yyyy";
+    public static final String DD_MMM = "dd MMM";
+    public static final String HH_MM_SS = "hh:mm:ss a";
+
     public static Date getStartOfDay(Calendar calendar) {
         //Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -24,10 +30,14 @@ public class Utils {
         return calendar.getTime();
     }
     public static String getStringFromDate(Calendar calendar, String pattern) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(calendar.getTime());
+    }
+    public static String getStringFromDate(Long time, String pattern) {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
-        String date = simpleDateFormat.format(calendar.getTime());
-        return date;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        return simpleDateFormat.format(calendar.getTime());
     }
 }

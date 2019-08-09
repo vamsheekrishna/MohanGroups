@@ -226,12 +226,12 @@ public class BaseActivity extends AppCompatActivity implements OnBaseAppListener
 
         return super.onOptionsItemSelected(item);
     }
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_sales, menu);
         return true;
-    }
+    }*/
 
     protected void replaceFragment(BaseFragment baseFragment, String fragment_id) {
         FragmentManager fm = getSupportFragmentManager();

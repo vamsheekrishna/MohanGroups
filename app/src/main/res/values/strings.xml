@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">My Business Tracker</string>
+    <string name="action_sales_year">Yearly</string>
     <string name="action_sales_month">Monthly</string>
+    <string name="action_sales_day">Daily</string>
 
     <string name="c_name">Cabin Name:</string>
 
@@ -23,6 +25,7 @@
     <string name="cus_address_hint">Enter Address</string>
     <string name="cus_date">Date:</string>
     <string name="c_total_amount">Total Amount:</string>
+    <string name="date">Date</string>
     <string name="ice_amount">Ice Amount:</string>
     <string name="cus_paid">Paid Amount:</string>
     <string name="cus_due">Due Amount:</string>
@@ -50,5 +53,8 @@
 
     <string name="WEBSITE_ADDRESS">https://www.tssouthernpower.com/CPDCL_Home.portal;jsessionid=Fs8xbGTBtJPnnFyF9VrcQyGSPyChhQVmGBQh28fv03QNdSFLMHvN!-1374925354?_nfpb=true&amp;_pageLabel=CPDCL_Home_portal_page_289</string>
     <string name="time">Time</string>
+    <string name="yearly_sales">Yearly Sales</string>
+    <string name="monthly_sales">Monthly Sales</string>
+    <string name="daily_sales">Daily Sales</string>
 
 </resources>

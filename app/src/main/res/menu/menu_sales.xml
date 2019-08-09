@@ -1,10 +1,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.mybusinesstracker.MainActivity">
+    tools:context=".sales.SalesActivity">
+    <item
+        android:id="@+id/action_sales_day"
+        android:orderInCategory="100"
+        android:title="@string/action_sales_day"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_sales_month"
         android:orderInCategory="100"
         android:title="@string/action_sales_month"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sales_year"
+        android:orderInCategory="100"
+        android:title="@string/action_sales_year"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/button_item"
+        android:title=""
+        app:actionLayout="@layout/button_layout"
+        app:showAsAction="always"
+        />
 </menu>

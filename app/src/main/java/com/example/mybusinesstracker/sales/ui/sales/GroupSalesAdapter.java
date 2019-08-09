@@ -49,7 +49,7 @@ public class GroupSalesAdapter extends RecyclerView.Adapter<GroupBasedSalesViewH
         return mSalesViewModels;
     }
 
-    public void setSalesViewModels(Collection<TotalSalesInfo> mSalesViewModels) {
+    void setSalesViewModels(Collection<TotalSalesInfo> mSalesViewModels) {
         this.mSalesViewModels = new ArrayList<>(mSalesViewModels);
     }
 }
