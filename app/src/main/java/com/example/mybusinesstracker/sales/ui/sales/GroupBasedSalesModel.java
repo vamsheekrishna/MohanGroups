@@ -3,18 +3,20 @@ package com.example.mybusinesstracker.sales.ui.sales;
 import com.example.mybusinesstracker.utilities.Utils;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class GroupBasedSalesModel {
+public class GroupBasedSalesModel implements Serializable {
     private Calendar calendar = Calendar.getInstance();
     TotalSalesInfo totalSalesInfo = new TotalSalesInfo();
+    private Content content = Content.date;
     private ArrayList<SalesViewModel> allSales = new ArrayList<>();
     private HashMap<String, TotalSalesInfo> byNameSales = new HashMap<>();
     private HashMap<String, TotalSalesInfo> byDateSales = new HashMap<>();
-
+    private Date dateType = Date.day;//0 -> day, 1 -> month, 2 -> year
 
     void clearAllData() {
         allSales.clear();
@@ -58,10 +60,41 @@ public class GroupBasedSalesModel {
     HashMap<String, TotalSalesInfo> getSalesByDate() {
         return byDateSales;
     }
+    void setContentTypeName(boolean isContentTypeName) {
+        if(isContentTypeName)
+            content = Content.date;
+        else
+            content = Content.name;
+    }
+    Content getContentType() {
+        return content;
+    }
     void setCalendar(Long date) {
         calendar.setTimeInMillis(date);
     }
     Calendar getCalendar() {
         return calendar;
+    }
+
+    HashMap<String, TotalSalesInfo> getSalesData() {
+        if(content == Content.name) {
+            return getSalesByName();
+        } else {
+            return getSalesByDate();
+        }
+    }
+
+    void setDateType(Date type) {
+        dateType = type;
+    }
+
+    Date getDateType() {
+        return dateType;
+    }
+    enum Content {
+        name, date, month;
+    }
+    enum Date {
+        day, month, year;
     }
 }

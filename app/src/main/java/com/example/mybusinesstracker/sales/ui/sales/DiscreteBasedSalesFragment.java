@@ -16,6 +16,7 @@ import com.example.mybusinesstracker.BaseCalsses.BaseFragment;
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.databinding.FragmentDiscreteBasedSalesBinding;
 import com.example.mybusinesstracker.sales.OnSalesInteractionListener;
+import com.example.mybusinesstracker.utilities.Utils;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 
 import java.util.ArrayList;
@@ -64,9 +65,13 @@ public class DiscreteBasedSalesFragment extends BaseFragment implements View.OnC
         LinearLayout header = view.findViewById(R.id.row_header);
         ((TextView)header.findViewById(R.id.customer_name)).setText(getString(R.string.time));
         ArrayList<SalesViewModel> temp = mTotalSalesInfo.getSalesModels();//mCustomerSaleModel.getSalesViewModels();
+        String pattern = "HH:mm";
+        if(mParam2.contains(getString(R.string.monthly_sales))) {
+            pattern = Utils.DD_MMM_YYYY_HH_MM_SS;
+        }
         for (SalesViewModel salesViewModel :
                 temp) {
-            salesViewModel.setDate(salesViewModel.getDate(), "HH:mm");
+            salesViewModel.setDate(salesViewModel.getDate(), pattern);
         }
         DiscreteBaseSalesAdapter mDiscreteBaseSalesAdapter = new DiscreteBaseSalesAdapter(temp, this);
         binder.setDiscreteSalesAdapter(mDiscreteBaseSalesAdapter);

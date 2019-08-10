@@ -2,11 +2,7 @@ package com.example.mybusinesstracker.sales;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,7 +16,7 @@ import com.example.mybusinesstracker.sales.ui.sales.AddSaleFragment;
 import com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel;
 import com.example.mybusinesstracker.sales.ui.sales.DiscreteBasedSalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.GroupBasedSalesFragment;
-import com.example.mybusinesstracker.sales.ui.sales.MonthSaleFragment;
+import com.example.mybusinesstracker.sales.ui.sales.GroupBasedSalesModel;
 import com.example.mybusinesstracker.sales.ui.sales.TotalSalesInfo;
 import com.example.mybusinesstracker.utilities.Utils;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
@@ -34,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class SalesActivity extends FactoryBaseActivity implements OnSalesInteractionListener{
 
@@ -54,7 +49,7 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
 
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.container, GroupBasedSalesFragment.newInstance()).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.container, GroupBasedSalesFragment.newInstance(null, null)).commit();
         }
     }
 
@@ -170,9 +165,9 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
         replaceFragment(AddSaleFragment.newInstance(salesViewModel), "add_sale");
     }
     @Override
-    public void gotToMonthlyFragment() {
+    public void gotToGroupBasedSalesFragment(GroupBasedSalesModel groupBasedSalesModel) {
         getSupportActionBar().setTitle("Month Sales");
-        replaceFragment(MonthSaleFragment.newInstance("",""), "month_sale_fragment");
+        replaceFragment(GroupBasedSalesFragment.newInstance(groupBasedSalesModel,null), "month_sale_fragment");
     }
 
     public void myFancyMethod(View view) {

@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -34,33 +33,41 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
+
+import static com.example.mybusinesstracker.sales.ui.sales.GroupBasedSalesModel.Date.day;
+import static com.example.mybusinesstracker.sales.ui.sales.GroupBasedSalesModel.Date.month;
+import static com.example.mybusinesstracker.sales.ui.sales.GroupBasedSalesModel.Date.year;
 
 public class GroupBasedSalesFragment extends BaseFragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private GroupBasedSalesModel mGroupBasedSalesModel = new GroupBasedSalesModel();
+    private GroupBasedSalesModel mGroupBasedSalesModel ;//= new GroupBasedSalesModel();
     private String mParam2;
 
     private OnSalesInteractionListener mListener;
     private GroupSalesAdapter groupBasedSalesAdapter;
-    private Date dateType = Date.day;//0 -> day, 1 -> month, 2 -> year
-    private Content content = Content.name;
+    private MenuItem nameMenuItem;
+    ToggleButton toggleButton;
     //private String dateType = "day";
     //boolean isSingleSaleData = false;
     public GroupBasedSalesFragment() {
         // Required empty public constructor
     }
 
-    public static GroupBasedSalesFragment newInstance() {
+    public static GroupBasedSalesFragment newInstance(GroupBasedSalesModel totalSalesInfo, Date dateType) {
         GroupBasedSalesFragment fragment = new GroupBasedSalesFragment();
-        /*Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);*/
+        if(null != totalSalesInfo) {
+            Bundle args = new Bundle();
+            args.putSerializable(ARG_PARAM1, totalSalesInfo);
+            //args.putSerializable(ARG_PARAM2, dateType);
+            fragment.setArguments(args);
+        }
         return fragment;
     }
 
@@ -68,8 +75,7 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            //mGroupBasedSalesModel = (CustomerSaleModel) getArguments().getSerializable(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
+            mGroupBasedSalesModel = (GroupBasedSalesModel) getArguments().getSerializable(ARG_PARAM1);
         }
     }
 
@@ -77,35 +83,46 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        setHasOptionsMenu(true);
+        if(null == mGroupBasedSalesModel) {
+            mGroupBasedSalesModel = new GroupBasedSalesModel();
+            setDate(Calendar.getInstance().getTimeInMillis(), Utils.DD_MMM_YYYY);
+            mGroupBasedSalesModel.totalSalesInfo.setHeaderText("Frick");
+        }
+        //String pattern;
+        if(mGroupBasedSalesModel.getDateType().equals(day)) {
+            //pattern = Utils.DD_MMM_YYYY;
+            mListener.setTitle(getString(R.string.daily_sales));
+        } else {
+            //pattern = Utils.MMM_YYYY;
+            mListener.setTitle(getString(R.string.monthly_sales));
+        }
         // Inflate the layout for this fragment
-        mListener.setTitle("Day Sales");
         FragmentGroupBasedSalesBinding binder = DataBindingUtil.inflate(inflater, R.layout.fragment_group_based_sales, container, false);
-
-        //mGroupBasedSalesModel.clearAllData();
-        mGroupBasedSalesModel.totalSalesInfo.setHeaderText("Frick");
-        setDate(Calendar.getInstance().getTimeInMillis());
-
         binder.setGroupTotalSalesModel(mGroupBasedSalesModel.totalSalesInfo);
-        View view =  binder.getRoot();//inflater.inflate(R.layout.fragment_customer_based_sales, fragmet, false);
-        ((TextView)view.findViewById(R.id.selected_date)).setText(mParam2);
-        ((TextView)view.findViewById(R.id.selected_date)).setOnClickListener(this);
-        groupBasedSalesAdapter = new GroupSalesAdapter(mGroupBasedSalesModel.getSalesByName(), this);
-        binder.setTotalSales(groupBasedSalesAdapter);
+        View view =  binder.getRoot();
+        //((TextView)view.findViewById(R.id.selected_date)).setText(mParam2);
+        view.findViewById(R.id.selected_date).setOnClickListener(this);
 
+        groupBasedSalesAdapter = new GroupSalesAdapter(mGroupBasedSalesModel.getSalesData(), this);
+        binder.setTotalSales(groupBasedSalesAdapter);
         view.findViewById(R.id.add_new).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.gotToAddSaleFragment(null);
             }
         });
-        setHasOptionsMenu(true);
         return view;
     }
 
     private void getSalesGroupArray() {
         mGroupBasedSalesModel.clearAllData();
+        if(null != groupBasedSalesAdapter) {
+            groupBasedSalesAdapter.setSalesViewModels(new ArrayList<TotalSalesInfo>());
+            groupBasedSalesAdapter.notifyDataSetChanged();
+        }
         SalesTable salesTable = new SalesTable();
-        switch (dateType) {
+        switch (mGroupBasedSalesModel.getDateType()) {
             case day:
                 dayBased(salesTable);
                 break;
@@ -133,10 +150,9 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
                         Map<String, Object> data = document.getData();
                         assert data != null;
                         SalesViewModel salesViewModel = new SalesViewModel(data);
-                        mGroupBasedSalesModel.addSale(salesViewModel, mGroupBasedSalesModel.totalSalesInfo.getHeaderText(), mGroupBasedSalesModel.totalSalesInfo.getHeaderSubText(), Utils.DD_MMM_YYYY);
-                        mGroupBasedSalesModel.totalSalesInfo.setName(salesViewModel.getCustomerID());
+                        addSaleToDay(salesViewModel, Utils.DD_MMM_YYYY);
                     }
-                    groupBasedSalesAdapter.setSalesViewModels(mGroupBasedSalesModel.getSalesByName().values());
+                    groupBasedSalesAdapter.setSalesViewModels(mGroupBasedSalesModel.getSalesData().values());
                     groupBasedSalesAdapter.notifyDataSetChanged();
                 }
             }
@@ -159,11 +175,10 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
                         Map<String, Object> data = document.getData();
                         assert data != null;
                         SalesViewModel salesViewModel = new SalesViewModel(data);
-                        mGroupBasedSalesModel.addSale(salesViewModel, mGroupBasedSalesModel.totalSalesInfo.getHeaderText(), mGroupBasedSalesModel.totalSalesInfo.getHeaderSubText(), Utils.HH_MM_SS);
-                        mGroupBasedSalesModel.totalSalesInfo.setName(salesViewModel.getCustomerID());
+                        addSaleToDay(salesViewModel, Utils.HH_MM_SS);
                     }
-                    groupBasedSalesAdapter.setSalesViewModels(mGroupBasedSalesModel.getSalesByName().values());
-                    groupBasedSalesAdapter.notifyDataSetChanged();
+                    //groupBasedSalesAdapter.setSalesViewModels(mGroupBasedSalesModel.getSalesByName().values());
+                    //groupBasedSalesAdapter.notifyDataSetChanged();
                 }
 
             }
@@ -175,15 +190,14 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
         });
     }
 
-    private void setDate(long timeInMillis) {
+    private void addSaleToDay(SalesViewModel salesViewModel, String hhMmSs) {
+        mGroupBasedSalesModel.addSale(salesViewModel, mGroupBasedSalesModel.totalSalesInfo.getHeaderText(), mGroupBasedSalesModel.totalSalesInfo.getHeaderSubText(), hhMmSs);
+        mGroupBasedSalesModel.totalSalesInfo.setName(salesViewModel.getCustomerID());
+    }
+
+    private void setDate(long timeInMillis, String pattern) {
         mGroupBasedSalesModel.clearAllData();
         mGroupBasedSalesModel.setCalendar(timeInMillis);
-        String pattern;
-        if(dateType.equals(Date.day)) {
-            pattern = Utils.DD_MMM_YYYY;
-        } else {
-            pattern = Utils.MMM_YYYY;
-        }
         mGroupBasedSalesModel.totalSalesInfo.setHeaderSubText(Utils.getStringFromDate(mGroupBasedSalesModel.getCalendar(), pattern));
         getSalesGroupArray();
     }
@@ -212,8 +226,37 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
                 showDatePicker(v);
                 break;
                 default:
-                    TotalSalesInfo dataModel = (TotalSalesInfo) v.getTag();
-                    mListener.goToDiscreteBasedSalesFragment(dataModel, "Day Sales");
+                    TotalSalesInfo totalSalesInfo = (TotalSalesInfo) v.getTag();
+                    GroupBasedSalesModel groupBasedSalesModel = new GroupBasedSalesModel();
+                    for (SalesViewModel salesViewModel : totalSalesInfo.getSalesModels()) {
+                        groupBasedSalesModel.addSale(salesViewModel, groupBasedSalesModel.totalSalesInfo.getHeaderText(), groupBasedSalesModel.totalSalesInfo.getHeaderSubText(), Utils.DD_MMM_YYYY);
+                    }
+
+                    if(groupBasedSalesModel.getSalesByDate().size() == groupBasedSalesModel.getSalesByName().size()) {
+                        totalSalesInfo.setHeaderSubText(mGroupBasedSalesModel.totalSalesInfo.headerSubText);
+                        totalSalesInfo.setHeaderText(mGroupBasedSalesModel.totalSalesInfo.headerText);
+                        mListener.goToDiscreteBasedSalesFragment(totalSalesInfo, getString(R.string.daily_sales));
+                    } else {
+
+                        if(mGroupBasedSalesModel.getContentType().equals(GroupBasedSalesModel.Content.date)) {
+                            groupBasedSalesModel.setContentTypeName(false);
+                        } else {
+                            groupBasedSalesModel.setContentTypeName(true);
+                        }
+                        groupBasedSalesModel.setDateType(GroupBasedSalesModel.Date.month);
+                        groupBasedSalesModel.totalSalesInfo.setHeaderSubText(totalSalesInfo.headerSubText);
+                        groupBasedSalesModel.totalSalesInfo.setHeaderText(totalSalesInfo.getName());
+
+                        /*String format = "";
+                        if (mGroupBasedSalesModel.getDateType()  == GroupBasedSalesModel.Date.day) {
+                            format = Utils.DD_MMM_YYYY;
+                        } else if (mGroupBasedSalesModel.getDateType()  == GroupBasedSalesModel.Date.month) {
+                            format = Utils.DD_MMM_YYYY;
+                        }*/
+                        //groupBasedSalesModel.totalSalesInfo.setName(salesViewModel.getCustomerID());
+                        mListener.gotToGroupBasedSalesFragment(groupBasedSalesModel);
+
+                    }
                     break;
         }
     }
@@ -231,15 +274,15 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
                 Toast.makeText(getActivity(),year+ " "+monthOfYear+" "+dayOfMonth,Toast.LENGTH_LONG).show();
                 Calendar selectedDate = Calendar.getInstance();
                 selectedDate.set(year, monthOfYear, dayOfMonth);
-                setDate(selectedDate.getTimeInMillis());
+                String pattern;
+                if(mGroupBasedSalesModel.getDateType().equals(day)) {
+                    pattern = Utils.DD_MMM_YYYY;
+                } else {
+                    pattern = Utils.MMM_YYYY;
+                }
+                setDate(selectedDate.getTimeInMillis(), pattern);
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        /*if(dateType.equals(Date.month)) {
-            mdiDialog.findViewById(getResources().getIdentifier("day","id","android")).setVisibility(View.GONE);
-        } else if(dateType.equals(Date.year)) {
-            mdiDialog.findViewById(getResources().getIdentifier("day","id","android")).setVisibility(View.GONE);
-            mdiDialog.findViewById(getResources().getIdentifier("day","id","android")).setVisibility(View.GONE);
-        }*/
         mdiDialog.show();
     }
 
@@ -256,57 +299,68 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
             case R.id.action_sales_year:
                 showYearlyData();
                 return true;
-            case R.id.button:
-                RelativeLayout view = (RelativeLayout) item.getActionView();
-
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     private void showDailyData() {
-        if(!dateType.equals(Date.day)) {
-            dateType = Date.day;
+        if(!mGroupBasedSalesModel.getDateType().equals(day)) {
+            mGroupBasedSalesModel.setDateType(day);
+            //nameMenuItem.setVisible(false);
             getSalesGroupArray();
         }
     }
 
     private void showMonthlyData() {
-        if(!dateType.equals(Date.month)) {
-            dateType = Date.month;
+        if(!mGroupBasedSalesModel.getDateType().equals(month)) {
+            mGroupBasedSalesModel.setDateType(month);
+            //nameMenuItem.setVisible(true);
             getSalesGroupArray();
         }
     }
 
     private void showYearlyData() {
-        if(!dateType.equals(Date.year)) {
-            dateType = Date.day;
+        if(!mGroupBasedSalesModel.getDateType().equals(year)) {
+            mGroupBasedSalesModel.setDateType(year);
+            //nameMenuItem.setVisible(true);
             getSalesGroupArray();
         }
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        nameMenuItem = menu.findItem(R.id.button_item);
+        RelativeLayout relativeLayout = (RelativeLayout) nameMenuItem.getActionView();
+        toggleButton = relativeLayout.findViewById(R.id.button);
+        toggleButton.setChecked(mGroupBasedSalesModel.getContentType() == GroupBasedSalesModel.Content.date);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         //menu.clear();
-        inflater.inflate(R.menu.menu_sales,menu);
+         inflater.inflate(R.menu.menu_sales, menu);
 
-    }
-    enum Date {
-        day, month, year;
+        /*if(mGroupBasedSalesModel.getDateType().equals(month)) {
+            toggleButton.setChecked(false);
+        } else {
+            toggleButton.setChecked(true);
+        }
+        Toast.makeText(getActivity(), "Toggle is: "+toggleButton.isChecked(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Toggle is: "+toggleButton.getText().toString(),Toast.LENGTH_SHORT).show();*/
+         //nameMenuItem.setVisible(false);
     }
 
-    enum Content {
-        name, date, month;
-    }
     public void myFancyMethod(View v) {
         ToggleButton toggleButton = (ToggleButton) v;
         //toggleButton.getSta
-        if(toggleButton.getText().toString().equalsIgnoreCase("DATE") ) {
-            groupBasedSalesAdapter.setSalesViewModels(mGroupBasedSalesModel.getSalesByDate().values());
+        /*if(toggleButton.getText().toString().equalsIgnoreCase("DATE") ) {
         } else {
             groupBasedSalesAdapter.setSalesViewModels(mGroupBasedSalesModel.getSalesByName().values());
-        }
+        }*/
+        mGroupBasedSalesModel.setContentTypeName(toggleButton.isChecked());
+        groupBasedSalesAdapter.setSalesViewModels(mGroupBasedSalesModel.getSalesData().values());
         groupBasedSalesAdapter.notifyDataSetChanged();
         Toast.makeText(getActivity(), "Toggle is: "+toggleButton.isChecked(),Toast.LENGTH_SHORT).show();
     }

@@ -2,6 +2,7 @@ package com.example.mybusinesstracker.sales;
 
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
 import com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel;
+import com.example.mybusinesstracker.sales.ui.sales.GroupBasedSalesModel;
 import com.example.mybusinesstracker.sales.ui.sales.TotalSalesInfo;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 
@@ -17,7 +18,7 @@ public interface OnSalesInteractionListener {
     HashMap<Long, SalesViewModel> getDaySales();
 
     void gotToAddSaleFragment(SalesViewModel salesViewModel);
-    void gotToMonthlyFragment();
+    void gotToGroupBasedSalesFragment(GroupBasedSalesModel groupBasedSalesModel);
 
     void getSalesListFromCloud(Calendar calendar);
     CustomerSaleModel getCustomerSales(String customerID);

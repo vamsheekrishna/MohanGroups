@@ -11,6 +11,7 @@ public class Utils {
     public static final String MMM_YYYY = "MMM yyyy";
     public static final String DD_MMM = "dd MMM";
     public static final String HH_MM_SS = "hh:mm:ss a";
+    public static final String DD_MMM_YYYY_HH_MM_SS = DD_MMM_YYYY+" "+HH_MM_SS;
 
     public static Date getStartOfDay(Calendar calendar) {
         //Calendar calendar = Calendar.getInstance();
