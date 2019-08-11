@@ -13,7 +13,6 @@ import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
 import com.example.mybusinesstracker.factory.FactoryBaseActivity;
 import com.example.mybusinesstracker.sales.ui.sales.AddSaleFragment;
-import com.example.mybusinesstracker.sales.ui.sales.CustomerSaleModel;
 import com.example.mybusinesstracker.sales.ui.sales.DiscreteBasedSalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.GroupBasedSalesFragment;
 import com.example.mybusinesstracker.sales.ui.sales.GroupBasedSalesModel;
@@ -26,7 +25,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,9 +34,6 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
 
     protected HashMap<String, Customer> mAllCustomers = new HashMap<>();
     protected HashMap<Long, SalesViewModel> mAllSales = new HashMap<>();
-    private HashMap<String, CustomerSaleModel> saleModelHashMap = new HashMap<>();
-    private ArrayList<CustomerSaleModel> listOfCustomerSaleModel = new ArrayList<>();
-    private int testValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,19 +99,6 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
         }
     }
 
-    @Override
-    public CustomerSaleModel getCustomerSales(String customerID) {
-
-        return saleModelHashMap.get(customerID);
-    }
-
-    @Override
-    public void goToCustomerBasedSalesFragment(String name, String date) {
-        //CustomerSaleModel customerSaleModel = saleModelHashMap.get(name);
-        //getSupportActionBar().setTitle(name+" Sales");
-        //replaceFragment(CustomerBasedSalesFragment.newInstance(customerSaleModel,date), "customer_based_sales_fragment");
-        //Toast.makeText(getActivity(),"TotalSalesInfo: "+temp.name, Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public void goToDiscreteBasedSalesFragment(TotalSalesInfo totalSalesInfo, String header) {
@@ -149,15 +131,7 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
 
     @Override
     public void onDeleteSaleRecordSuccess(SalesViewModel mSalesViewModel) {
-        /*mAllSales.remove(mSalesViewModel.getDate());
-        CustomerSaleModel customerSaleModel = saleModelHashMap.get(mSalesViewModel.getCustomerID());
-        customerSaleModel.salesViewModels.remove(mSalesViewModel);*/
         SalesActivity.this.onBackPressed();
-    }
-
-    @Override
-    public HashMap<Long, SalesViewModel> getDaySales() {
-        return mAllSales;
     }
 
     @Override

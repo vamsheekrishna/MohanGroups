@@ -38,9 +38,7 @@
     <string name="paid_amount"><![CDATA[Paid \u20B9]]></string>
     <string name="due_amount"><![CDATA[Due \u20B9]]></string>
     <string name="_5_5_5">5+5+5</string>
-    <string name="ice_amount_header"><![CDATA[Ice(\u20B9)]]></string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_sales">Sales</string>
     <string name="nav_customer">Customers</string>
     <string name="colorpicselection">ColorPicSelection</string>
@@ -55,6 +53,5 @@
     <string name="time">Time</string>
     <string name="monthly_sales">Monthly Sales</string>
     <string name="daily_sales">Daily Sales</string>
-    <string name="yearly_sales">Yearly Sales</string>
 
 </resources>

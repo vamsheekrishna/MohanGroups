@@ -8,17 +8,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class TotalSalesInfo extends BaseObservable implements Serializable {
-    public int totalDue;
-    public int totalPaid;
+    private int totalDue;
+    private int totalPaid;
     public int totalICEAmount;
-    public int totalLabourCharges;
+    private int totalLabourCharges;
     public int totalAmount;
-    public float totalBlock;
+    private float totalBlock;
     public String totalBlocksString = "";
     public String name = "";
-    public String headerText = "";
-    public String headerSubText = "";
-    public ArrayList<SalesViewModel> salesModels = new ArrayList<>();
+    String headerText = "";
+    String headerSubText = "";
+    private ArrayList<SalesViewModel> salesModels = new ArrayList<>();
 
     public int getTotalDue() {
         return totalDue;
