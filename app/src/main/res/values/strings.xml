@@ -41,6 +41,7 @@
 
     <string name="nav_sales">Sales</string>
     <string name="nav_customer">Customers</string>
+    <string name="nav_cabin">Cabin</string>
     <string name="colorpicselection">ColorPicSelection</string>
     <string name="message">MESSAGE</string>
     <string name="call">CALL</string>
@@ -53,5 +54,12 @@
     <string name="time">Time</string>
     <string name="monthly_sales">Monthly Sales</string>
     <string name="daily_sales">Daily Sales</string>
+    <string name="create_cabin">Create Cabin</string>
+    <string name="update_cabin">Update Cabin</string>
+    <string name="cabin_name">Cabin Name</string>
+    <string name="cabin_name_hint">Enter Cabin Name</string>
+    <string name="cabin_coulmn_hint">Columns</string>
+    <string name="cabin_rows_hint">Rows</string>
+    <string name="show_cabin">Show Cabin</string>
 
 </resources>

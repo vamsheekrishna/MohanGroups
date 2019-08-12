@@ -18,10 +18,14 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.view.MenuItemCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybusinesstracker.BaseCalsses.BaseFragment;
 import com.example.mybusinesstracker.R;
+import com.example.mybusinesstracker.cabin.ui.cabinhome.AutoFitGridLayoutManager;
 import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
 import com.example.mybusinesstracker.databinding.FragmentGroupBasedSalesBinding;
 import com.example.mybusinesstracker.sales.OnSalesInteractionListener;
@@ -103,8 +107,10 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
         View view =  binder.getRoot();
         //((TextView)view.findViewById(R.id.selected_date)).setText(mParam2);
         view.findViewById(R.id.selected_date).setOnClickListener(this);
-
         groupBasedSalesAdapter = new GroupSalesAdapter(mGroupBasedSalesModel.getSalesData(), this);
+
+        //GridLayoutManager manager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        //recyclerView.setLayoutManager(manager);
         binder.setTotalSales(groupBasedSalesAdapter);
         view.findViewById(R.id.add_new).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -332,7 +338,7 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         nameMenuItem = menu.findItem(R.id.button_item);
-        RelativeLayout relativeLayout = (RelativeLayout) nameMenuItem.getActionView();
+        RelativeLayout relativeLayout = (RelativeLayout) MenuItemCompat.getActionView(nameMenuItem);
         toggleButton = relativeLayout.findViewById(R.id.button);
         toggleButton.setChecked(mGroupBasedSalesModel.getContentType() == GroupBasedSalesModel.Content.date);
     }

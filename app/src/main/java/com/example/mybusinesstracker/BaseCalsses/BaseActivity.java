@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mybusinesstracker.R;
+import com.example.mybusinesstracker.cabin.CabinActivity;
 import com.example.mybusinesstracker.customer.CustomerActivity;
 import com.example.mybusinesstracker.power.PowerActivity;
 import com.example.mybusinesstracker.sales.SalesActivity;
@@ -102,6 +103,14 @@ public class BaseActivity extends AppCompatActivity implements OnBaseAppListener
             case R.id.customer:
                 if(!(BaseActivity.this instanceof CustomerActivity)) {
                     intent = new Intent(this, CustomerActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(BaseActivity.this, "My Cart",Toast.LENGTH_SHORT).show();break;
+                }
+            case R.id.cabin:
+                if(!(BaseActivity.this instanceof CabinActivity)) {
+                    intent = new Intent(this, CabinActivity.class);
                     startActivity(intent);
                     finish();
                 } else {

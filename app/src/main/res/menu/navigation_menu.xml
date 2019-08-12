@@ -7,5 +7,7 @@
         android:title="@string/nav_sales"/>
     <item android:id="@+id/customer"
         android:title="@string/nav_customer"/>
+    <item android:id="@+id/cabin"
+        android:title="@string/nav_cabin"/>
 
 </menu>

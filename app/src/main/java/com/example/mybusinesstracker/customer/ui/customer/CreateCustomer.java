@@ -39,7 +39,7 @@ public class CreateCustomer extends BaseFragment implements View.OnClickListener
     public CreateCustomer() {
         // Required empty public constructor
     }
-    FragmentCreateCustomerBinding binding;
+    private FragmentCreateCustomerBinding binding;
     public static CreateCustomer newInstance(Customer param1) {
         CreateCustomer fragment = new CreateCustomer();
         Bundle args = new Bundle();
@@ -161,7 +161,6 @@ public class CreateCustomer extends BaseFragment implements View.OnClickListener
                             //String color = "#" + Integer.toHexString();
 
                             mCustomer.setColorID(Color.argb(alphaValue,redValue,greenValue,blueValue));
-
                             pickedColor.setBackgroundColor(mCustomer.getColorID());
                         }
                     }
