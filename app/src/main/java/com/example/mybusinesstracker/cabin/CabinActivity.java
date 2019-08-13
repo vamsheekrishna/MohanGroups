@@ -1,11 +1,10 @@
 package com.example.mybusinesstracker.cabin;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinHomeFragment;
+import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CreteFragment;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.OnCabinInteractionListener;
 import com.example.mybusinesstracker.factory.FactoryBaseActivity;
@@ -24,7 +23,7 @@ public class CabinActivity extends FactoryBaseActivity implements OnCabinInterac
     }
 
     @Override
-    public void goToCreteCabin() {
-        replaceFragment(CreteFragment.newInstance(),"CreteFragment");
+    public void goToCreteCabin(CabinViewModel cabinViewModel) {
+        replaceFragment(CreteFragment.newInstance(cabinViewModel),"CreteFragment");
     }
 }

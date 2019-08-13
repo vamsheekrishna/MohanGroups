@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/cabin_name"
                 android:hint="@string/cabin_rows_hint"
-                android:text="@={``+creteViewModel.totalColumns}"
+                android:text="@={``+creteViewModel.totalRows}"
                 android:inputType="number"/>
             <EditText
                 android:id="@+id/cabin_column"
@@ -56,6 +56,9 @@
                 android:layout_toEndOf="@+id/cabin_column"
                 android:layout_alignParentEnd="true"
                 android:layout_width="100dp"
+                android:background="@color/blue"
+                android:textColor="@color/white"
+                android:textSize="@dimen/header_3"
                 android:layout_height="wrap_content"
                 android:text="@string/show_cabin"/>
         </RelativeLayout>
@@ -72,10 +75,40 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/body"
             android:layout_below="@+id/header"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/bottom"
             android:layout_width="match_parent"
             android:adapter="@{iceBlockAdapter}"
             android:layout_height="wrap_content">
         </androidx.recyclerview.widget.RecyclerView>
+        <LinearLayout
+            android:id="@+id/bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <Button
+                android:layout_marginEnd="16dp"
+                android:id="@+id/insert_cabin"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/cus_create_btn"
+                android:background="@color/colorAccent"
+                android:textColor="@color/white"
+                android:textSize="@dimen/header_3"
+                android:textStyle="bold"
+                android:layout_marginRight="16dp" />
+            <Button
+                android:visibility="gone"
+                android:id="@+id/delete_cabin"
+                android:layout_width="150dp"
+                android:background="@color/dark_pink"
+                android:textColor="@color/white"
+                android:textSize="@dimen/header_3"
+                android:layout_height="wrap_content"
+                android:text="@string/cus_delete_btn"
+                android:layout_marginLeft="16dp" />
+        </LinearLayout>
     </RelativeLayout>
 </layout>

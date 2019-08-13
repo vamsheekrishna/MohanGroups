@@ -5,6 +5,8 @@ import androidx.databinding.BaseObservable;
 import com.example.mybusinesstracker.R;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 public class IceBlock extends BaseObservable implements Serializable {
@@ -16,13 +18,22 @@ public class IceBlock extends BaseObservable implements Serializable {
     private String blockName;
     private int block1, block2, block3, block4, blockBG;
 
+    public IceBlock() {
+
+    }
     public IceBlock(int i, String name) {
         setID(i);
         setBlockName(name);
         setFullBlockColor(R.color.transparent);
         setBlockBG(R.color.blue);
     }
-
+    public IceBlock(Map<String, Object> data) {
+        ID = (int) data.get("ID");
+        isInProduction = (boolean) data.get("isInProduction");
+        isIceBlock = (boolean) data.get("isIceBlock");
+        startedAt = (long) data.get("startedAt");
+        blockName = (String) data.get("blockName");
+    }
     public boolean isIceBlock() {
         return isIceBlock;
     }

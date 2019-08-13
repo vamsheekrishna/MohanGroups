@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Check link patterns https://www.color-hex.com/color/058791-->
     <color name="colorPrimary">#058791</color>
     <color name="colorPrimaryDark">#248A92</color>
     <color name="colorAccent">#248A92</color>

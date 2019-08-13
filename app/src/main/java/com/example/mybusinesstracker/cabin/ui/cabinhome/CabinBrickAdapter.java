@@ -17,12 +17,11 @@ import com.example.mybusinesstracker.databinding.FragmentRecycleCabinBrickItemBi
 
 import java.util.ArrayList;
 
-public class CabinBrickAdapter extends RecyclerView.Adapter<CabinBrickViewHolder> implements View.OnClickListener {
+public class CabinBrickAdapter extends RecyclerView.Adapter<CabinBrickViewHolder> {
     private ArrayList<IceBlock> mIceBlocks;
-    private View.OnClickListener mOnClickListener;
-    CabinBrickAdapter(ArrayList<IceBlock> iceBlocks , View.OnClickListener onClickListener) {
+
+    CabinBrickAdapter(ArrayList<IceBlock> iceBlocks) {
         mIceBlocks = iceBlocks;
-        mOnClickListener = onClickListener;
     }
     @NonNull
     @Override
@@ -42,10 +41,10 @@ public class CabinBrickAdapter extends RecyclerView.Adapter<CabinBrickViewHolder
         holder.bind(mIceBlocks.get(position));
     }
     public void setIceBlocks(ArrayList<IceBlock> iceBlocks) {
-        mIceBlocks.clear();
-        mIceBlocks.addAll(iceBlocks);
+        //mIceBlocks.clear();
+        //mIceBlocks.addAll(iceBlocks);
     }
-    public ArrayList<IceBlock> getIceBlocks() {
+    ArrayList<IceBlock> getIceBlocks() {
         return mIceBlocks;
     }
 
@@ -54,11 +53,13 @@ public class CabinBrickAdapter extends RecyclerView.Adapter<CabinBrickViewHolder
         return mIceBlocks.size();
     }
 
+    /*
     @Override
     public void onClick(View view) {
         //CabinBrickViewHolder cabinBrickViewHolder = (CabinBrickViewHolder)view;
-        /*int position = (int) view.getTag();
-        mIceBlocks.get(position).setIceBlock();*/
+        *//*int position = (int) view.getTag();
+        mIceBlocks.get(position).setIceBlock();*//*
         //notifyDataSetChanged();
     }
+    */
 }

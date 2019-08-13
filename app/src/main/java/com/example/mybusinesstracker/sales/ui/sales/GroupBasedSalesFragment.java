@@ -20,12 +20,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.view.MenuItemCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybusinesstracker.BaseCalsses.BaseFragment;
 import com.example.mybusinesstracker.R;
-import com.example.mybusinesstracker.cabin.ui.cabinhome.AutoFitGridLayoutManager;
 import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
 import com.example.mybusinesstracker.databinding.FragmentGroupBasedSalesBinding;
 import com.example.mybusinesstracker.sales.OnSalesInteractionListener;
