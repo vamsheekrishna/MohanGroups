@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mybusinesstracker.BaseCalsses.BaseFragment;
+import com.example.mybusinesstracker.basecalss.BaseFragment;
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.customer.CustomerFragmentInteractionListener;
 

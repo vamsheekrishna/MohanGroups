@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.mybusinesstracker.basecalss.BaseFragment;
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cloud_firestore.tables.CabinTable;
 import com.example.mybusinesstracker.databinding.CabinHomeFragmentBinding;
@@ -23,9 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Map;
-
-public class CabinHomeFragment extends Fragment implements View.OnClickListener {
+public class CabinHomeFragment extends BaseFragment implements View.OnClickListener {
 
     private CabinHomeViewModel mViewModel;
     private OnCabinInteractionListener onCabinInteractionListener;
@@ -75,7 +73,6 @@ public class CabinHomeFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //mViewModel = ViewModelProviders.of(this).get(CabinHomeViewModel.class);
     }
 
     @Override
@@ -86,9 +83,8 @@ public class CabinHomeFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        view = (TextView) view;
         String temp = ((TextView) view).getText().toString();
-       CabinViewModel cabinViewModel=  mViewModel.getCabinViewModel(temp);
+        CabinViewModel cabinViewModel=  mViewModel.getCabinViewModel(temp);
         onCabinInteractionListener.goToCreteCabin(cabinViewModel);
     }
 }

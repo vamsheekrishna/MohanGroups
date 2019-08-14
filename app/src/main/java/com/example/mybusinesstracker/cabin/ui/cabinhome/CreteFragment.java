@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.mybusinesstracker.BaseCalsses.BaseFragment;
+import com.example.mybusinesstracker.basecalss.BaseFragment;
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cabin.IceBlock;
 import com.example.mybusinesstracker.cloud_firestore.tables.CabinTable;
@@ -26,7 +26,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.Calendar;
-import java.util.HashMap;
 
 public class CreteFragment extends BaseFragment implements View.OnClickListener {
 

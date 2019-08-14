@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
-import com.example.mybusinesstracker.BaseCalsses.BaseFragment;
+import com.example.mybusinesstracker.basecalss.BaseFragment;
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.databinding.FragmentDiscreteBasedSalesBinding;
 import com.example.mybusinesstracker.sales.OnSalesInteractionListener;

@@ -2,7 +2,7 @@ package com.example.mybusinesstracker.power;
 
 import android.os.Bundle;
 
-import com.example.mybusinesstracker.BaseCalsses.BaseActivity;
+import com.example.mybusinesstracker.basecalss.BaseActivity;
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.power.ui.power.PowerFragment;
 

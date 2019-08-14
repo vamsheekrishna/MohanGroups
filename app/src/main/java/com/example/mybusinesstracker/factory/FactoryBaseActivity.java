@@ -6,7 +6,7 @@ import android.os.PersistableBundle;
 
 import androidx.annotation.Nullable;
 
-import com.example.mybusinesstracker.BaseCalsses.BaseActivity;
+import com.example.mybusinesstracker.basecalss.BaseActivity;
 import com.example.mybusinesstracker.cloud_firestore.tables.CustomerTable;
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
 

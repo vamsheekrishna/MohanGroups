@@ -1,4 +1,4 @@
-package com.example.mybusinesstracker.BaseCalsses;
+package com.example.mybusinesstracker.basecalss;
 
 public interface OnNtworkChangeListener {
 

@@ -29,23 +29,9 @@ public class CabinViewModel extends BaseObservable implements Serializable {
         totalRows=temp.intValue();
         temp = (Long) data.get("totalColumns") ;
         totalColumns = temp.intValue();
-        //totalIceBlocks = (int) data.get("totalIceBlocks");
-//        Map<String, Object> dataIceBlock = (Map<String, Object>) data.get("iceBlocks");
-
-        /*for(Map.Entry<String,Object> map : dataIceBlock.entrySet()){
-
-            iceBlocks.add( new IceBlock(map));
-
-        }*/
 
         ArrayList<IceBlock> iceBlocksTemp = new ArrayList<>();
         iceBlocksTemp.addAll((Collection<? extends IceBlock>) data.get("iceBlocks"));
-        HashSet<Object> set = new HashSet<>(Arrays.asList(data.get("iceBlocks")));
-        for ( Object temp1:set) {
-
-            Log.d("","");
-
-        }
 
     }
     public CabinViewModel() {

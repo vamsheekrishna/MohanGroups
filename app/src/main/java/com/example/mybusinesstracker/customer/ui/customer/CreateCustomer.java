@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.databinding.DataBindingUtil;
 
-import com.example.mybusinesstracker.BaseCalsses.BaseFragment;
+import com.example.mybusinesstracker.basecalss.BaseFragment;
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.customer.CustomerFragmentInteractionListener;
 import com.example.mybusinesstracker.databinding.FragmentCreateCustomerBinding;

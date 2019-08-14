@@ -1,4 +1,4 @@
-package com.example.mybusinesstracker.BaseCalsses;
+package com.example.mybusinesstracker.basecalss;
 
 interface OnBaseAppListener extends OnNtworkChangeListener{
     void setTagName();
