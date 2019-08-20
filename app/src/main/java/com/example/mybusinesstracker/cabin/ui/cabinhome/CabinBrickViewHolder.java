@@ -19,14 +19,16 @@ import java.util.Objects;
 class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private TextView blockPart1, blockPart2, blockPart3, blockPart4, blockBG;
     FragmentRecycleCabinBrickItemBinding itemBinding;
+    View view;
     Context context;
     CabinBrickAdapter mCabinBrickAdapter;
     public CabinBrickViewHolder(@NonNull FragmentRecycleCabinBrickItemBinding itemView, CabinBrickAdapter cabinBrickAdapter) {
         super(itemView.getRoot());
         itemBinding = itemView;
-        itemView.getRoot().setOnClickListener(this);
+        view = itemView.getRoot();
+        view.setOnClickListener(this);
         mCabinBrickAdapter = cabinBrickAdapter;
-        context = itemView.getRoot().getContext();
+        context = view.getContext();
         blockPart1 = itemView.getRoot().findViewById(R.id.block_piece_1);
         blockPart2 = itemView.getRoot().findViewById(R.id.block_piece_2);
         blockPart3 = itemView.getRoot().findViewById(R.id.block_piece_3);
@@ -53,7 +55,7 @@ class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     @Override
     public void onClick(View view) {
         int position = (int) view.getTag();
-        mCabinBrickAdapter.getIceBlocks().get(position).setIceBlock();
+        mCabinBrickAdapter.getIceBlocks().get(position).setBlockSelectedState();
         updateBackGround(mCabinBrickAdapter.getIceBlocks().get(position));
     }
 }

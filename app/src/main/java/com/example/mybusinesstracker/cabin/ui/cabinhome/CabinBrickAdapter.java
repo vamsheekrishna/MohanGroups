@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class CabinBrickAdapter extends RecyclerView.Adapter<CabinBrickViewHolder> {
     private ArrayList<IceBlock> mIceBlocks;
 
-    CabinBrickAdapter(ArrayList<IceBlock> iceBlocks) {
+    public CabinBrickAdapter(ArrayList<IceBlock> iceBlocks) {
         mIceBlocks = iceBlocks;
     }
     @NonNull
@@ -39,10 +39,12 @@ public class CabinBrickAdapter extends RecyclerView.Adapter<CabinBrickViewHolder
     public void onBindViewHolder(@NonNull CabinBrickViewHolder holder, int position) {
         holder.itemView.setTag(position);
         holder.bind(mIceBlocks.get(position));
+        holder.view.setClickable(mIceBlocks.get(position).isClickable());
     }
     public void setIceBlocks(ArrayList<IceBlock> iceBlocks) {
-        //mIceBlocks.clear();
-        //mIceBlocks.addAll(iceBlocks);
+        mIceBlocks.clear();
+        mIceBlocks.addAll(iceBlocks);
+        //notifyDataSetChanged();
     }
     ArrayList<IceBlock> getIceBlocks() {
         return mIceBlocks;

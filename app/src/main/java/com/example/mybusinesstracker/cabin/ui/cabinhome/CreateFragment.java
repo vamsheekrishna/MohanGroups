@@ -27,7 +27,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.Calendar;
 
-public class CreteFragment extends BaseFragment implements View.OnClickListener {
+public class CreateFragment extends BaseFragment implements View.OnClickListener {
 
     private CabinViewModel mViewModel;
     private CabinBrickAdapter cabinBrickAdapter;
@@ -36,8 +36,8 @@ public class CreteFragment extends BaseFragment implements View.OnClickListener 
     private boolean isCabinUpdate = false;
     String cabinName = "";
 
-    public static CreteFragment newInstance(CabinViewModel cabinViewModel) {
-        CreteFragment creteFragment = new CreteFragment();
+    public static CreateFragment newInstance(CabinViewModel cabinViewModel) {
+        CreateFragment creteFragment = new CreateFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("model", cabinViewModel);
         creteFragment.setArguments(bundle);
@@ -80,9 +80,11 @@ public class CreteFragment extends BaseFragment implements View.OnClickListener 
     private void generateCabin() {
         mViewModel.getIceBlocks().clear();
 
-        for (int i =0; i<mViewModel.getTotalIceBlocks(); i++) {
+        for (int i = 0; i<mViewModel.getCabinSize(); i++) {
 
             IceBlock iceBlock = new IceBlock(i, String.valueOf((i%mViewModel.getTotalColumns())+1));
+            iceBlock.setSelectedColor(R.color.light_gray);
+            iceBlock.setIceColor(R.color.blue);
             //iceBlock.setFullBlockColor(Objects.requireNonNull(getActivity()).getColor(R.color.blue));
             mViewModel.addBlock(iceBlock);
             iceBlock.setStartedAt(Calendar.getInstance().getTimeInMillis());
@@ -123,6 +125,9 @@ public class CreteFragment extends BaseFragment implements View.OnClickListener 
 
                 if(cabinName.length()>0 && !cabinName.equalsIgnoreCase(mViewModel.getCabinName())) {
                     deleteRecord();
+                }
+                for (IceBlock iceBlock : mViewModel.getIceBlocks()) {
+                    iceBlock.setIceBlock();
                 }
                 CabinTable cabinTable = new CabinTable();
                 cabinTable.addDataField(mViewModel, new OnSuccessListener<Void>() {

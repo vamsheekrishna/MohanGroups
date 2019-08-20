@@ -5,18 +5,18 @@ import androidx.databinding.BaseObservable;
 import com.example.mybusinesstracker.R;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.Objects;
 
 public class IceBlock extends BaseObservable implements Serializable {
 
     private int ID;
-    private boolean isInProduction;
-    private boolean isIceBlock = true;
+    private boolean inProduction = true;
+    private boolean iceBlock = true;
     private long startedAt;
     private String blockName;
-    private int block1, block2, block3, block4, blockBG;
+    private boolean isClickable = true;
+    private int block1, block2, block3, block4, blockBG, iceColor, selectedColor = R.color.light_gray;
+    private boolean isSelected;
 
     public IceBlock() {
 
@@ -25,27 +25,28 @@ public class IceBlock extends BaseObservable implements Serializable {
         setID(i);
         setBlockName(name);
         setFullBlockColor(R.color.transparent);
-        setBlockBG(R.color.blue);
+        //setBlockBG(R.color.blue);
     }
     public IceBlock(Map<String, Object> data) {
         ID = (int) data.get("ID");
-        isInProduction = (boolean) data.get("isInProduction");
-        isIceBlock = (boolean) data.get("isIceBlock");
+        inProduction = (boolean) data.get("inProduction");
+        iceBlock = (boolean) data.get("iceBlock");
         startedAt = (long) data.get("startedAt");
         blockName = (String) data.get("blockName");
     }
     public boolean isIceBlock() {
-        return isIceBlock;
+        return iceBlock;
     }
 
     public void setIceBlock() {
-        if(isIceBlock) {
-            isIceBlock = false;
-            setBlockBG(R.color.light_gray);
+        iceBlock = isSelected;
+        /*if(iceBlock) {
+            iceBlock = false;
+            //setBlockBG(getSelectedColor());
         } else  {
-            isIceBlock = true;
-            setBlockBG(R.color.blue);
-        }
+            iceBlock = true;
+            //setBlockBG(getIceColor());
+        }*/
     }
 
     public int getID() {
@@ -66,11 +67,11 @@ public class IceBlock extends BaseObservable implements Serializable {
     }
 
     public boolean isInProduction() {
-        return isInProduction;
+        return inProduction;
     }
 
     public void setInProduction(boolean inProduction) {
-        isInProduction = inProduction;
+        this.inProduction = inProduction;
     }
 
     public long getStartedAt() {
@@ -120,10 +121,47 @@ public class IceBlock extends BaseObservable implements Serializable {
     }
 
     public int getBlockBG() {
-        return blockBG;
+        if(isSelected) {
+            return getSelectedColor();
+        } else {
+            return getIceColor();
+        }
+
     }
 
     public void setBlockBG(int blockBG) {
         this.blockBG = blockBG;
+    }
+
+    public boolean isClickable() {
+        return isClickable;
+    }
+
+    public void setClickable(boolean clickable) {
+        isClickable = clickable;
+    }
+
+    public int getIceColor() {
+        return iceColor;
+    }
+
+    public void setIceColor(int iceColor) {
+        this.iceColor = iceColor;
+    }
+
+    public void setSelectedColor(int selectedColor) {
+        this.selectedColor = selectedColor;
+    }
+
+    public int getSelectedColor() {
+        return selectedColor;
+    }
+
+
+    public void setBlockSelectedState() {
+        isSelected = !isSelected;
+    }
+    public void setBlockSelectedState(boolean state) {
+        isSelected = state;
     }
 }

@@ -69,8 +69,7 @@ public class DiscreteBasedSalesFragment extends BaseFragment implements View.OnC
         if(mParam2.contains(getString(R.string.monthly_sales))) {
             pattern = Utils.DD_MMM_YYYY_HH_MM_SS;
         }
-        for (SalesViewModel salesViewModel :
-                temp) {
+        for (SalesViewModel salesViewModel : temp) {
             salesViewModel.setDate(salesViewModel.getDate(), pattern);
         }
         DiscreteBaseSalesAdapter mDiscreteBaseSalesAdapter = new DiscreteBaseSalesAdapter(temp, this);

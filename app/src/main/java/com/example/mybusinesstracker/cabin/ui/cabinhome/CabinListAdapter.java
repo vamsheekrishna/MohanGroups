@@ -11,7 +11,7 @@ import com.example.mybusinesstracker.R;
 
 import java.util.ArrayList;
 
-class CabinListAdapter extends RecyclerView.Adapter<CabinNameViewHolder> {
+public class CabinListAdapter extends RecyclerView.Adapter<CabinNameViewHolder> {
     ArrayList<String> cabinNames;
     View.OnClickListener onClickListener;
     public CabinListAdapter(ArrayList<String> arrayList, View.OnClickListener click) {

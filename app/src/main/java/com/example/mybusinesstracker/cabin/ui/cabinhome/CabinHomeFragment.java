@@ -27,7 +27,7 @@ public class CabinHomeFragment extends BaseFragment implements View.OnClickListe
 
     private CabinHomeViewModel mViewModel;
     private OnCabinInteractionListener onCabinInteractionListener;
-    CabinListAdapter cabinListAdapter;
+    private CabinListAdapter cabinListAdapter;
     public static CabinHomeFragment newInstance() {
         return new CabinHomeFragment();
     }
@@ -46,8 +46,8 @@ public class CabinHomeFragment extends BaseFragment implements View.OnClickListe
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(null != task.getResult()) {
                     for (DocumentSnapshot document : task.getResult()) {
-                        CabinViewModel dungeon= document.toObject(CabinViewModel.class);
-                        mViewModel.addCabinViewModel(dungeon);
+                        CabinViewModel cabinViewModel= document.toObject(CabinViewModel.class);
+                        mViewModel.addCabinViewModel(cabinViewModel);
                     }
                 }
                 updateList();

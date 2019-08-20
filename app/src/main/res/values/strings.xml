@@ -62,4 +62,6 @@
     <string name="cabin_rows_hint">Rows</string>
     <string name="show_cabin">Show Cabin</string>
 
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

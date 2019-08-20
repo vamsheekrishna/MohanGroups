@@ -52,4 +52,10 @@
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
     <color name="white">#ffffffff</color>
     <color name="transparent">#00000000</color>
+    <color name="ice_block_full">#b4cffa</color>
+    <color name="ice_block_threeforth">#caddfb</color>
+    <color name="ice_block_half">#d9e7fc</color>
+    <color name="ice_block_one_fourth">#f0f5fe</color>
+    <color name="ice_block_empty">#fab4cf</color>
+    <color name="ice_block_out_side">#910f05</color>
 </resources>

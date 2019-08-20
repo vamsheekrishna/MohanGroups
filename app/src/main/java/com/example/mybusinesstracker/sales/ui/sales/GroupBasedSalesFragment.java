@@ -48,13 +48,12 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private GroupBasedSalesModel mGroupBasedSalesModel ;//= new GroupBasedSalesModel();
+    private GroupBasedSalesModel mGroupBasedSalesModel;//= new GroupBasedSalesModel();
     private String mParam2;
 
     private OnSalesInteractionListener mListener;
     private GroupSalesAdapter groupBasedSalesAdapter;
-    private MenuItem nameMenuItem;
-    ToggleButton toggleButton;
+
     //private String dateType = "day";
     //boolean isSingleSaleData = false;
     public GroupBasedSalesFragment() {
@@ -334,9 +333,9 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        nameMenuItem = menu.findItem(R.id.button_item);
+        MenuItem nameMenuItem = menu.findItem(R.id.button_item);
         RelativeLayout relativeLayout = (RelativeLayout) MenuItemCompat.getActionView(nameMenuItem);
-        toggleButton = relativeLayout.findViewById(R.id.button);
+        ToggleButton toggleButton = relativeLayout.findViewById(R.id.button);
         toggleButton.setChecked(mGroupBasedSalesModel.getContentType() == GroupBasedSalesModel.Content.date);
     }
 
