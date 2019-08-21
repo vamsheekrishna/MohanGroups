@@ -140,7 +140,7 @@ public class Customer extends BaseObservable implements Serializable, Parcelable
         notifyPropertyChanged(BR.colorID);
     }
     @Override
-    public HashMap<String, String> getHashMap() {
+    public HashMap<String, Object> getHashMap() {
         HashMap<String, String> data = new HashMap<>();
         data.put(KEY_CUSTOMER_NAME,customerName);
         data.put(KEY_ADDRESS,address);

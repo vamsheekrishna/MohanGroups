@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class CreateFragment extends BaseFragment implements View.OnClickListener {
 
@@ -133,7 +134,7 @@ public class CreateFragment extends BaseFragment implements View.OnClickListener
                 cabinTable.addDataField(mViewModel, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        getActivity().onBackPressed();
+                        Objects.requireNonNull(getActivity()).onBackPressed();
                         //Toast.makeText(getActivity(), "create_cabin onSuccess", Toast.LENGTH_SHORT).show();
                     }
                 }, new OnFailureListener() {

@@ -1,6 +1,5 @@
 package com.example.mybusinesstracker.cabin.ui.cabinhome;
 
-import androidx.lifecycle.ViewModel;
 
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cabin.IceBlock;
@@ -18,7 +17,9 @@ public class CabinHomeViewModel extends Observable {
         for (IceBlock iceBlock: model.getIceBlocks()) {
             iceBlock.setSelectedColor(R.color.light_gray);
             iceBlock.setIceColor(R.color.blue);
-            iceBlock.setBlockSelectedState(iceBlock.isIceBlock());
+            if(!iceBlock.isIceBlock()) {
+                iceBlock.setBlockSelectedState(true);
+            }
         }
         arrayList.add(model.getCabinName());
     }

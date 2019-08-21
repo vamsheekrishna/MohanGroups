@@ -56,7 +56,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/header_3"
                 android:layout_height="wrap_content"
-                android:text="@string/show_cabin"/>
+                android:text="Add Sales"/>
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView

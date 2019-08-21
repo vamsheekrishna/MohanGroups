@@ -39,7 +39,7 @@ public class IceBlock extends BaseObservable implements Serializable {
     }
 
     public void setIceBlock() {
-        iceBlock = isSelected;
+        iceBlock = !isSelected;
         /*if(iceBlock) {
             iceBlock = false;
             //setBlockBG(getSelectedColor());

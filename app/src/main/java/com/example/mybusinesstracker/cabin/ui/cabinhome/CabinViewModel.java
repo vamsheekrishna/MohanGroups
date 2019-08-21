@@ -65,15 +65,16 @@ public class CabinViewModel extends BaseObservable implements Serializable {
                     } else if(hours>=36 && hours < 47) {
                         threeFourth+=1;
                         iceBlock.setIceColor(R.color.ice_block_threeforth);
-                    } if(hours>=24 && hours < 36) {
+                    } else if(hours>=24 && hours < 36) {
                         oneTwo+=1;
                         iceBlock.setIceColor(R.color.ice_block_half);
-                    } if(hours>=12 && hours < 24) {
+                    } else if(hours>=12 && hours < 24) {
                         oneFourth+=1;
                         iceBlock.setIceColor(R.color.ice_block_one_fourth);
                     } else {
                         emptyBlocks+=1;
                         iceBlock.setIceColor(R.color.ice_block_empty);
+                        iceBlock.setClickable(false);
                     }
                 } else {
                     outSide+=1;

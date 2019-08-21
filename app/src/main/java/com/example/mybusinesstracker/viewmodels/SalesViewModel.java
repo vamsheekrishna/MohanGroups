@@ -2,6 +2,7 @@ package com.example.mybusinesstracker.viewmodels;
 
 import androidx.databinding.BaseObservable;
 
+import com.example.mybusinesstracker.cabin.IceBlock;
 import com.example.mybusinesstracker.cloud_firestore.OnCloudFireStoreInteraction;
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
 import com.example.mybusinesstracker.utilities.Utils;
@@ -27,6 +28,7 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     private static final String PAID_AMOUNT = "paidAmount";
     private static final String DUE_AMOUNT = "dueAmount";
     private static final String NOTE = "note";
+    private static final String SELECTED_BLOCKS = "selectBlocks";
     private int ID;
     private Long date ;
     private String cabinID = null;
@@ -42,6 +44,7 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     private String note = null;
     private String dateString;
     private Customer selectedCustomer;
+    //ArrayList<IceBlock> selectedBlocks = new ArrayList<>();
 
     public SalesViewModel( Map<String, Object> hashMap) {
         setDate(Long.valueOf((String) requireNonNull(hashMap.get(DATE))), "dd-MM-YYYY HH:mm");
@@ -56,14 +59,15 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
         paidAmount= Integer.parseInt((String) requireNonNull(hashMap.get(PAID_AMOUNT)));
         dueAmount = Integer.parseInt((String) requireNonNull(hashMap.get(DUE_AMOUNT)));
         note = (String) hashMap.get(NOTE);
+        //selectedBlocks = (ArrayList<IceBlock>) hashMap.get(SELECTED_BLOCKS);
     }
     public SalesViewModel() {
 
     }
 
     @Override
-    public HashMap<String, String> getHashMap() {
-        HashMap<String, String> hashMap = new HashMap<>();
+    public HashMap<String, Object> getHashMap() {
+        HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put(DATE, String.valueOf(date));
         hashMap.put(CABIN_ID, cabinID);
         hashMap.put(CUSTOMER_ID, customerID);
@@ -76,6 +80,8 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
         hashMap.put(PAID_AMOUNT, String.valueOf(paidAmount));
         hashMap.put(DUE_AMOUNT, String.valueOf(dueAmount));
         hashMap.put(NOTE, String.valueOf(note));
+        //selectedBlocks.add(new IceBlock());
+        //hashMap.put(SELECTED_BLOCKS, selectedBlocks);
         return hashMap;
     }
 

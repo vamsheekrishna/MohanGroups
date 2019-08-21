@@ -1,8 +1,8 @@
 package com.example.mybusinesstracker.dashboard.ui.dashboard;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,12 +17,11 @@ import android.view.ViewGroup;
 
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinBrickAdapter;
-import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinListAdapter;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel;
+import com.example.mybusinesstracker.cabin.ui.cabinhome.OnCabinInteractionListener;
 import com.example.mybusinesstracker.cloud_firestore.tables.CabinTable;
 import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
 import com.example.mybusinesstracker.databinding.DashboardFragmentBinding;
-import com.example.mybusinesstracker.utilities.Utils;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,15 +33,26 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Objects;
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements View.OnClickListener {
 
     //private DashboardViewModel mViewModel;
     CabinViewModel mCabinViewModel;
     private CabinBrickAdapter cabinBrickAdapter;
     private RecyclerView recyclerView;
-
+    OnCabinInteractionListener onCabinInteractionListener;
     public static DashboardFragment newInstance() {
         return new DashboardFragment();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
@@ -51,9 +61,9 @@ public class DashboardFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         DashboardFragmentBinding dashboardFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.dashboard_fragment, container, false);
         mCabinViewModel = new CabinViewModel();
-        //mViewModel.addTempData(10);
         View  view = dashboardFragmentBinding.getRoot(); //inflater.inflate(R.layout.dashboard_fragment, container, false);
         recyclerView = view.findViewById(R.id.cabin);
+        view.findViewById(R.id.submit).setOnClickListener(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),5, RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
         cabinBrickAdapter = new CabinBrickAdapter(mCabinViewModel.getIceBlocks());
@@ -64,16 +74,13 @@ public class DashboardFragment extends Fragment {
                 if(null != task.getResult()) {
                     for (DocumentSnapshot document : task.getResult()) {
                         CabinViewModel cabinViewModel = document.toObject(CabinViewModel.class);
-
                         mCabinViewModel.cloneCabinViewModel(cabinViewModel, Calendar.getInstance());
-                        //mViewModel = dungeon;
                     }
                     if (mCabinViewModel.getCabinSize() > 0) {
                         updateList();
                         getSalesData();
                     }
                 }
-                //cabinListAdapter.notifyDataSetChanged();
             }
         });
 
@@ -107,9 +114,13 @@ public class DashboardFragment extends Fragment {
 
     private void updateList() {
         ((GridLayoutManager) Objects.requireNonNull(recyclerView.getLayoutManager())).setSpanCount(mCabinViewModel.getTotalColumns());
-        //cabinBrickAdapter.setIceBlocks(mViewModel.getIceBlocks());
         cabinBrickAdapter.notifyDataSetChanged();
     }
 
 
+    @Override
+    public void onClick(View view) {
+        SalesViewModel salesViewModel = new SalesViewModel();
+        onCabinInteractionListener.gotoSalesActivity(salesViewModel);
+    }
 }
