@@ -351,7 +351,7 @@ public class GroupBasedSalesFragment extends BaseFragment implements View.OnClic
         }
         Toast.makeText(getActivity(), "Toggle is: "+toggleButton.isChecked(),Toast.LENGTH_SHORT).show();
         Toast.makeText(getActivity(), "Toggle is: "+toggleButton.getText().toString(),Toast.LENGTH_SHORT).show();*/
-         //nameMenuItem.setVisible(false);
+        //nameMenuItem.setVisible(false);
     }
 
     public void myFancyMethod(View v) {

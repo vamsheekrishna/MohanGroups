@@ -23,24 +23,32 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.mybusinesstracker.basecalss.BaseFragment;
 import com.example.mybusinesstracker.R;
+import com.example.mybusinesstracker.cabin.ui.cabinhome.OnCabinInteractionListener;
+import com.example.mybusinesstracker.cloud_firestore.tables.CustomerTable;
 import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
 import com.example.mybusinesstracker.databinding.SalesFragmentBinding;
 import com.example.mybusinesstracker.sales.OnSalesInteractionListener;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class AddSaleFragment extends BaseFragment implements View.OnClickListener, OnFailureListener, OnSuccessListener<Void> {
 
     private static final String ARG_SALES_MODEL = "SalesViewModel";
+    public static final String IS_NEW = "IS_NEW";
     //private SalesViewModel mViewModel;
     private ArrayList<String> mSalesTypes = new ArrayList<>();
     private ArrayList<String> mCabinNames = new ArrayList<>();
@@ -50,13 +58,18 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
     private ArrayAdapter<String> spinnerCustomerAdapter;
     private ArrayAdapter<String> spinnerCabinAdapter;
     private OnSalesInteractionListener mListener;
+    OnCabinInteractionListener onCabinInteractionListener;
     private int testValue = 0;
     private SalesViewModel mSalesViewModel;
 
-    public static AddSaleFragment newInstance(SalesViewModel salesViewModel) {
+    protected HashMap<String, Customer> mAllCustomers = new HashMap<>();
+    private boolean mIsNew = false;
+
+    public static AddSaleFragment newInstance(SalesViewModel salesViewModel, boolean isNew) {
         AddSaleFragment fragment = new AddSaleFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_SALES_MODEL, salesViewModel);
+        args.putBoolean(IS_NEW, isNew);
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,6 +79,7 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mSalesViewModel = (SalesViewModel) getArguments().getSerializable(ARG_SALES_MODEL);
+            mIsNew = getArguments().getBoolean(IS_NEW);
         }
     }
 
@@ -74,12 +88,12 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        getCustomerList();
         mSalesTypes.add("Sale");
         mSalesTypes.add("Due");
         mSalesTypes.add("Due Paid");
         mCabinNames.add("Frick");
         mCabinNames.add("kirloskar");
-
         SalesFragmentBinding binder = DataBindingUtil.inflate(inflater, R.layout.sales_fragment, container, false);
         View view = binder.getRoot();
         Spinner mSpinnerEntryType = view.findViewById(R.id.entry_type_sp);
@@ -95,7 +109,8 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mSalesViewModel.setCustomerID(mCustomerNames.get(position));
-                mSalesViewModel.setSelectedCustomer(mListener.getCustomers().get(mSalesViewModel.getCustomerID()));
+                mSalesViewModel.setSelectedCustomer(mAllCustomers.get(mSalesViewModel.getCustomerID()));
+                mSalesViewModel.setTotalBlocks(mSalesViewModel.getSelectedBlocks().size());
                 if(mSalesViewModel.getTotalBlocks()>0) {
                     mSalesViewModel.setIceAmount((int) (mSalesViewModel.getTotalBlocks()*mSalesViewModel.getSelectedCustomer().getAmount()));
                     mSalesViewModel.setLabourCharges((int) (mSalesViewModel.getTotalBlocks()*mSalesViewModel.getSelectedCustomer().getLaborCharge()));
@@ -137,7 +152,7 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         mSpinnerCabin.setAdapter(spinnerCabinAdapter);
         mSpinnerCustomerName.setAdapter(spinnerCustomerAdapter);
         mSpinnerEntryType.setAdapter(salesTypeAdapter);
-        updateCustomerSpinner(mListener.getCustomers());
+        updateCustomerSpinner();
 
         if(null == mSalesViewModel){
             mSalesViewModel = new SalesViewModel();
@@ -153,9 +168,15 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
             mSpinnerCabin.setSelection(mCabinNames.indexOf(mSalesViewModel.getCabinID()));
             mSpinnerCustomerName.setSelection(mCustomerNames.indexOf(mSalesViewModel.getCustomerID()));
             mSpinnerEntryType.setSelection(mSalesTypes.indexOf(mSalesViewModel.getSalesType()));
-            ((Button)view.findViewById(R.id.sub_btn)).setText(R.string.cus_update_btn);
-            ((Button)view.findViewById(R.id.del_btn)).setText(R.string.cus_delete_btn);
-            view.findViewById(R.id.del_btn).setVisibility(View.VISIBLE);
+
+            if(!mIsNew) {
+                ((Button) view.findViewById(R.id.sub_btn)).setText(R.string.cus_update_btn);
+                ((Button) view.findViewById(R.id.del_btn)).setText(R.string.cus_delete_btn);
+                view.findViewById(R.id.del_btn).setVisibility(View.VISIBLE);
+            } else {
+                ((Button)view.findViewById(R.id.sub_btn)).setText(R.string.cus_create_btn);
+                view.findViewById(R.id.del_btn).setVisibility(View.GONE);
+            }
         }
 
         return view;
@@ -166,6 +187,8 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         super.onAttach(context);
         if (context instanceof OnSalesInteractionListener) {
             mListener = (OnSalesInteractionListener) context;
+        } else if (context instanceof OnCabinInteractionListener) {
+            onCabinInteractionListener = (OnCabinInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnSalesInteractionListener");
@@ -175,10 +198,18 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+
+        if (getContext() instanceof OnSalesInteractionListener) {
+            mListener = null;
+        } else if (getContext() instanceof OnCabinInteractionListener) {
+            onCabinInteractionListener = null;
+        } else {
+            throw new RuntimeException(Objects.requireNonNull(getContext()).toString() + " must implement OnSalesInteractionListener");
+        }
+
     }
 
-    public void updateCustomerSpinner(HashMap<String, Customer> mAllCustomers) {
+    public void updateCustomerSpinner() {
         mCustomerNames.clear();
         mCustomerNames.addAll(mAllCustomers.keySet());
         spinnerCustomerAdapter.notifyDataSetChanged();
@@ -191,7 +222,7 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
                 showDatePicker(v);
                 break;
             case R.id.sub_btn:
-                if(((TextView)v).getText().equals(R.string.cus_update_btn))
+                if(((TextView)v).getText().toString().equals(getString(R.string.cus_update_btn)))
                     onUpdateClicked();
                 else
                     onSaveClicked();
@@ -207,7 +238,13 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         salesTable.deleteRecord(mSalesViewModel, this, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                mListener.onDeleteSaleRecordSuccess(mSalesViewModel);
+                if (getContext() instanceof OnSalesInteractionListener) {
+                    mListener.onDeleteSaleRecordSuccess(mSalesViewModel);
+                } else if (getContext() instanceof OnCabinInteractionListener) {
+                    onCabinInteractionListener.onAddSaleRecordSuccess(mSalesViewModel);
+                } else {
+                    throw new RuntimeException(Objects.requireNonNull(getContext()).toString() + " must implement OnSalesInteractionListener");
+                }
             }
         });
     }
@@ -225,7 +262,13 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         salesTable.updateFields(mSalesViewModel, this, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                mListener.onUpdateSaleRecordSuccess(mSalesViewModel);
+                if (getContext() instanceof OnSalesInteractionListener) {
+                    mListener.onUpdateSaleRecordSuccess(mSalesViewModel);
+                } else if (getContext() instanceof OnCabinInteractionListener) {
+                    onCabinInteractionListener.onAddSaleRecordSuccess(mSalesViewModel);
+                } else {
+                    throw new RuntimeException(Objects.requireNonNull(getContext()).toString() + " must implement OnSalesInteractionListener");
+                }
             }
         });
     }
@@ -272,7 +315,39 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void onSuccess(Void aVoid) {
-        mListener.onAddSaleRecordSuccess(mSalesViewModel);
+
+
+        if (getContext() instanceof OnSalesInteractionListener) {
+            mListener.onAddSaleRecordSuccess(mSalesViewModel);
+        } else if (getContext() instanceof OnCabinInteractionListener) {
+            onCabinInteractionListener.onAddSaleRecordSuccess(mSalesViewModel);
+        } else {
+            throw new RuntimeException(Objects.requireNonNull(getContext()).toString() + " must implement OnSalesInteractionListener");
+        }
+    }
+
+    private void getCustomerList() {
+
+        CustomerTable customerTable = new CustomerTable();
+        if(null == mAllCustomers || mAllCustomers.size()<=0) {
+            customerTable.getCustomerList(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(null != task.getResult()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            Map<String, Object> data = document.getData();
+                            assert data != null;
+                            addCustomer(new Customer(data));
+                        }
+                    }
+                    updateCustomerSpinner();
+                }
+            });
+        }
+    }
+
+    private void addCustomer(Customer customer) {
+        mAllCustomers.put(customer.getCustomerName(), customer);
     }
 }
 

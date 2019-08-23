@@ -7,4 +7,5 @@ public interface OnCabinInteractionListener {
     void goToCreteCabin(CabinViewModel cabinViewModel);
 
     void gotoSalesActivity(SalesViewModel salesViewModel);
+    void onAddSaleRecordSuccess(SalesViewModel mViewModel);
 }

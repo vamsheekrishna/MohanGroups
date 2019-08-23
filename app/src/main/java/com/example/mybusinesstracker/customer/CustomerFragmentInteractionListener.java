@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public interface CustomerFragmentInteractionListener {
     void createCustomer(Customer customer, boolean isUpdateCustomer);
     void deleteCustomer(Customer customer, Fragment createCustomer);
-    ArrayList<Customer> getAllCustomers();
+    //ArrayList<Customer> getAllCustomers();
     void goToCreateCustomer();
     void goToUpdateCustomer(Customer customer);
 }

@@ -48,9 +48,9 @@ public class CustomerActivity extends FactoryBaseActivity implements CustomerFra
         }, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                if(!isUpdateCustomer) {
+                /*if(!isUpdateCustomer) {
                     addCustomer(customer);
-                }
+                }*/
                 CustomerActivity.this.onBackPressed();
             }
         });
@@ -67,40 +67,20 @@ public class CustomerActivity extends FactoryBaseActivity implements CustomerFra
         }, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                mAllCustomers.remove(customer);
+                /*mAllCustomers.remove(customer);
                 Log.d(DBInstance.BASE_COLLECTION_FACTORY, "DocumentSnapshot successfully written!");
-                CustomerActivity.this.onBackPressed();
+                CustomerActivity.this.onBackPressed();*/
             }
         });
     }
     protected void getCustomerList() {
-        if(null == mAllCustomers || mAllCustomers.size()<=0) {
-            customerTable.getCustomerList(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if(null != task.getResult()) {
-                        for (DocumentSnapshot document : task.getResult()) {
-                            Map<String, Object> data = document.getData();
-                            assert data != null;
-                            addCustomer(new Customer(data));
-                        }
-                    }
-                    CustomerListView myFragment = (CustomerListView) getSupportFragmentManager().findFragmentByTag("CustomerListView");
-                    // add your code here
-                    if (myFragment != null && myFragment.isVisible()) {
-                        myFragment.mAdapter.notifyDataSetChanged();
-                    }
-                }
-            });
-        }
+
     }
-    protected void addCustomer(Customer customer) {
-        mAllCustomers.add(customer);
-    }
-    @Override
+
+    /*@Override
     public ArrayList<Customer> getAllCustomers() {
         return mAllCustomers;
-    }
+    }*/
 
     @Override
     public void goToCreateCustomer() {

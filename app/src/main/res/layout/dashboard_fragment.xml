@@ -4,7 +4,7 @@
     <data>
         <variable
             name="creteViewModel"
-            type="com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel" />
+            type="com.example.mybusinesstracker.dashboard.ui.dashboard.DashboardViewModel" />
         <variable
             name="iceCabinAdapter"
             type="com.example.mybusinesstracker.cabin.ui.cabinhome.CabinBrickAdapter" />
@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/cabin_name_hint"
                 android:layout_alignParentStart="true"
-                android:text="@={creteViewModel.cabinName}"
+                android:text="@={creteViewModel.cabinViewModel.cabinName}"
                 android:inputType="text"/>
 
             <EditText
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/cabin_name"
                 android:hint="@string/cabin_rows_hint"
-                android:text="@={``+creteViewModel.totalRows}"
+                android:text="@={``+creteViewModel.cabinViewModel.totalRows}"
                 android:inputType="number"/>
             <EditText
                 android:id="@+id/cabin_column"
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/cabin_coulmn_hint"
                 android:layout_toEndOf="@+id/cabin_rows"
-                android:text="@={``+creteViewModel.totalColumns}"
+                android:text="@={``+creteViewModel.cabinViewModel.totalColumns}"
                 android:inputType="number"/>
             <Button
                 android:id="@+id/submit"

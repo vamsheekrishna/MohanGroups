@@ -31,6 +31,11 @@ public class CabinActivity extends FactoryBaseActivity implements OnCabinInterac
 
     @Override
     public void gotoSalesActivity(com.example.mybusinesstracker.viewmodels.SalesViewModel salesViewModel) {
-        replaceFragment(AddSaleFragment.newInstance(salesViewModel),"AddSaleFragment");
+        replaceFragment(AddSaleFragment.newInstance(salesViewModel, false),"AddSaleFragment");
+    }
+
+    @Override
+    public void onAddSaleRecordSuccess(com.example.mybusinesstracker.viewmodels.SalesViewModel mViewModel) {
+
     }
 }

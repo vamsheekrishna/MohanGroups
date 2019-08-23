@@ -18,10 +18,10 @@ import java.util.Objects;
 
 class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private TextView blockPart1, blockPart2, blockPart3, blockPart4, blockBG;
-    FragmentRecycleCabinBrickItemBinding itemBinding;
+    private FragmentRecycleCabinBrickItemBinding itemBinding;
     View view;
-    Context context;
-    CabinBrickAdapter mCabinBrickAdapter;
+    private Context context;
+    private CabinBrickAdapter mCabinBrickAdapter;
     public CabinBrickViewHolder(@NonNull FragmentRecycleCabinBrickItemBinding itemView, CabinBrickAdapter cabinBrickAdapter) {
         super(itemView.getRoot());
         itemBinding = itemView;
@@ -55,6 +55,9 @@ class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     @Override
     public void onClick(View view) {
         int position = (int) view.getTag();
+        if(null!= mCabinBrickAdapter.mDashboardViewModel) {
+            mCabinBrickAdapter.mDashboardViewModel.getAddNewSales().setAddIceBlocks(mCabinBrickAdapter.getIceBlocks().get(position));
+        }
         mCabinBrickAdapter.getIceBlocks().get(position).setBlockSelectedState();
         updateBackGround(mCabinBrickAdapter.getIceBlocks().get(position));
     }

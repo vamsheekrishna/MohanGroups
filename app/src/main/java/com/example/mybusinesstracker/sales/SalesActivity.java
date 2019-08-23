@@ -8,9 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.mybusinesstracker.R;
-import com.example.mybusinesstracker.cloud_firestore.tables.CustomerTable;
 import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
-import com.example.mybusinesstracker.customer.ui.customer.Customer;
 import com.example.mybusinesstracker.factory.FactoryBaseActivity;
 import com.example.mybusinesstracker.sales.ui.sales.AddSaleFragment;
 import com.example.mybusinesstracker.sales.ui.sales.DiscreteBasedSalesFragment;
@@ -31,15 +29,11 @@ import java.util.Map;
 
 public class SalesActivity extends FactoryBaseActivity implements OnSalesInteractionListener{
 
-
-    protected HashMap<String, Customer> mAllCustomers = new HashMap<>();
     protected HashMap<Long, SalesViewModel> mAllSales = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        customerTable = new CustomerTable();
-        getCustomerList();
         getSalesListFromCloud(Calendar.getInstance());
 
 
@@ -48,27 +42,6 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
         }
     }
 
-    protected void getCustomerList() {
-        if(null == mAllCustomers || mAllCustomers.size()<=0) {
-            customerTable.getCustomerList(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if(null != task.getResult()) {
-                        for (DocumentSnapshot document : task.getResult()) {
-                            Map<String, Object> data = document.getData();
-                            assert data != null;
-                            addCustomer(new Customer(data));
-                        }
-                    }
-                    AddSaleFragment myFragment = (AddSaleFragment) getSupportFragmentManager().findFragmentByTag("AddSaleFragment");
-                    // add your code here
-                    if (myFragment != null) {
-                        myFragment.updateCustomerSpinner(mAllCustomers);
-                    }
-                }
-            });
-        }
-    }
     @Override
     public void getSalesListFromCloud(Calendar calendar) {
         if(null == mAllSales || mAllSales.size() <=0) {
@@ -83,11 +56,11 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
                             addSale(new SalesViewModel(data));
                         }
                     }
-                    AddSaleFragment myFragment = (AddSaleFragment) getSupportFragmentManager().findFragmentByTag("AddSaleFragment");
+                    //AddSaleFragment myFragment = (AddSaleFragment) getSupportFragmentManager().findFragmentByTag("AddSaleFragment");
                     // add your code here
-                    if (myFragment != null) {
+                    /*if (myFragment != null) {
                         myFragment.updateCustomerSpinner(mAllCustomers);
-                    }
+                    }*/
 
                 }
             }, new OnFailureListener() {
@@ -107,16 +80,13 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
 
     }
 
-    protected void addCustomer(Customer customer) {
-        mAllCustomers.put(customer.getCustomerName(), customer);
-    }
     protected void addSale(SalesViewModel sale) {
         mAllSales.put(sale.getDate(), sale);
     }
-    @Override
+    /*@Override
     public HashMap<String, Customer> getCustomers() {
         return mAllCustomers;
-    }
+    }*/
 
     @Override
     public void onAddSaleRecordSuccess(SalesViewModel mViewModel) {
@@ -136,7 +106,7 @@ public class SalesActivity extends FactoryBaseActivity implements OnSalesInterac
 
     @Override
     public void gotToAddSaleFragment(SalesViewModel salesViewModel) {
-        replaceFragment(AddSaleFragment.newInstance(salesViewModel), "add_sale");
+        replaceFragment(AddSaleFragment.newInstance(salesViewModel, false), "add_sale");
     }
     @Override
     public void gotToGroupBasedSalesFragment(GroupBasedSalesModel groupBasedSalesModel) {

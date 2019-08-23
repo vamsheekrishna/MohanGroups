@@ -44,7 +44,7 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     private String note = null;
     private String dateString;
     private Customer selectedCustomer;
-    //ArrayList<IceBlock> selectedBlocks = new ArrayList<>();
+    ArrayList<IceBlock> selectedBlocks = new ArrayList<>();
 
     public SalesViewModel( Map<String, Object> hashMap) {
         setDate(Long.valueOf((String) requireNonNull(hashMap.get(DATE))), "dd-MM-YYYY HH:mm");
@@ -59,7 +59,7 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
         paidAmount= Integer.parseInt((String) requireNonNull(hashMap.get(PAID_AMOUNT)));
         dueAmount = Integer.parseInt((String) requireNonNull(hashMap.get(DUE_AMOUNT)));
         note = (String) hashMap.get(NOTE);
-        //selectedBlocks = (ArrayList<IceBlock>) hashMap.get(SELECTED_BLOCKS);
+        selectedBlocks = (ArrayList<IceBlock>) hashMap.get(SELECTED_BLOCKS);
     }
     public SalesViewModel() {
 
@@ -80,8 +80,8 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
         hashMap.put(PAID_AMOUNT, String.valueOf(paidAmount));
         hashMap.put(DUE_AMOUNT, String.valueOf(dueAmount));
         hashMap.put(NOTE, String.valueOf(note));
-        //selectedBlocks.add(new IceBlock());
-        //hashMap.put(SELECTED_BLOCKS, selectedBlocks);
+        selectedBlocks.add(new IceBlock());
+        hashMap.put(SELECTED_BLOCKS, selectedBlocks);
         return hashMap;
     }
 
@@ -236,5 +236,20 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     }
     public int getDay(){
         return getCalendarObject().get(Calendar.DAY_OF_MONTH);
+    }
+
+    public ArrayList<IceBlock> getSelectedBlocks() {
+        return selectedBlocks;
+    }
+
+    public void setSelectedBlocks(ArrayList<IceBlock> selectedBlocks) {
+        this.selectedBlocks = selectedBlocks;
+    }
+    public void setAddIceBlocks(IceBlock iceBlock) {
+        if(selectedBlocks.contains(iceBlock)) {
+            this.selectedBlocks.remove(iceBlock);
+        } else {
+            this.selectedBlocks.add(iceBlock);
+        }
     }
 }

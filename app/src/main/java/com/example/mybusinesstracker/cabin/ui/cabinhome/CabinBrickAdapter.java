@@ -13,25 +13,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cabin.IceBlock;
+import com.example.mybusinesstracker.dashboard.ui.dashboard.DashboardViewModel;
 import com.example.mybusinesstracker.databinding.FragmentRecycleCabinBrickItemBinding;
 
 import java.util.ArrayList;
 
 public class CabinBrickAdapter extends RecyclerView.Adapter<CabinBrickViewHolder> {
     private ArrayList<IceBlock> mIceBlocks;
-
+    DashboardViewModel mDashboardViewModel;
     public CabinBrickAdapter(ArrayList<IceBlock> iceBlocks) {
         mIceBlocks = iceBlocks;
+    }
+    public CabinBrickAdapter(DashboardViewModel dashboardViewModel) {
+        mIceBlocks = dashboardViewModel.getCabinViewModel().getIceBlocks();
+        mDashboardViewModel = dashboardViewModel;
     }
     @NonNull
     @Override
     public CabinBrickViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         FragmentRecycleCabinBrickItemBinding view = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
                 R.layout.fragment_recycle_cabin_brick_item, parent, false);
-        CabinBrickViewHolder cabinBrickViewHolder = new CabinBrickViewHolder(view, this);
         //view.getRoot().setOnClickListener(mOnClickListener);
         //cabinBrickViewHolder.itemView.setOnClickListener(this);
-        return cabinBrickViewHolder;
+        return new CabinBrickViewHolder(view, this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

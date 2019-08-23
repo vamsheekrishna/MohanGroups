@@ -141,7 +141,7 @@ public class Customer extends BaseObservable implements Serializable, Parcelable
     }
     @Override
     public HashMap<String, Object> getHashMap() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, Object> data = new HashMap<>();
         data.put(KEY_CUSTOMER_NAME,customerName);
         data.put(KEY_ADDRESS,address);
         data.put(KEY_PHONE_NUMBER,phoneNumber);

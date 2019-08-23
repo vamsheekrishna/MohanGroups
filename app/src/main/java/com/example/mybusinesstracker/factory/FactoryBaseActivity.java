@@ -15,7 +15,7 @@ import java.util.ArrayList;
 @SuppressLint("Registered")
 public class FactoryBaseActivity extends BaseActivity {
     protected CustomerTable customerTable;
-    protected ArrayList<Customer> mAllCustomers = new ArrayList<>();
+    //protected ArrayList<Customer> mAllCustomers = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {

@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 public interface OnSalesInteractionListener {
-    HashMap<String, Customer> getCustomers();
+    //HashMap<String, Customer> getCustomers();
     void onAddSaleRecordSuccess(SalesViewModel mViewModel);
     void onUpdateSaleRecordSuccess(SalesViewModel mSalesViewModel);
     void onDeleteSaleRecordSuccess(SalesViewModel mSalesViewModel);
