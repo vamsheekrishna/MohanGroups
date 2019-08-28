@@ -23,7 +23,10 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.mybusinesstracker.basecalss.BaseFragment;
 import com.example.mybusinesstracker.R;
+import com.example.mybusinesstracker.cabin.IceBlock;
+import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.OnCabinInteractionListener;
+import com.example.mybusinesstracker.cloud_firestore.tables.CabinTable;
 import com.example.mybusinesstracker.cloud_firestore.tables.CustomerTable;
 import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
@@ -58,13 +61,13 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
     private ArrayAdapter<String> spinnerCustomerAdapter;
     private ArrayAdapter<String> spinnerCabinAdapter;
     private OnSalesInteractionListener mListener;
-    OnCabinInteractionListener onCabinInteractionListener;
+    private OnCabinInteractionListener onCabinInteractionListener;
     private int testValue = 0;
     private SalesViewModel mSalesViewModel;
 
-    protected HashMap<String, Customer> mAllCustomers = new HashMap<>();
+    private HashMap<String, Customer> mAllCustomers = new HashMap<>();
     private boolean mIsNew = false;
-
+    private Spinner mSpinnerCabin;
     public static AddSaleFragment newInstance(SalesViewModel salesViewModel, boolean isNew) {
         AddSaleFragment fragment = new AddSaleFragment();
         Bundle args = new Bundle();
@@ -92,12 +95,11 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         mSalesTypes.add("Sale");
         mSalesTypes.add("Due");
         mSalesTypes.add("Due Paid");
-        mCabinNames.add("Frick");
-        mCabinNames.add("kirloskar");
+        getCabinList();
         SalesFragmentBinding binder = DataBindingUtil.inflate(inflater, R.layout.sales_fragment, container, false);
         View view = binder.getRoot();
         Spinner mSpinnerEntryType = view.findViewById(R.id.entry_type_sp);
-        Spinner mSpinnerCabin = view.findViewById(R.id.cab_name_sp);
+        mSpinnerCabin = view.findViewById(R.id.cab_name_sp);
         Spinner mSpinnerCustomerName = view.findViewById(R.id.sal_cus_ed);
         TextView mDateTextView = view.findViewById(R.id.sal_date_ed);
 
@@ -110,7 +112,7 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mSalesViewModel.setCustomerID(mCustomerNames.get(position));
                 mSalesViewModel.setSelectedCustomer(mAllCustomers.get(mSalesViewModel.getCustomerID()));
-                mSalesViewModel.setTotalBlocks(mSalesViewModel.getSelectedBlocks().size());
+                mSalesViewModel.setTotalBlocks(mSalesViewModel.getBlocks().size());
                 if(mSalesViewModel.getTotalBlocks()>0) {
                     mSalesViewModel.setIceAmount((int) (mSalesViewModel.getTotalBlocks()*mSalesViewModel.getSelectedCustomer().getAmount()));
                     mSalesViewModel.setLabourCharges((int) (mSalesViewModel.getTotalBlocks()*mSalesViewModel.getSelectedCustomer().getLaborCharge()));
@@ -165,7 +167,6 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(mSalesViewModel.getDate());
             setTimeText(calendar);
-            mSpinnerCabin.setSelection(mCabinNames.indexOf(mSalesViewModel.getCabinID()));
             mSpinnerCustomerName.setSelection(mCustomerNames.indexOf(mSalesViewModel.getCustomerID()));
             mSpinnerEntryType.setSelection(mSalesTypes.indexOf(mSalesViewModel.getSalesType()));
 
@@ -180,6 +181,28 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         }
 
         return view;
+    }
+
+    private void getCabinList() {
+        CabinTable cabinTable = new CabinTable();
+        cabinTable.getCabinList(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                mCabinNames.clear();
+                if(null != task.getResult()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        CabinViewModel cabinViewModel = document.toObject(CabinViewModel.class);
+                        assert cabinViewModel != null;
+                        mCabinNames.add(cabinViewModel.getCabinName());
+                    }
+                    String name = mSalesViewModel.getCabinID();
+                    spinnerCabinAdapter.notifyDataSetChanged();
+                    if(name.length()>0) {
+                        mSpinnerCabin.setSelection(mCabinNames.indexOf(mSalesViewModel.getCabinID()));
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -252,6 +275,11 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
     private void onSaveClicked() {
         if(null == mSalesViewModel.getDate()) {
             mSalesViewModel.setDate(Calendar.getInstance().getTimeInMillis(), "DD-MM-YYYY HH:mm");
+        }
+        //Customer customer =mAllCustomers.get(mSalesViewModel.getCustomerID());
+        for (IceBlock iceBlock : mSalesViewModel.getBlocks()) {
+            //assert customer != null;
+            iceBlock.setFullBlockColor(mSalesViewModel.getSelectedCustomer().getColorID());
         }
         SalesTable salesTable = new SalesTable();
         salesTable.addDataField(mSalesViewModel,this, this);

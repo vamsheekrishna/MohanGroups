@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mybusinesstracker.R;
+import com.example.mybusinesstracker.cabin.IceBlock;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinBrickAdapter;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.OnCabinInteractionListener;
@@ -31,18 +32,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Objects;
 
 public class DashboardFragment extends Fragment implements View.OnClickListener {
 
-    private DashboardViewModel mViewModel = new DashboardViewModel();
+    private DashboardViewModel mViewModel;
     //CabinViewModel mCabinViewModel;
     private CabinBrickAdapter cabinBrickAdapter;
     private RecyclerView recyclerView;
     private OnCabinInteractionListener onCabinInteractionListener;
-
+    private ArrayList<IceBlock> iceBlocks = new ArrayList<>();;
     public static DashboardFragment newInstance() {
         return new DashboardFragment();
     }
@@ -64,6 +66,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         DashboardFragmentBinding dashboardFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.dashboard_fragment, container, false);
+        mViewModel = new DashboardViewModel();
         mViewModel.setCabinViewModel(new CabinViewModel());
         mViewModel.setSelectedDate(Calendar.getInstance());
         View  view = dashboardFragmentBinding.getRoot(); //inflater.inflate(R.layout.dashboard_fragment, container, false);
@@ -96,16 +99,27 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
     private void getSalesData() {
         SalesTable salesTable = new SalesTable();
-        salesTable.getDaySales(mViewModel.getSelectedDate(), mViewModel.getCabinViewModel().getCabinName(), new OnCompleteListener<QuerySnapshot>() {
+        salesTable.getDaySales(Calendar.getInstance(), mViewModel.getCabinViewModel().getCabinName(), new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (null != task.getResult()) {
+                    iceBlocks.clear();
                     for (DocumentSnapshot document : task.getResult()) {
-                        Map<String, Object> data = document.getData();
-                        assert data != null;
-                        SalesViewModel salesViewModel = new SalesViewModel(data);
-                        mViewModel.setAddNewSales(salesViewModel);
+                        SalesViewModel salesViewModel = document.toObject(SalesViewModel.class);
+                        //SalesViewModel salesViewModel = new SalesViewModel(document.getData());
+                        assert salesViewModel != null;
+                        //mViewModel.addBricks(salesViewModel.getBlocks());
+                        iceBlocks.addAll(salesViewModel.getBlocks());
+                        //mViewModel.setAddNewSales(salesViewModel);
                     }
+
+                    for (IceBlock iceBlock : iceBlocks) {
+                        mViewModel.getCabinViewModel().getIceBlocks().get(iceBlock.getID()).setBlockColor1(iceBlock.getBlock1());
+                        mViewModel.getCabinViewModel().getIceBlocks().get(iceBlock.getID()).setBlockColor2(iceBlock.getBlock2());
+                        mViewModel.getCabinViewModel().getIceBlocks().get(iceBlock.getID()).setBlockColor3(iceBlock.getBlock3());
+                        mViewModel.getCabinViewModel().getIceBlocks().get(iceBlock.getID()).setBlockColor4(iceBlock.getBlock4());
+                    }
+                    updateList();
                 }
             }
         }, new OnFailureListener() {

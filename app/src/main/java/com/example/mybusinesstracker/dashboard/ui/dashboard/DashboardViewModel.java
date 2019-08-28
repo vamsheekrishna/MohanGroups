@@ -3,6 +3,7 @@ package com.example.mybusinesstracker.dashboard.ui.dashboard;
 import androidx.databinding.BaseObservable;
 import androidx.lifecycle.ViewModel;
 
+import com.example.mybusinesstracker.cabin.IceBlock;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 
@@ -13,15 +14,17 @@ import java.util.Calendar;
 public class DashboardViewModel extends BaseObservable implements Serializable {
 
     private Calendar selectedDate;
-    String cabinName;
+
+   /* String cabinName;
     int totalBlocks;
     int availableBlocks;
 
-
-    int todaySales;
     int oneFourth;
     int threeFourth;
     int oneTwo;
+
+    int todaySales;*/
+
     private ArrayList<SalesViewModel> salesViewModels = new ArrayList<>();
     private CabinViewModel cabinViewModel = new CabinViewModel();
     private SalesViewModel addNewSales = new SalesViewModel();
@@ -33,7 +36,7 @@ public class DashboardViewModel extends BaseObservable implements Serializable {
         return cabinViewModel;
     }
 
-    public void setCabinViewModel(CabinViewModel viewModel) {
+    void setCabinViewModel(CabinViewModel viewModel) {
         this.cabinViewModel = viewModel;
     }
 
@@ -49,15 +52,19 @@ public class DashboardViewModel extends BaseObservable implements Serializable {
         return addNewSales;
     }
 
-    public void setAddNewSales(SalesViewModel addNewSales) {
+    void setAddNewSales(SalesViewModel addNewSales) {
         this.addNewSales = addNewSales;
     }
 
-    public Calendar getSelectedDate() {
+    Calendar getSelectedDate() {
         return selectedDate;
     }
 
-    public void setSelectedDate(Calendar selectedDate) {
+    void setSelectedDate(Calendar selectedDate) {
         this.selectedDate = selectedDate;
+    }
+
+    public void addBricks(ArrayList<IceBlock> blocks) {
+
     }
 }

@@ -45,10 +45,18 @@ class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void updateBackGround(IceBlock iceBlock) {
         itemBinding.getRoot().setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
-        blockPart1.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlock1()));
-        blockPart2.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlock2()));
-        blockPart3.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlock3()));
-        blockPart4.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlock4()));
+        if(iceBlock.getBlock1() == -1) {
+            blockPart1.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
+            blockPart2.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
+            blockPart3.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
+            blockPart4.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
+        } else {
+            blockPart1.setBackgroundColor(iceBlock.getBlock1());
+            blockPart2.setBackgroundColor(iceBlock.getBlock2());
+            blockPart3.setBackgroundColor(iceBlock.getBlock3());
+            blockPart4.setBackgroundColor(iceBlock.getBlock4());
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

@@ -30,6 +30,7 @@ public class SalesTable extends DBInstance {
                 .set(data.getHashMap())
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(error_writing_document);*/
+        String temp = " Content date: "+Utils.getStringFromDate(data.getDate(),Utils.DD_MMM_YYYY_HH_MM_SS);
         getCollection().document(BASE_DIRECTORY_DETAILS)
                 .collection(BASE_DIRECTORY_SALES).document(String.valueOf(data.getYear()))
                 .collection(String.valueOf(data.getMonth())).document(String.valueOf(data.getDate()))
@@ -58,13 +59,19 @@ public class SalesTable extends DBInstance {
                 .addOnFailureListener(onFailure);
     }
     public void getDaySales(Calendar calendar, String cabin_id, OnCompleteListener<QuerySnapshot> onCompleteListener, OnFailureListener onFailure) {
+        String temp = "Selected date: "+Utils.getStringFromDate(calendar,Utils.DD_MMM_YYYY_HH_MM_SS) + " Start date: "+Utils.getStringFromDate(Utils.getStartOfDay(calendar).getTime(),Utils.DD_MMM_YYYY_HH_MM_SS)
+                + " End date: "+Utils.getStringFromDate(Utils.getEndOfDay(calendar).getTime(),Utils.DD_MMM_YYYY_HH_MM_SS)
+                + " Content date: "+Utils.getStringFromDate(1566844199836l,Utils.DD_MMM_YYYY_HH_MM_SS);
+
         getCollection().document(BASE_DIRECTORY_DETAILS)
                 .collection(BASE_DIRECTORY_SALES).document(String.valueOf(calendar.get(Calendar.YEAR)))
-                .collection(String.valueOf(calendar.get(Calendar.MONTH))).document(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)))
-                .collection(cabin_id).get()
+                .collection(String.valueOf(calendar.get(Calendar.MONTH)))
+                .whereGreaterThanOrEqualTo("date", Utils.getStartOfDay(calendar).getTime())
+                .whereLessThanOrEqualTo("date", Utils.getEndOfDay(calendar).getTime())
+                .whereEqualTo("cabinID", cabin_id)
+                .get()
                 .addOnCompleteListener(onCompleteListener)
                 .addOnFailureListener(onFailure);
-
     }
     public void getDaySales(Calendar calendar, OnCompleteListener<QuerySnapshot> onCompleteListener, OnFailureListener onFailure) {
         getCollection().document(BASE_DIRECTORY_DETAILS)

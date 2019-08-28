@@ -24,8 +24,7 @@ public class IceBlock extends BaseObservable implements Serializable {
     public IceBlock(int i, String name) {
         setID(i);
         setBlockName(name);
-        setFullBlockColor(R.color.transparent);
-        //setBlockBG(R.color.blue);
+        setFullBlockColor(-1);
     }
     public IceBlock(Map<String, Object> data) {
         ID = (int) data.get("ID");
@@ -40,20 +39,22 @@ public class IceBlock extends BaseObservable implements Serializable {
 
     public void setIceBlock() {
         iceBlock = !isSelected;
-        /*if(iceBlock) {
-            iceBlock = false;
-            //setBlockBG(getSelectedColor());
-        } else  {
-            iceBlock = true;
-            //setBlockBG(getIceColor());
-        }*/
+        /*
+            if(iceBlock) {
+                iceBlock = false;
+                //setBlockBG(getSelectedColor());
+            } else  {
+                iceBlock = true;
+                setBlockBG(getIceColor());
+            }
+        */
     }
 
     public int getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    private void setID(int ID) {
         this.ID = ID;
     }
 
@@ -113,13 +114,13 @@ public class IceBlock extends BaseObservable implements Serializable {
     public void setBlockColor4(int block4) {
         this.block4 = block4;
     }
+
     public void setFullBlockColor(int color) {
         setBlockColor1(color);
         setBlockColor2(color);
         setBlockColor3(color);
         setBlockColor4(color);
     }
-
     public int getBlockBG() {
         if(isSelected) {
             return getSelectedColor();
@@ -141,7 +142,7 @@ public class IceBlock extends BaseObservable implements Serializable {
         isClickable = clickable;
     }
 
-    public int getIceColor() {
+    private int getIceColor() {
         return iceColor;
     }
 
@@ -153,7 +154,7 @@ public class IceBlock extends BaseObservable implements Serializable {
         this.selectedColor = selectedColor;
     }
 
-    public int getSelectedColor() {
+    private int getSelectedColor() {
         return selectedColor;
     }
 

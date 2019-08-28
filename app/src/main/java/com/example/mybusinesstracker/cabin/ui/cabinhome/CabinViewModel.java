@@ -1,37 +1,31 @@
 package com.example.mybusinesstracker.cabin.ui.cabinhome;
 
-import android.util.Log;
-
 import androidx.databinding.BaseObservable;
 
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cabin.IceBlock;
 
 import java.io.Serializable;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class CabinViewModel extends BaseObservable implements Serializable {
 
-    Calendar currentDate;
+    private Calendar currentDate;
     private String cabinName;
     private int totalRows;
     private int totalColumns;
     private int totalIceBlocks;
-    int availableBlocks;
+    private int availableBlocks;
     int todaySales;
-    int oneFourth;
-    int threeFourth;
-    int emptyBlocks;
-    int oneTwo;
-    int outSide;
+    private int oneFourth;
+    private int threeFourth;
+    private int emptyBlocks;
+    private int oneTwo;
+    private int outSide;
     private ArrayList<IceBlock> iceBlocks = new ArrayList<>();
 
     public CabinViewModel(Map<String, Object> data) {
@@ -58,7 +52,6 @@ public class CabinViewModel extends BaseObservable implements Serializable {
                 if(iceBlock.isInProduction()) {
                     long seconds = (currentDate.getTimeInMillis() - iceBlock.getStartedAt()) / 1000;
                     int hours = (int) (seconds / 3600);
-
                     if(hours >= 48) {
                         availableBlocks+=1;
                         iceBlock.setIceColor(R.color.ice_block_full);

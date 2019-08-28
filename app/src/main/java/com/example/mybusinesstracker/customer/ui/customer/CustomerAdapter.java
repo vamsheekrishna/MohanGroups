@@ -30,8 +30,14 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CustomerViewHolder holder, int position) {
         final Customer customer = customerList.get(position);
+        holder.mRoot.setBackgroundColor(customer.getColorID());
+
         holder.mName.setText(customer.getCustomerName());
+        holder.mName.setBackgroundColor(customer.getColorID());
+
+        holder.mNumber.setBackgroundColor(customer.getColorID());
         holder.mNumber.setText(customer.getPhoneNumber());
+
         holder.mCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

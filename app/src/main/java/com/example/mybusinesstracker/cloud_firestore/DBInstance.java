@@ -10,7 +10,7 @@ public abstract class DBInstance implements DBInstanceInterface {
     protected static String BASE_DIRECTORY_CABIN="CABIN";
     protected static String BASE_DIRECTORY_DETAILS="DETAILS";
     //sales fields
-    protected static final String BASE_DIRECTORY_SALES = "Sales";
+    protected static final String BASE_DIRECTORY_SALES = "SALES";
 
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore myDB;

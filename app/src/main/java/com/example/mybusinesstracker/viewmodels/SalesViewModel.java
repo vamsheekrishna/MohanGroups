@@ -1,11 +1,15 @@
 package com.example.mybusinesstracker.viewmodels;
 
+import android.util.Log;
+
 import androidx.databinding.BaseObservable;
 
 import com.example.mybusinesstracker.cabin.IceBlock;
 import com.example.mybusinesstracker.cloud_firestore.OnCloudFireStoreInteraction;
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
 import com.example.mybusinesstracker.utilities.Utils;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,38 +32,67 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     private static final String PAID_AMOUNT = "paidAmount";
     private static final String DUE_AMOUNT = "dueAmount";
     private static final String NOTE = "note";
-    private static final String SELECTED_BLOCKS = "selectBlocks";
+    private static final String SELECTED_BLOCKS = "blocks";
+
+    private ArrayList<IceBlock> blocks = new ArrayList<>();
     private int ID;
+    @SerializedName("date")
+    @Expose
     private Long date ;
+    @SerializedName("cabinID")
+    @Expose
     private String cabinID = null;
+    @SerializedName("customerID")
+    @Expose
     private String customerID = null;
+    @SerializedName("salesType")
+    @Expose
     private String salesType = null;
+    @SerializedName("totalBlocks")
+    @Expose
     private float totalBlocks = 0;
+    @SerializedName("iceAmount")
+    @Expose
     private int iceAmount = 0;
+    @SerializedName("labourCharges")
+    @Expose
     private int labourCharges = 0;
+    @SerializedName("otherAmount")
+    @Expose
     private int otherAmount = 0;
+    @SerializedName("totalAmount")
+    @Expose
     private int totalAmount = 0;
+    @SerializedName("paidAmount")
+    @Expose
     private int paidAmount = 0;
+    @SerializedName("dueAmount")
+    @Expose
     private int dueAmount = 0;
     private String note = null;
     private String dateString;
-    private Customer selectedCustomer;
-    ArrayList<IceBlock> selectedBlocks = new ArrayList<>();
+    private Customer selectedCustomer = new Customer();
 
     public SalesViewModel( Map<String, Object> hashMap) {
-        setDate(Long.valueOf((String) requireNonNull(hashMap.get(DATE))), "dd-MM-YYYY HH:mm");
+        //setDate(Long.valueOf((String) requireNonNull(hashMap.get(DATE))), "dd-MM-YYYY HH:mm");
+        date = (Long) hashMap.get(DATE);
+        setDate(date, "dd-MM-YYYY HH:mm");
         cabinID = (String) hashMap.get(CABIN_ID);
         customerID = (String) hashMap.get(CUSTOMER_ID);
         salesType = (String) hashMap.get(SALES_TYPE);
-        totalBlocks = Float.parseFloat((String) requireNonNull(hashMap.get(TOTAL_BLOCKS)));
-        iceAmount = Integer.parseInt((String) requireNonNull(hashMap.get(ICE_AMOUNT)));
-        labourCharges = Integer.parseInt((String) requireNonNull(hashMap.get(LABOUR_CHARGES)));
+        totalBlocks = (float) requireNonNull(hashMap.get(TOTAL_BLOCKS));
+        iceAmount = (int) requireNonNull(hashMap.get(ICE_AMOUNT));
+        try {
+            labourCharges = Integer.parseInt((String) requireNonNull(hashMap.get(LABOUR_CHARGES)));
+        } catch (Exception e) {
+
+        }
         otherAmount = Integer.parseInt((String) requireNonNull(hashMap.get(OTHER_AMOUNT)));
         totalAmount = Integer.parseInt((String) requireNonNull(hashMap.get(TOTAL_AMOUNT)));
         paidAmount= Integer.parseInt((String) requireNonNull(hashMap.get(PAID_AMOUNT)));
         dueAmount = Integer.parseInt((String) requireNonNull(hashMap.get(DUE_AMOUNT)));
         note = (String) hashMap.get(NOTE);
-        selectedBlocks = (ArrayList<IceBlock>) hashMap.get(SELECTED_BLOCKS);
+        blocks = (ArrayList<IceBlock>) hashMap.get(SELECTED_BLOCKS);
     }
     public SalesViewModel() {
 
@@ -68,20 +101,19 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     @Override
     public HashMap<String, Object> getHashMap() {
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put(DATE, String.valueOf(date));
+        hashMap.put(DATE, date);
         hashMap.put(CABIN_ID, cabinID);
         hashMap.put(CUSTOMER_ID, customerID);
         hashMap.put(SALES_TYPE, salesType);
-        hashMap.put(TOTAL_BLOCKS, String.valueOf(totalBlocks));
-        hashMap.put(ICE_AMOUNT, String.valueOf(iceAmount));
-        hashMap.put(LABOUR_CHARGES, String.valueOf(labourCharges));
-        hashMap.put(OTHER_AMOUNT, String.valueOf(otherAmount));
-        hashMap.put(TOTAL_AMOUNT, String.valueOf(totalAmount));
-        hashMap.put(PAID_AMOUNT, String.valueOf(paidAmount));
-        hashMap.put(DUE_AMOUNT, String.valueOf(dueAmount));
-        hashMap.put(NOTE, String.valueOf(note));
-        selectedBlocks.add(new IceBlock());
-        hashMap.put(SELECTED_BLOCKS, selectedBlocks);
+        hashMap.put(TOTAL_BLOCKS, totalBlocks);
+        hashMap.put(ICE_AMOUNT, iceAmount);
+        hashMap.put(LABOUR_CHARGES, labourCharges);
+        hashMap.put(OTHER_AMOUNT, otherAmount);
+        hashMap.put(TOTAL_AMOUNT, totalAmount);
+        hashMap.put(PAID_AMOUNT, paidAmount);
+        hashMap.put(DUE_AMOUNT, dueAmount);
+        hashMap.put(NOTE, note);
+        hashMap.put(SELECTED_BLOCKS, blocks);
         return hashMap;
     }
 
@@ -142,9 +174,13 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     }
 
     public void setTotalBlocks(float totalBlocks) {
-        this.totalBlocks = totalBlocks;
-        setIceAmount((int) (selectedCustomer.getAmount()*totalBlocks));
-        setLabourCharges((int) (selectedCustomer.getLaborCharge()*totalBlocks));
+        try {
+            this.totalBlocks = totalBlocks;
+            setIceAmount((int) (selectedCustomer.getAmount()*totalBlocks));
+            setLabourCharges((int) (selectedCustomer.getLaborCharge()*totalBlocks));
+        } catch (Exception e) {
+            Log.d("Exception", "Exception: "+e.getMessage());
+        }
     }
 
     public int getIceAmount() {
@@ -166,7 +202,11 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
         setTotalAmount(getIceAmount()+getLabourCharges()+getOtherAmount());
         notifyChange();
     }
-
+    /*public void setLabourCharges(String labourCharges) {
+        this.labourCharges = Integer.parseInt(labourCharges);
+        setTotalAmount(getIceAmount()+Integer.parseInt(getLabourCharges())+getOtherAmount());
+        notifyChange();
+    }*/
     public int getOtherAmount() {
         return otherAmount;
     }
@@ -238,18 +278,18 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
         return getCalendarObject().get(Calendar.DAY_OF_MONTH);
     }
 
-    public ArrayList<IceBlock> getSelectedBlocks() {
-        return selectedBlocks;
+    public ArrayList<IceBlock> getBlocks() {
+        return blocks;
     }
 
-    public void setSelectedBlocks(ArrayList<IceBlock> selectedBlocks) {
-        this.selectedBlocks = selectedBlocks;
+    public void setBlocks(ArrayList<IceBlock> blocks) {
+        this.blocks = blocks;
     }
     public void setAddIceBlocks(IceBlock iceBlock) {
-        if(selectedBlocks.contains(iceBlock)) {
-            this.selectedBlocks.remove(iceBlock);
+        if(blocks.contains(iceBlock)) {
+            this.blocks.remove(iceBlock);
         } else {
-            this.selectedBlocks.add(iceBlock);
+            this.blocks.add(iceBlock);
         }
     }
 }

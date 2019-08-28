@@ -12,12 +12,14 @@ import com.example.mybusinesstracker.R;
 
 public class CustomerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+    public View mRoot;
     TextView mName;
     TextView mNumber;
     LinearLayout mCustomer;
     Button mCall, mMessage;
     public CustomerViewHolder(@NonNull View itemView) {
         super(itemView);
+        mRoot = itemView;
         mName = itemView.findViewById(R.id.customer_name);
         mNumber = itemView.findViewById(R.id.customer_number);
         mCustomer = itemView.findViewById(R.id.customer_details);
