@@ -3,6 +3,7 @@ package com.example.mybusinesstracker.sales.ui.sales;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,7 +31,9 @@ import com.example.mybusinesstracker.cabin.ui.cabinhome.OnCabinInteractionListen
 import com.example.mybusinesstracker.cloud_firestore.tables.CabinTable;
 import com.example.mybusinesstracker.cloud_firestore.tables.CustomerTable;
 import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
+import com.example.mybusinesstracker.customer.CustomerActivity;
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
+import com.example.mybusinesstracker.dashboard.ui.dashboard.DashboardViewModel;
 import com.example.mybusinesstracker.databinding.SalesFragmentBinding;
 import com.example.mybusinesstracker.sales.OnSalesInteractionListener;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
@@ -51,6 +55,7 @@ import java.util.Objects;
 public class AddSaleFragment extends BaseFragment implements View.OnClickListener, OnFailureListener, OnSuccessListener<Void> {
 
     private static final String ARG_SALES_MODEL = "SalesViewModel";
+    private static final String ARG_CABIN_MODEL = "cabinModule";
     public static final String IS_NEW = "IS_NEW";
     //private SalesViewModel mViewModel;
     private ArrayList<String> mSalesTypes = new ArrayList<>();
@@ -64,7 +69,8 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
     private OnCabinInteractionListener onCabinInteractionListener;
     private int testValue = 0;
     private SalesViewModel mSalesViewModel;
-
+    private CabinViewModel mCabinViewModel;
+    private CheckBox isInProduction;
     private HashMap<String, Customer> mAllCustomers = new HashMap<>();
     private boolean mIsNew = false;
     private Spinner mSpinnerCabin;
@@ -76,12 +82,21 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         fragment.setArguments(args);
         return fragment;
     }
-
+    public static AddSaleFragment newInstance(DashboardViewModel dashboardViewModel, boolean isNew) {
+        AddSaleFragment fragment = new AddSaleFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_SALES_MODEL, dashboardViewModel.getAddNewSales());
+        args.putSerializable(ARG_CABIN_MODEL, dashboardViewModel.getCabinViewModel());
+        args.putBoolean(IS_NEW, isNew);
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mSalesViewModel = (SalesViewModel) getArguments().getSerializable(ARG_SALES_MODEL);
+            mCabinViewModel = (CabinViewModel) getArguments().getSerializable(ARG_CABIN_MODEL);
             mIsNew = getArguments().getBoolean(IS_NEW);
         }
     }
@@ -106,7 +121,7 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         mDateTextView.setOnClickListener(this);
         view.findViewById(R.id.sub_btn).setOnClickListener(this);
         view.findViewById(R.id.del_btn).setOnClickListener(this);
-
+        isInProduction = view.findViewById(R.id.restart_checkbox);
         mSpinnerCustomerName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -221,7 +236,6 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onDetach() {
         super.onDetach();
-
         if (getContext() instanceof OnSalesInteractionListener) {
             mListener = null;
         } else if (getContext() instanceof OnCabinInteractionListener) {
@@ -229,10 +243,10 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         } else {
             throw new RuntimeException(Objects.requireNonNull(getContext()).toString() + " must implement OnSalesInteractionListener");
         }
-
     }
 
     public void updateCustomerSpinner() {
+
         mCustomerNames.clear();
         mCustomerNames.addAll(mAllCustomers.keySet());
         spinnerCustomerAdapter.notifyDataSetChanged();
@@ -245,15 +259,41 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
                 showDatePicker(v);
                 break;
             case R.id.sub_btn:
-                if(((TextView)v).getText().toString().equals(getString(R.string.cus_update_btn)))
-                    onUpdateClicked();
-                else
-                    onSaveClicked();
+                if(mSalesViewModel.isInProductionMode()) {
+                    if (((TextView) v).getText().toString().equals(getString(R.string.cus_update_btn)))
+                        onUpdateClicked();
+                    else
+                        onSaveClicked();
+                }
+                updateCabinData();
                 break;
             case R.id.del_btn:
                 onDeleteClicked();
                 break;
         }
+    }
+
+    private void updateCabinData() {
+        //SalesViewModel salesViewModel = mViewModel.getAddNewSales();
+        Calendar calendar = Calendar.getInstance();
+        for (IceBlock iceBlock :  mSalesViewModel.getBlocks()) {
+            mCabinViewModel.getIceBlocks().get(iceBlock.getID()).setInProduction(iceBlock.isInProduction());
+            mCabinViewModel.getIceBlocks().get(iceBlock.getID()).setStartedAt(calendar.getTimeInMillis());
+            mCabinViewModel.getIceBlocks().get(iceBlock.getID()).setFullBlockColor(-1);
+        }
+        CabinTable cabinTable = new CabinTable();
+        cabinTable.updateFields(mCabinViewModel.getCabinName(),mCabinViewModel.getIceBlocks(), new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //Toast.makeText(getContext(),"onFailure",Toast.LENGTH_SHORT).show();
+            }
+        }, new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+                //Toast.makeText(getContext(),"onSuccess",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void onDeleteClicked() {
@@ -280,6 +320,7 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
         for (IceBlock iceBlock : mSalesViewModel.getBlocks()) {
             //assert customer != null;
             iceBlock.setFullBlockColor(mSalesViewModel.getSelectedCustomer().getColorID());
+            iceBlock.setInProduction(isInProduction.isChecked());
         }
         SalesTable salesTable = new SalesTable();
         salesTable.addDataField(mSalesViewModel,this, this);
@@ -368,7 +409,14 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
                             addCustomer(new Customer(data));
                         }
                     }
-                    updateCustomerSpinner();
+
+                    if(mAllCustomers.size()>0) {
+                        updateCustomerSpinner();
+                    } else {
+                        Intent intent = new Intent(getActivity(), CustomerActivity.class);
+                        startActivity(intent);
+                    }
+
                 }
             });
         }

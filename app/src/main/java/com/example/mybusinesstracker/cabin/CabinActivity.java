@@ -7,6 +7,7 @@ import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinHomeFragment;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CreateFragment;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.OnCabinInteractionListener;
+import com.example.mybusinesstracker.dashboard.ui.dashboard.DashboardViewModel;
 import com.example.mybusinesstracker.factory.FactoryBaseActivity;
 import com.example.mybusinesstracker.sales.ui.sales.AddSaleFragment;
 
@@ -30,7 +31,7 @@ public class CabinActivity extends FactoryBaseActivity implements OnCabinInterac
     }
 
     @Override
-    public void gotoSalesActivity(com.example.mybusinesstracker.viewmodels.SalesViewModel salesViewModel) {
+    public void gotoSalesActivity(DashboardViewModel salesViewModel) {
         replaceFragment(AddSaleFragment.newInstance(salesViewModel, false),"AddSaleFragment");
     }
 

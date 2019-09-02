@@ -1,8 +1,10 @@
 package com.example.mybusinesstracker.dashboard.ui.dashboard;
 
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.mybusinesstracker.R;
+import com.example.mybusinesstracker.cabin.CabinActivity;
 import com.example.mybusinesstracker.cabin.IceBlock;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinBrickAdapter;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel;
@@ -34,7 +38,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Map;
 import java.util.Objects;
 
 public class DashboardFragment extends Fragment implements View.OnClickListener {
@@ -45,6 +48,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     private RecyclerView recyclerView;
     private OnCabinInteractionListener onCabinInteractionListener;
     private ArrayList<IceBlock> iceBlocks = new ArrayList<>();;
+    private IceBlock iceBlock;
+    //private CabinViewModel cabinViewModel;
     public static DashboardFragment newInstance() {
         return new DashboardFragment();
     }
@@ -57,6 +62,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
     }
@@ -74,7 +80,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         view.findViewById(R.id.submit).setOnClickListener(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),5, RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        cabinBrickAdapter = new CabinBrickAdapter(mViewModel);
+        cabinBrickAdapter = new CabinBrickAdapter(mViewModel, getContext());
         CabinTable cabinTable = new CabinTable();
         cabinTable.getCabinList(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -82,11 +88,19 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                 if(null != task.getResult()) {
                     for (DocumentSnapshot document : task.getResult()) {
                         CabinViewModel cabinViewModel = document.toObject(CabinViewModel.class);
+                        assert cabinViewModel != null;
+                        for (IceBlock iceBlock : cabinViewModel.getIceBlocks()) {
+                            iceBlock.setFullBlockColor(Objects.requireNonNull(ContextCompat.getColor(Objects.requireNonNull(getContext()),R.color.transparent)));//getActivity()).getResources().getColor(R.color.transparent)
+                        }
                         mViewModel.getCabinViewModel().cloneCabinViewModel(cabinViewModel, Calendar.getInstance());
                     }
                     if (mViewModel.getCabinViewModel().getCabinSize() > 0) {
                         updateList();
                         getSalesData();
+                    } else {
+                        Objects.requireNonNull(getActivity()).onBackPressed();
+                        Intent intent = new Intent(getActivity(), CabinActivity.class);
+                        startActivity(intent);
                     }
                 }
             }
@@ -107,10 +121,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                     for (DocumentSnapshot document : task.getResult()) {
                         SalesViewModel salesViewModel = document.toObject(SalesViewModel.class);
                         //SalesViewModel salesViewModel = new SalesViewModel(document.getData());
-                        assert salesViewModel != null;
                         //mViewModel.addBricks(salesViewModel.getBlocks());
-                        iceBlocks.addAll(salesViewModel.getBlocks());
                         //mViewModel.setAddNewSales(salesViewModel);
+                        assert salesViewModel != null;
+                        iceBlocks.addAll(salesViewModel.getBlocks());
                     }
 
                     for (IceBlock iceBlock : iceBlocks) {
@@ -131,14 +145,17 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     }
 
     private void updateList() {
+        int count = mViewModel.getCabinViewModel().getTotalColumns();
         ((GridLayoutManager) Objects.requireNonNull(recyclerView.getLayoutManager())).setSpanCount(mViewModel.getCabinViewModel().getTotalColumns());
         cabinBrickAdapter.notifyDataSetChanged();
+
     }
 
     @Override
     public void onClick(View view) {
+        //mViewModel.getAddNewSales();
         mViewModel.getAddNewSales().setCabinID(mViewModel.getCabinViewModel().getCabinName());
         mViewModel.getAddNewSales().setDate(mViewModel.getSelectedDate().getTimeInMillis(), Utils.DD_MMM_YYYY);
-        onCabinInteractionListener.gotoSalesActivity(mViewModel.getAddNewSales());
+        onCabinInteractionListener.gotoSalesActivity(mViewModel);
     }
 }

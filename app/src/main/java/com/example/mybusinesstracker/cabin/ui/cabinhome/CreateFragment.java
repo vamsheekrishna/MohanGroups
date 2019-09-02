@@ -63,7 +63,7 @@ public class CreateFragment extends BaseFragment implements View.OnClickListener
 
 
         recyclerView = view.findViewById(R.id.body);
-        cabinBrickAdapter = new CabinBrickAdapter(mViewModel.getIceBlocks());
+        cabinBrickAdapter = new CabinBrickAdapter(mViewModel.getIceBlocks(), getContext());
         creteFragmentBinding.setIceBlockAdapter(cabinBrickAdapter);
         if(isCabinUpdate) {
             cabinName = mViewModel.getCabinName();

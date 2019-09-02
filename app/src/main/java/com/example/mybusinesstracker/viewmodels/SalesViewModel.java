@@ -292,4 +292,12 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
             this.blocks.add(iceBlock);
         }
     }
+
+    public Boolean isInProductionMode() {
+        if(blocks.size() <=0 ) {
+            return null;
+        } else {
+            return blocks.get(0).isInProduction();
+        }
+    }
 }

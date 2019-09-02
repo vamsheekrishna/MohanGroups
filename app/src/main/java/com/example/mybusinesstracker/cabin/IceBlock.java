@@ -54,7 +54,7 @@ public class IceBlock extends BaseObservable implements Serializable {
         return ID;
     }
 
-    private void setID(int ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
@@ -121,13 +121,13 @@ public class IceBlock extends BaseObservable implements Serializable {
         setBlockColor3(color);
         setBlockColor4(color);
     }
+
     public int getBlockBG() {
         if(isSelected) {
             return getSelectedColor();
         } else {
             return getIceColor();
         }
-
     }
 
     public void setBlockBG(int blockBG) {
@@ -164,5 +164,8 @@ public class IceBlock extends BaseObservable implements Serializable {
     }
     public void setBlockSelectedState(boolean state) {
         isSelected = state;
+    }
+    public boolean getBlockSelectedState() {
+        return isSelected;
     }
 }

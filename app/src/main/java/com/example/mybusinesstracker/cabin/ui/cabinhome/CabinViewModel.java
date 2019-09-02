@@ -14,7 +14,6 @@ import java.util.Map;
 
 public class CabinViewModel extends BaseObservable implements Serializable {
 
-    private Calendar currentDate;
     private String cabinName;
     private int totalRows;
     private int totalColumns;
@@ -41,7 +40,6 @@ public class CabinViewModel extends BaseObservable implements Serializable {
     }
 
     public void cloneCabinViewModel(CabinViewModel data, Calendar calendar) {
-        currentDate = calendar;
         cabinName = data.getCabinName();
         totalRows=data.getTotalRows();
         totalColumns = data.totalColumns;
@@ -50,7 +48,7 @@ public class CabinViewModel extends BaseObservable implements Serializable {
             if(iceBlock.isIceBlock()) {
                 totalIceBlocks+=1;
                 if(iceBlock.isInProduction()) {
-                    long seconds = (currentDate.getTimeInMillis() - iceBlock.getStartedAt()) / 1000;
+                    long seconds = (calendar.getTimeInMillis() - iceBlock.getStartedAt()) / 1000;
                     int hours = (int) (seconds / 3600);
                     if(hours >= 48) {
                         availableBlocks+=1;
@@ -72,7 +70,7 @@ public class CabinViewModel extends BaseObservable implements Serializable {
                 } else {
                     outSide+=1;
                     iceBlock.setIceColor(R.color.ice_block_out_side);
-                    iceBlock.setClickable(false);
+                    //iceBlock.setClickable(false);
                 }
             } else {
                 iceBlock.setIceColor(R.color.light_gray);
@@ -80,11 +78,7 @@ public class CabinViewModel extends BaseObservable implements Serializable {
             }
             iceBlock.setSelectedColor(R.color.ice_block_out_side);
             iceBlocks.add(iceBlock);
-            //long hours = ChronoUnit.HOURS.between(currentDate.toInstant(), c2.toInstant());
         }
-        //iceBlocks.addAll(data.iceBlocks);
-        /*ArrayList<IceBlock> iceBlocksTemp = new ArrayList<>();
-        iceBlocksTemp.addAll((Collection<? extends IceBlock>) data.get("iceBlocks"));*/
 
     }
     public CabinViewModel() {

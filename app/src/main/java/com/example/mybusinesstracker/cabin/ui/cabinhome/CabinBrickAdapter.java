@@ -1,14 +1,14 @@
 package com.example.mybusinesstracker.cabin.ui.cabinhome;
 
+import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybusinesstracker.R;
@@ -21,12 +21,18 @@ import java.util.ArrayList;
 public class CabinBrickAdapter extends RecyclerView.Adapter<CabinBrickViewHolder> {
     private ArrayList<IceBlock> mIceBlocks;
     DashboardViewModel mDashboardViewModel;
-    public CabinBrickAdapter(ArrayList<IceBlock> iceBlocks) {
+    boolean isCreteCabin = false;
+    private Context mContext;
+    public CabinBrickAdapter(ArrayList<IceBlock> iceBlocks, Context context) {
         mIceBlocks = iceBlocks;
+        mContext = context;
+        isCreteCabin = true;
     }
-    public CabinBrickAdapter(DashboardViewModel dashboardViewModel) {
+    public CabinBrickAdapter(DashboardViewModel dashboardViewModel, Context context) {
         mIceBlocks = dashboardViewModel.getCabinViewModel().getIceBlocks();
         mDashboardViewModel = dashboardViewModel;
+        mContext = context;
+        isCreteCabin = false;
     }
     @NonNull
     @Override
@@ -59,13 +65,21 @@ public class CabinBrickAdapter extends RecyclerView.Adapter<CabinBrickViewHolder
         return mIceBlocks.size();
     }
 
-    /*
-    @Override
-    public void onClick(View view) {
-        //CabinBrickViewHolder cabinBrickViewHolder = (CabinBrickViewHolder)view;
-        *//*int position = (int) view.getTag();
-        mIceBlocks.get(position).setIceBlock();*//*
-        //notifyDataSetChanged();
+    void showToast(String s) {
+        Toast.makeText(mContext, s,Toast.LENGTH_SHORT).show();
     }
+
+    boolean isCreateCabin() {
+        return isCreteCabin;
+    }
+
+    /*
+        @Override
+        public void onClick(View view) {
+            //CabinBrickViewHolder cabinBrickViewHolder = (CabinBrickViewHolder)view;
+            *//*int position = (int) view.getTag();
+            mIceBlocks.get(position).setIceBlock();*//*
+            //notifyDataSetChanged();
+        }
     */
 }

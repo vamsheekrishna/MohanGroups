@@ -62,11 +62,30 @@ class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View view) {
+
         int position = (int) view.getTag();
-        if(null!= mCabinBrickAdapter.mDashboardViewModel) {
-            mCabinBrickAdapter.mDashboardViewModel.getAddNewSales().setAddIceBlocks(mCabinBrickAdapter.getIceBlocks().get(position));
+        if(mCabinBrickAdapter.isCreateCabin()) {
+            if(null!= mCabinBrickAdapter.mDashboardViewModel) {
+                mCabinBrickAdapter.mDashboardViewModel.getAddNewSales().setAddIceBlocks(mCabinBrickAdapter.getIceBlocks().get(position));
+            }
+            mCabinBrickAdapter.getIceBlocks().get(position).setBlockSelectedState();
+            updateBackGround(mCabinBrickAdapter.getIceBlocks().get(position));
+        } else {
+
+            IceBlock iceBlock = mCabinBrickAdapter.getIceBlocks().get(position);
+            Boolean isInProductionMode = mCabinBrickAdapter.mDashboardViewModel.getAddNewSales().isInProductionMode();
+            if (null != mCabinBrickAdapter.mDashboardViewModel && (null == isInProductionMode || isInProductionMode == iceBlock.isInProduction())) {
+                mCabinBrickAdapter.mDashboardViewModel.getAddNewSales().setAddIceBlocks(iceBlock);
+                iceBlock.setBlockSelectedState();
+                updateBackGround(iceBlock);
+                if (iceBlock.getBlockSelectedState()) {
+                    view.setAlpha(.5f);
+                } else {
+                    view.setAlpha(1);
+                }
+            } else {
+                mCabinBrickAdapter.showToast("Please select the same type of block");
+            }
         }
-        mCabinBrickAdapter.getIceBlocks().get(position).setBlockSelectedState();
-        updateBackGround(mCabinBrickAdapter.getIceBlocks().get(position));
     }
 }
