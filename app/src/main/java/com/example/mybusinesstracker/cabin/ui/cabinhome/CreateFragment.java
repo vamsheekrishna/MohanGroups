@@ -79,21 +79,25 @@ public class CreateFragment extends BaseFragment implements View.OnClickListener
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void generateCabin() {
-        mViewModel.getIceBlocks().clear();
+        if(mViewModel.getCabinSize()>0) {
+            mViewModel.getIceBlocks().clear();
 
-        for (int i = 0; i<mViewModel.getCabinSize(); i++) {
+            for (int i = 0; i<mViewModel.getCabinSize(); i++) {
 
-            IceBlock iceBlock = new IceBlock(i, String.valueOf((i%mViewModel.getTotalColumns())+1));
-            iceBlock.setSelectedColor(R.color.light_gray);
-            iceBlock.setIceColor(R.color.blue);
-            //iceBlock.setFullBlockColor(Objects.requireNonNull(getActivity()).getColor(R.color.blue));
-            mViewModel.addBlock(iceBlock);
-            iceBlock.setStartedAt(Calendar.getInstance().getTimeInMillis());
-            //iceBlocks.add();
+                IceBlock iceBlock = new IceBlock(i, String.valueOf((i%mViewModel.getTotalColumns())+1));
+                iceBlock.setSelectedColor(R.color.light_gray);
+                iceBlock.setIceColor(R.color.blue);
+                //iceBlock.setFullBlockColor(Objects.requireNonNull(getActivity()).getColor(R.color.blue));
+                mViewModel.addBlock(iceBlock);
+                iceBlock.setStartedAt(Calendar.getInstance().getTimeInMillis());
+                //iceBlocks.add();
+            }
+            gridLayoutManager = new GridLayoutManager(getContext(),mViewModel.getTotalColumns(), RecyclerView.VERTICAL,false);
+            recyclerView.setLayoutManager(gridLayoutManager);
+            cabinBrickAdapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(getContext(), "Please enter the Rows and Column", Toast.LENGTH_SHORT).show();
         }
-        gridLayoutManager = new GridLayoutManager(getContext(),mViewModel.getTotalColumns(), RecyclerView.VERTICAL,false);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        cabinBrickAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -118,31 +122,36 @@ public class CreateFragment extends BaseFragment implements View.OnClickListener
             case R.id.submit:
 
                 generateCabin();
-                Toast.makeText(getActivity(),"show cabin Clicked",Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.insert_cabin:
                 //Button button = (Button)view;
+                if(null== mViewModel.getCabinName() || mViewModel.getCabinName().length()<=0) {
+                    Toast.makeText(getActivity(),"Please enter the cabin name.",Toast.LENGTH_SHORT).show();
+                } else if(null == mViewModel.getIceBlocks() || mViewModel.getIceBlocks().size()<=0) {
+                    Toast.makeText(getActivity(),"Please enter the ice blocks.",Toast.LENGTH_SHORT).show();
+                } else  {
+                    if(cabinName.length()>0 && !cabinName.equalsIgnoreCase(mViewModel.getCabinName())) {
+                        deleteRecord();
+                    }
+                    for (IceBlock iceBlock : mViewModel.getIceBlocks()) {
+                        iceBlock.setIceBlock();
+                    }
+                    CabinTable cabinTable = new CabinTable();
+                    cabinTable.addDataField(mViewModel, new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Objects.requireNonNull(getActivity()).onBackPressed();
+                            //Toast.makeText(getActivity(), "create_cabin onSuccess", Toast.LENGTH_SHORT).show();
+                        }
+                    }, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getActivity(),"create_cabin onFailure",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
-                if(cabinName.length()>0 && !cabinName.equalsIgnoreCase(mViewModel.getCabinName())) {
-                    deleteRecord();
-                }
-                for (IceBlock iceBlock : mViewModel.getIceBlocks()) {
-                    iceBlock.setIceBlock();
-                }
-                CabinTable cabinTable = new CabinTable();
-                cabinTable.addDataField(mViewModel, new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Objects.requireNonNull(getActivity()).onBackPressed();
-                        //Toast.makeText(getActivity(), "create_cabin onSuccess", Toast.LENGTH_SHORT).show();
-                    }
-                }, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(),"create_cabin onFailure",Toast.LENGTH_SHORT).show();
-                    }
-                });
             break;
             case R.id.delete_cabin:
                 deleteRecord();

@@ -45,6 +45,8 @@ public class CabinViewModel extends BaseObservable implements Serializable {
         totalColumns = data.totalColumns;
         iceBlocks.clear();
         for (IceBlock iceBlock : data.getIceBlocks()) {
+
+            iceBlock.setSelectedColor(R.color.ice_block_out_side);
             if(iceBlock.isIceBlock()) {
                 totalIceBlocks+=1;
                 if(iceBlock.isInProduction()) {
@@ -74,9 +76,9 @@ public class CabinViewModel extends BaseObservable implements Serializable {
                 }
             } else {
                 iceBlock.setIceColor(R.color.light_gray);
+                iceBlock.setSelectedColor(R.color.light_gray);
                 iceBlock.setClickable(false);
             }
-            iceBlock.setSelectedColor(R.color.ice_block_out_side);
             iceBlocks.add(iceBlock);
         }
 
