@@ -6,36 +6,40 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
+import androidx.appcompat.widget.AppCompatTextView;
+
 import com.example.mybusinesstracker.R;
 
 class ServicesListAdapter extends BaseExpandableListAdapter {
     private Context mContext;
+    private ServicePOJO servicePOJO;
     ServicesListAdapter(Context context) {
         mContext = context ;
+        servicePOJO = new ServicePOJO();
     }
     @Override
     public int getGroupCount() {
-        return 5;
+        return servicePOJO.getType().length;
     }
 
     @Override
     public int getChildrenCount(int i) {
-        return 7;
+        return servicePOJO.getTypeDetails().length;
     }
 
     @Override
     public Object getGroup(int i) {
-        return null;
+        return servicePOJO.getType()[i];
     }
 
     @Override
     public Object getChild(int i, int i1) {
-        return null;
+        return i;
     }
 
     @Override
     public long getGroupId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
@@ -53,7 +57,9 @@ class ServicesListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             assert layoutInflater != null;
-            convertView = layoutInflater.inflate(R.layout.expandable_list_groups, null);
+            convertView = layoutInflater.inflate(R.layout.services_group_item, null);
+            AppCompatTextView groupName = convertView.findViewById(R.id.service_group_name);
+            groupName.setText(servicePOJO.getType()[i]);
         }
         return convertView;
     }
@@ -62,7 +68,10 @@ class ServicesListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int i, int i1, boolean b, View convertView, ViewGroup viewGroup) {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.expandable_list_groups, null);
+            assert layoutInflater != null;
+            convertView = layoutInflater.inflate(R.layout.expandable_group_list_item, null);
+            AppCompatTextView typeItemHeader = convertView.findViewById(R.id.type_header);
+            typeItemHeader.setText(servicePOJO.getTypeDetails()[i1]);
         }
         return convertView;
     }
