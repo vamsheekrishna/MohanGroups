@@ -28,6 +28,7 @@ import com.example.mybusinesstracker.customer.CustomerActivity;
 import com.example.mybusinesstracker.dashboard.DashboardActivity;
 import com.example.mybusinesstracker.power.PowerActivity;
 import com.example.mybusinesstracker.sales.SalesActivity;
+import com.example.mybusinesstracker.services.ServicesActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -126,6 +127,15 @@ public class BaseActivity extends AppCompatActivity implements OnBaseAppListener
                     finish();
                 } else {
                     Toast.makeText(BaseActivity.this, "Dashboard",Toast.LENGTH_SHORT).show();break;
+                }
+                break;
+            case R.id.services:
+                if(!(BaseActivity.this instanceof ServicesActivity)) {
+                    intent = new Intent(this, ServicesActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(BaseActivity.this, "ServicesActivity",Toast.LENGTH_SHORT).show();break;
                 }
                 break;
             default:

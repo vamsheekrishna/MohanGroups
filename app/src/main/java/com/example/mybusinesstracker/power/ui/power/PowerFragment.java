@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,11 +43,17 @@ public class PowerFragment extends Fragment {
     }
     @SuppressLint("SetJavaScriptEnabled")
     private void init() {
-        String url = getString(R.string.WEBSITE_ADDRESS);
+//        String url = getString(R.string.WEBSITE_ADDRESS);
+        String url = "https://www.tssouthernpower.com/CPDCL_Home.portal?_nfpb=true&_pageLabel=CPDCL_Home_portal_page_289";
 
         if (!url.isEmpty()) {
             webView.getSettings().setJavaScriptEnabled(true);
-            webView.setWebViewClient(new WebViewClient());
+            webView.setWebViewClient(new WebViewClient(){
+                @Override
+                public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                    Toast.makeText(getContext(),"Web page loading error", Toast.LENGTH_SHORT).show();
+                }
+            });
             webView.loadUrl(url);
         }
     }

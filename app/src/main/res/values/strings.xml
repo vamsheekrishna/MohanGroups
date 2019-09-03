@@ -50,7 +50,8 @@
     <string name="Close">Close</string>
     <string name="current_bill">Current Bill</string>
 
-    <string name="WEBSITE_ADDRESS">https://www.tssouthernpower.com/CPDCL_Home.portal;jsessionid=Fs8xbGTBtJPnnFyF9VrcQyGSPyChhQVmGBQh28fv03QNdSFLMHvN!-1374925354?_nfpb=true&amp;_pageLabel=CPDCL_Home_portal_page_289</string>
+    <string name="WEBSITE_ADDRESS">
+        https://www.tssouthernpower.com/CPDCL_Home.portal;jsessionid=Fs8xbGTBtJPnnFyF9VrcQyGSPyChhQVmGBQh28fv03QNdSFLMHvN!-1374925354?_nfpb=true&amp;_pageLabel=CPDCL_Home_portal_page_289</string>
     <string name="time">Time</string>
     <string name="monthly_sales">Monthly Sales</string>
     <string name="daily_sales">Daily Sales</string>
@@ -65,5 +66,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_dashboard">Dashboard</string>
     <string name="restart">Restart after 30 mins</string>
+    <string name="nav_services">Services</string>
 
 </resources>

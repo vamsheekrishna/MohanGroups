@@ -12,4 +12,6 @@
     <item android:id="@+id/dash_board"
         android:title="@string/nav_dashboard"/>
 
+    <item android:id="@+id/services"
+        android:title="@string/nav_services"/>
 </menu>
