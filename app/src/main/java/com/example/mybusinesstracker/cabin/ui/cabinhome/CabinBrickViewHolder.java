@@ -22,7 +22,7 @@ class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     View view;
     private Context context;
     private CabinBrickAdapter mCabinBrickAdapter;
-    public CabinBrickViewHolder(@NonNull FragmentRecycleCabinBrickItemBinding itemView, CabinBrickAdapter cabinBrickAdapter) {
+    CabinBrickViewHolder(@NonNull FragmentRecycleCabinBrickItemBinding itemView, CabinBrickAdapter cabinBrickAdapter) {
         super(itemView.getRoot());
         itemBinding = itemView;
         view = itemView.getRoot();
@@ -43,7 +43,7 @@ class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void updateBackGround(IceBlock iceBlock) {
+    private void updateBackGround(IceBlock iceBlock) {
         itemBinding.getRoot().setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
         if(iceBlock.getBlock1() == -1) {
             blockPart1.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
@@ -71,7 +71,6 @@ class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnCli
             mCabinBrickAdapter.getIceBlocks().get(position).setBlockSelectedState();
             updateBackGround(mCabinBrickAdapter.getIceBlocks().get(position));
         } else {
-
             IceBlock iceBlock = mCabinBrickAdapter.getIceBlocks().get(position);
             Boolean isInProductionMode = mCabinBrickAdapter.mDashboardViewModel.getAddNewSales().isInProductionMode();
             if (null != mCabinBrickAdapter.mDashboardViewModel && (null == isInProductionMode || isInProductionMode == iceBlock.isInProduction())) {
