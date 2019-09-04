@@ -43,7 +43,7 @@ class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void updateBackGround(IceBlockPOJO iceBlockPOJO) {
         itemBinding.getRoot().setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlockPOJO.getBlockBG()));
-        if(iceBlockPOJO.getBlock1() <= 0) {
+        if(iceBlockPOJO.getBlock1() == 0) {
             blockPart1.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlockPOJO.getBlockBG()));
             blockPart2.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlockPOJO.getBlockBG()));
             blockPart3.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlockPOJO.getBlockBG()));
@@ -63,9 +63,9 @@ class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnCli
 
         int position = (int) view.getTag();
         if(mCabinBrickAdapter.isCreateCabin()) {
-            if(null!= mCabinBrickAdapter.mDashboardViewModel) {
+            /*if(null!= mCabinBrickAdapter.mDashboardViewModel) {
                 mCabinBrickAdapter.mDashboardViewModel.getAddNewSales().setAddIceBlocks(mCabinBrickAdapter.getIceBlocks().get(position));
-            }
+            }*/
             mCabinBrickAdapter.getIceBlocks().get(position).setBlockSelectedState();
             updateBackGround(mCabinBrickAdapter.getIceBlocks().get(position));
         } else {

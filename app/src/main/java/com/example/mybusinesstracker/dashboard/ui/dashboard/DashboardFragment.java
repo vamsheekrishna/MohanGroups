@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cabin.CabinActivity;
+import com.example.mybusinesstracker.cabin.ui.cabinhome.IceBlock;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.IceBlockPOJO;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinBrickAdapter;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel;
@@ -123,15 +124,26 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                         //mViewModel.addBricks(salesViewModel.getBlocks());
                         //mViewModel.setAddNewSales(salesViewModel);
                         assert salesViewModel != null;
-                        iceBlockPOJOS.addAll(salesViewModel.getBlocks());
+                        for (IceBlock iceBlock: salesViewModel.getBlocks()) {
+
+                            mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlock.getID()).setBlockColor1(salesViewModel.getCustomerColor());
+                            mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlock.getID()).setBlockColor2(salesViewModel.getCustomerColor());
+                            mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlock.getID()).setBlockColor3(salesViewModel.getCustomerColor());
+                            mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlock.getID()).setBlockColor4(salesViewModel.getCustomerColor());
+                            /*IceBlockPOJO iceBlockPOJO = new IceBlockPOJO();
+                            iceBlockPOJO.setIceBlock(iceBlock);
+                            iceBlockPOJOS.add(iceBlockPOJO);*/
+                        }
                     }
 
-                    for (IceBlockPOJO iceBlockPOJO : iceBlockPOJOS) {
-                        mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlockPOJO.getID()).setBlockColor1(iceBlockPOJO.getBlock1());
-                        mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlockPOJO.getID()).setBlockColor2(iceBlockPOJO.getBlock2());
-                        mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlockPOJO.getID()).setBlockColor3(iceBlockPOJO.getBlock3());
-                        mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlockPOJO.getID()).setBlockColor4(iceBlockPOJO.getBlock4());
-                    }
+                    /*
+                        for (IceBlockPOJO iceBlockPOJO : iceBlockPOJOS) {
+                            mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlockPOJO.getID()).setBlockColor1(iceBlockPOJO.getBlock1());
+                            mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlockPOJO.getID()).setBlockColor2(iceBlockPOJO.getBlock2());
+                            mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlockPOJO.getID()).setBlockColor3(iceBlockPOJO.getBlock3());
+                            mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlockPOJO.getID()).setBlockColor4(iceBlockPOJO.getBlock4());
+                        }
+                    */
                     updateList();
                 }
             }
@@ -144,7 +156,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     }
 
     private void updateList() {
-        int count = mViewModel.getCabinViewModel().getTotalColumns();
         ((GridLayoutManager) Objects.requireNonNull(recyclerView.getLayoutManager())).setSpanCount(mViewModel.getCabinViewModel().getTotalColumns());
         cabinBrickAdapter.notifyDataSetChanged();
 

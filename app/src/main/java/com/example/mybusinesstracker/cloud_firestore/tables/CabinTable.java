@@ -1,5 +1,6 @@
 package com.example.mybusinesstracker.cloud_firestore.tables;
 
+import com.example.mybusinesstracker.cabin.ui.cabinhome.IceBlock;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.IceBlockPOJO;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel;
 import com.example.mybusinesstracker.cloud_firestore.DBInstance;
@@ -25,7 +26,7 @@ public class CabinTable extends DBInstance {
 */
     }
 
-    public void updateFields(String cabinID, ArrayList<IceBlockPOJO> selected, OnFailureListener error_writing_document, OnSuccessListener<Void> onSuccessListener) {
+    public void updateFields(String cabinID, ArrayList<IceBlock> selected, OnFailureListener error_writing_document, OnSuccessListener<Void> onSuccessListener) {
         HashMap<String, Object> date = new HashMap<>();
         //date.put("0", );
         /*IceBlockPOJO iceBlock = new IceBlockPOJO();

@@ -25,26 +25,15 @@ public class CabinViewModel extends BaseObservable implements Serializable {
     private int oneTwo;
     private int outSide;
     private ArrayList<IceBlockPOJO> iceBlockPOJOS = new ArrayList<>();
-
-    public CabinViewModel(Map<String, Object> data) {
-        cabinName = (String) data.get("cabinName");
-        Long temp;
-        temp = (Long) data.get("totalRows") ;
-        totalRows=temp.intValue();
-        temp = (Long) data.get("totalColumns") ;
-        totalColumns = temp.intValue();
-        ArrayList<IceBlockPOJO> iceBlocksTempPOJO = new ArrayList<>();
-        iceBlocksTempPOJO.addAll((Collection<? extends IceBlockPOJO>) data.get("iceBlockPOJOS"));
-
-    }
-
+    
     public void cloneCabinViewModel(CabinViewModel data, Calendar calendar) {
         cabinName = data.getCabinName();
         totalRows=data.getTotalRows();
         totalColumns = data.totalColumns;
         iceBlockPOJOS.clear();
-        for (IceBlockPOJO iceBlockPOJO : data.getIceBlockPOJOS()) {
-
+        for (IceBlock iceBlock : data.getIceBlock()) {
+            IceBlockPOJO iceBlockPOJO = new IceBlockPOJO();
+            iceBlockPOJO.setIceBlock(iceBlock);
             iceBlockPOJO.setSelectedColor(R.color.ice_block_out_side);
             iceBlockPOJO.setBlockSelectedState(false);
             if(iceBlockPOJO.isIceBlock()) {
@@ -132,6 +121,13 @@ public class CabinViewModel extends BaseObservable implements Serializable {
     public  ArrayList<IceBlockPOJO> getIceBlockPOJOS() {
         return iceBlockPOJOS;
     }
+    public  ArrayList<IceBlock> getIceBlock() {
+        ArrayList<IceBlock> iceBlocks = new ArrayList<>();
+        for (IceBlockPOJO iceBlockPOJO:iceBlockPOJOS) {
+            iceBlocks.add(iceBlockPOJO.getIceBlock());
+        }
+        return iceBlocks;
+    }
     public void setTotalColumns(int totalColumns) {
         this.totalColumns = totalColumns;
     }
@@ -141,8 +137,23 @@ public class CabinViewModel extends BaseObservable implements Serializable {
         objectHashMap.put("cabinName",cabinName);
         objectHashMap.put("totalRows",totalRows);
         objectHashMap.put("totalColumns",totalColumns);
-        objectHashMap.put("iceBlockPOJOS", iceBlockPOJOS);
+        /*ArrayList<IceBlock> iceBlocks = new ArrayList<>();
+        for (IceBlockPOJO iceBlockPOJO:iceBlockPOJOS) {
+
+            iceBlocks.add(iceBlockPOJO.getIceBlock());
+        }*/
+        objectHashMap.put("iceBlock", getIceBlock());
         return objectHashMap;
+    }
+
+    public void setIceBlock(ArrayList<IceBlock> iceBlock) {
+        iceBlockPOJOS = new ArrayList<>();
+        for (IceBlock block:iceBlock) {
+            IceBlockPOJO iceBlockPOJO = new IceBlockPOJO();
+            iceBlockPOJO.setIceBlock(block);
+            iceBlockPOJOS.add(iceBlockPOJO);
+        }
+        //this.iceBlock = iceBlock;
     }
 
     public void addTempData(int size) {

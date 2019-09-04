@@ -80,15 +80,14 @@ public class CreateFragment extends BaseFragment implements View.OnClickListener
     private void generateCabin() {
         if(mViewModel.getCabinSize()>0) {
             mViewModel.getIceBlockPOJOS().clear();
-
-            for (int i = 0; i<mViewModel.getCabinSize(); i++) {
+            int total = mViewModel.getCabinSize();
+            for (int i = 0; i<total; i++) {
 
                 IceBlockPOJO iceBlockPOJO = new IceBlockPOJO(i, String.valueOf((i%mViewModel.getTotalColumns())+1));
                 iceBlockPOJO.setSelectedColor(R.color.light_gray);
                 iceBlockPOJO.setIceColor(R.color.blue);
-                //iceBlockPOJO.setFullBlockColor(Objects.requireNonNull(getActivity()).getColor(R.color.blue));
-                mViewModel.addBlock(iceBlockPOJO);
                 iceBlockPOJO.setStartedAt(Calendar.getInstance().getTimeInMillis());
+                mViewModel.addBlock(iceBlockPOJO);
                 //iceBlocks.add();
             }
             gridLayoutManager = new GridLayoutManager(getContext(),mViewModel.getTotalColumns(), RecyclerView.VERTICAL,false);

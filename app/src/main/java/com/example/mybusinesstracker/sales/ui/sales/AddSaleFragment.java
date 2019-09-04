@@ -25,6 +25,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.mybusinesstracker.basecalss.BaseFragment;
 import com.example.mybusinesstracker.R;
+import com.example.mybusinesstracker.cabin.ui.cabinhome.IceBlock;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.IceBlockPOJO;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.OnCabinInteractionListener;
@@ -276,13 +277,13 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
     private void updateCabinData() {
         //SalesViewModel salesViewModel = mViewModel.getAddNewSales();
         Calendar calendar = Calendar.getInstance();
-        for (IceBlockPOJO iceBlockPOJO :  mSalesViewModel.getBlocks()) {
-            mCabinViewModel.getIceBlockPOJOS().get(iceBlockPOJO.getID()).setInProduction(iceBlockPOJO.isInProduction());
-            mCabinViewModel.getIceBlockPOJOS().get(iceBlockPOJO.getID()).setStartedAt(calendar.getTimeInMillis());
-            mCabinViewModel.getIceBlockPOJOS().get(iceBlockPOJO.getID()).setFullBlockColor(-1);
+        for (IceBlock iceBlock :  mSalesViewModel.getBlocks()) {
+            mCabinViewModel.getIceBlockPOJOS().get(iceBlock.getID()).setInProduction(iceBlock.isInProduction());
+            mCabinViewModel.getIceBlockPOJOS().get(iceBlock.getID()).setStartedAt(calendar.getTimeInMillis());
+            mCabinViewModel.getIceBlockPOJOS().get(iceBlock.getID()).setFullBlockColor(-1);
         }
         CabinTable cabinTable = new CabinTable();
-        cabinTable.updateFields(mCabinViewModel.getCabinName(),mCabinViewModel.getIceBlockPOJOS(), new OnFailureListener() {
+        cabinTable.updateFields(mCabinViewModel.getCabinName(),mCabinViewModel.getIceBlock(), new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 //Toast.makeText(getContext(),"onFailure",Toast.LENGTH_SHORT).show();
@@ -317,10 +318,11 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
             mSalesViewModel.setDate(Calendar.getInstance().getTimeInMillis(), "DD-MM-YYYY HH:mm");
         }
         //Customer customer =mAllCustomers.get(mSalesViewModel.getCustomerID());
-        for (IceBlockPOJO iceBlockPOJO : mSalesViewModel.getBlocks()) {
+        for (IceBlock iceBlock : mSalesViewModel.getBlocks()) {
             //assert customer != null;
-            iceBlockPOJO.setFullBlockColor(mSalesViewModel.getSelectedCustomer().getColorID());
-            iceBlockPOJO.setInProduction(isInProduction.isChecked());
+            //iceBlock.setFullBlockColor(mSalesViewModel.getSelectedCustomer().getColorID());
+            mSalesViewModel.setCustomerColor(mSalesViewModel.getSelectedCustomer().getColorID());
+            iceBlock.setInProduction(isInProduction.isChecked());
         }
         SalesTable salesTable = new SalesTable();
         salesTable.addDataField(mSalesViewModel,this, this);

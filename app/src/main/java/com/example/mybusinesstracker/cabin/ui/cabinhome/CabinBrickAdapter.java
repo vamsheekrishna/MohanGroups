@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class CabinBrickAdapter extends RecyclerView.Adapter<CabinBrickViewHolder> {
     private ArrayList<IceBlockPOJO> mIceBlockPOJOS;
     DashboardViewModel mDashboardViewModel;
-    boolean isCreteCabin = false;
+    private boolean isCreteCabin;
     private Context mContext;
     public CabinBrickAdapter(ArrayList<IceBlockPOJO> iceBlockPOJOS, Context context) {
         mIceBlockPOJOS = iceBlockPOJOS;

@@ -21,20 +21,18 @@
         tools:ignore="GoogleAppIndexingWarning,InnerclassSeparator">
         <activity android:name=".services.ServicesActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".dashboard.DashboardActivity"
             android:theme="@style/AppTheme">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".cabin.CabinActivity"
