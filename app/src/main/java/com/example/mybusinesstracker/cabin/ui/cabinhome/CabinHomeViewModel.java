@@ -2,7 +2,6 @@ package com.example.mybusinesstracker.cabin.ui.cabinhome;
 
 
 import com.example.mybusinesstracker.R;
-import com.example.mybusinesstracker.cabin.IceBlock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,11 +13,11 @@ public class CabinHomeViewModel extends Observable {
 
     void addCabinViewModel(CabinViewModel model) {
         cabinViewModelHashMap.put(model.getCabinName(), model);
-        for (IceBlock iceBlock: model.getIceBlocks()) {
-            iceBlock.setSelectedColor(R.color.light_gray);
-            iceBlock.setIceColor(R.color.blue);
-            if(!iceBlock.isIceBlock()) {
-                iceBlock.setBlockSelectedState(true);
+        for (IceBlockPOJO iceBlockPOJO : model.getIceBlockPOJOS()) {
+            iceBlockPOJO.setSelectedColor(R.color.light_gray);
+            iceBlockPOJO.setIceColor(R.color.blue);
+            if(!iceBlockPOJO.isIceBlock()) {
+                iceBlockPOJO.setBlockSelectedState(true);
             }
         }
         arrayList.add(model.getCabinName());

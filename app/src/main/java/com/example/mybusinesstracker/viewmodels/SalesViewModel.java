@@ -4,7 +4,7 @@ import android.util.Log;
 
 import androidx.databinding.BaseObservable;
 
-import com.example.mybusinesstracker.cabin.IceBlock;
+import com.example.mybusinesstracker.cabin.ui.cabinhome.IceBlockPOJO;
 import com.example.mybusinesstracker.cloud_firestore.OnCloudFireStoreInteraction;
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
 import com.example.mybusinesstracker.utilities.Utils;
@@ -34,7 +34,7 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     private static final String NOTE = "note";
     private static final String SELECTED_BLOCKS = "blocks";
 
-    private ArrayList<IceBlock> blocks = new ArrayList<>();
+    private ArrayList<IceBlockPOJO> blocks = new ArrayList<>();
     private int ID;
     @SerializedName("date")
     @Expose
@@ -92,7 +92,7 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
         paidAmount= Integer.parseInt((String) requireNonNull(hashMap.get(PAID_AMOUNT)));
         dueAmount = Integer.parseInt((String) requireNonNull(hashMap.get(DUE_AMOUNT)));
         note = (String) hashMap.get(NOTE);
-        blocks = (ArrayList<IceBlock>) hashMap.get(SELECTED_BLOCKS);
+        blocks = (ArrayList<IceBlockPOJO>) hashMap.get(SELECTED_BLOCKS);
     }
     public SalesViewModel() {
 
@@ -278,18 +278,18 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
         return getCalendarObject().get(Calendar.DAY_OF_MONTH);
     }
 
-    public ArrayList<IceBlock> getBlocks() {
+    public ArrayList<IceBlockPOJO> getBlocks() {
         return blocks;
     }
 
-    public void setBlocks(ArrayList<IceBlock> blocks) {
+    public void setBlocks(ArrayList<IceBlockPOJO> blocks) {
         this.blocks = blocks;
     }
-    public void setAddIceBlocks(IceBlock iceBlock) {
-        if(blocks.contains(iceBlock)) {
-            this.blocks.remove(iceBlock);
+    public void setAddIceBlocks(IceBlockPOJO iceBlockPOJO) {
+        if(blocks.contains(iceBlockPOJO)) {
+            this.blocks.remove(iceBlockPOJO);
         } else {
-            this.blocks.add(iceBlock);
+            this.blocks.add(iceBlockPOJO);
         }
     }
 

@@ -10,7 +10,6 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybusinesstracker.R;
-import com.example.mybusinesstracker.cabin.IceBlock;
 import com.example.mybusinesstracker.databinding.FragmentRecycleCabinBrickItemBinding;
 
 import java.util.Objects;
@@ -35,25 +34,25 @@ class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void bind(IceBlock iceBlock) {
-        itemBinding.setVariable(com.example.mybusinesstracker.BR.cabinRowItemView, iceBlock);
-        //itemBinding.getRoot().setTag(iceBlock);
-        updateBackGround(iceBlock);
+    public void bind(IceBlockPOJO iceBlockPOJO) {
+        itemBinding.setVariable(com.example.mybusinesstracker.BR.cabinRowItemView, iceBlockPOJO);
+        //itemBinding.getRoot().setTag(iceBlockPOJO);
+        updateBackGround(iceBlockPOJO);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void updateBackGround(IceBlock iceBlock) {
-        itemBinding.getRoot().setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
-        if(iceBlock.getBlock1() <= 0) {
-            blockPart1.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
-            blockPart2.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
-            blockPart3.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
-            blockPart4.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
+    private void updateBackGround(IceBlockPOJO iceBlockPOJO) {
+        itemBinding.getRoot().setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlockPOJO.getBlockBG()));
+        if(iceBlockPOJO.getBlock1() <= 0) {
+            blockPart1.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlockPOJO.getBlockBG()));
+            blockPart2.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlockPOJO.getBlockBG()));
+            blockPart3.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlockPOJO.getBlockBG()));
+            blockPart4.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlockPOJO.getBlockBG()));
         } else {
-            blockPart1.setBackgroundColor(iceBlock.getBlock1());
-            blockPart2.setBackgroundColor(iceBlock.getBlock2());
-            blockPart3.setBackgroundColor(iceBlock.getBlock3());
-            blockPart4.setBackgroundColor(iceBlock.getBlock4());
+            blockPart1.setBackgroundColor(iceBlockPOJO.getBlock1());
+            blockPart2.setBackgroundColor(iceBlockPOJO.getBlock2());
+            blockPart3.setBackgroundColor(iceBlockPOJO.getBlock3());
+            blockPart4.setBackgroundColor(iceBlockPOJO.getBlock4());
         }
 
     }
@@ -70,13 +69,13 @@ class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnCli
             mCabinBrickAdapter.getIceBlocks().get(position).setBlockSelectedState();
             updateBackGround(mCabinBrickAdapter.getIceBlocks().get(position));
         } else {
-            IceBlock iceBlock = mCabinBrickAdapter.getIceBlocks().get(position);
+            IceBlockPOJO iceBlockPOJO = mCabinBrickAdapter.getIceBlocks().get(position);
             Boolean isInProductionMode = mCabinBrickAdapter.mDashboardViewModel.getAddNewSales().isInProductionMode();
-            if (null != mCabinBrickAdapter.mDashboardViewModel && (null == isInProductionMode || isInProductionMode == iceBlock.isInProduction())) {
-                mCabinBrickAdapter.mDashboardViewModel.getAddNewSales().setAddIceBlocks(iceBlock);
-                iceBlock.setBlockSelectedState();
-                updateBackGround(iceBlock);
-                if (iceBlock.getBlockSelectedState()) {
+            if (null != mCabinBrickAdapter.mDashboardViewModel && (null == isInProductionMode || isInProductionMode == iceBlockPOJO.isInProduction())) {
+                mCabinBrickAdapter.mDashboardViewModel.getAddNewSales().setAddIceBlocks(iceBlockPOJO);
+                iceBlockPOJO.setBlockSelectedState();
+                updateBackGround(iceBlockPOJO);
+                if (iceBlockPOJO.getBlockSelectedState()) {
                     view.setAlpha(.5f);
                 } else {
                     view.setAlpha(1);

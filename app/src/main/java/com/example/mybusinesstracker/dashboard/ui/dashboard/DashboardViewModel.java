@@ -1,9 +1,8 @@
 package com.example.mybusinesstracker.dashboard.ui.dashboard;
 
 import androidx.databinding.BaseObservable;
-import androidx.lifecycle.ViewModel;
 
-import com.example.mybusinesstracker.cabin.IceBlock;
+import com.example.mybusinesstracker.cabin.ui.cabinhome.IceBlockPOJO;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 
@@ -64,7 +63,7 @@ public class DashboardViewModel extends BaseObservable implements Serializable {
         this.selectedDate = selectedDate;
     }
 
-    public void addBricks(ArrayList<IceBlock> blocks) {
+    public void addBricks(ArrayList<IceBlockPOJO> blocks) {
 
     }
 }

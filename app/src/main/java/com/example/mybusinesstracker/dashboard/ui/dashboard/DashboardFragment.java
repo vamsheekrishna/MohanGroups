@@ -16,11 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cabin.CabinActivity;
-import com.example.mybusinesstracker.cabin.IceBlock;
+import com.example.mybusinesstracker.cabin.ui.cabinhome.IceBlockPOJO;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinBrickAdapter;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.OnCabinInteractionListener;
@@ -47,8 +46,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     private CabinBrickAdapter cabinBrickAdapter;
     private RecyclerView recyclerView;
     private OnCabinInteractionListener onCabinInteractionListener;
-    private ArrayList<IceBlock> iceBlocks = new ArrayList<>();;
-    private IceBlock iceBlock;
+    private ArrayList<IceBlockPOJO> iceBlockPOJOS = new ArrayList<>();;
+    private IceBlockPOJO iceBlockPOJO;
     //private CabinViewModel cabinViewModel;
     public static DashboardFragment newInstance() {
         return new DashboardFragment();
@@ -89,8 +88,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                     for (DocumentSnapshot document : task.getResult()) {
                         CabinViewModel cabinViewModel = document.toObject(CabinViewModel.class);
                         assert cabinViewModel != null;
-                        for (IceBlock iceBlock : cabinViewModel.getIceBlocks()) {
-                            iceBlock.setFullBlockColor(Objects.requireNonNull(ContextCompat.getColor(Objects.requireNonNull(getContext()),R.color.transparent)));//getActivity()).getResources().getColor(R.color.transparent)
+                        for (IceBlockPOJO iceBlockPOJO : cabinViewModel.getIceBlockPOJOS()) {
+                            iceBlockPOJO.setFullBlockColor(Objects.requireNonNull(ContextCompat.getColor(Objects.requireNonNull(getContext()),R.color.transparent)));//getActivity()).getResources().getColor(R.color.transparent)
                         }
                         mViewModel.getCabinViewModel().cloneCabinViewModel(cabinViewModel, Calendar.getInstance());
                     }
@@ -117,21 +116,21 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (null != task.getResult()) {
-                    iceBlocks.clear();
+                    iceBlockPOJOS.clear();
                     for (DocumentSnapshot document : task.getResult()) {
                         SalesViewModel salesViewModel = document.toObject(SalesViewModel.class);
                         //SalesViewModel salesViewModel = new SalesViewModel(document.getData());
                         //mViewModel.addBricks(salesViewModel.getBlocks());
                         //mViewModel.setAddNewSales(salesViewModel);
                         assert salesViewModel != null;
-                        iceBlocks.addAll(salesViewModel.getBlocks());
+                        iceBlockPOJOS.addAll(salesViewModel.getBlocks());
                     }
 
-                    for (IceBlock iceBlock : iceBlocks) {
-                        mViewModel.getCabinViewModel().getIceBlocks().get(iceBlock.getID()).setBlockColor1(iceBlock.getBlock1());
-                        mViewModel.getCabinViewModel().getIceBlocks().get(iceBlock.getID()).setBlockColor2(iceBlock.getBlock2());
-                        mViewModel.getCabinViewModel().getIceBlocks().get(iceBlock.getID()).setBlockColor3(iceBlock.getBlock3());
-                        mViewModel.getCabinViewModel().getIceBlocks().get(iceBlock.getID()).setBlockColor4(iceBlock.getBlock4());
+                    for (IceBlockPOJO iceBlockPOJO : iceBlockPOJOS) {
+                        mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlockPOJO.getID()).setBlockColor1(iceBlockPOJO.getBlock1());
+                        mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlockPOJO.getID()).setBlockColor2(iceBlockPOJO.getBlock2());
+                        mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlockPOJO.getID()).setBlockColor3(iceBlockPOJO.getBlock3());
+                        mViewModel.getCabinViewModel().getIceBlockPOJOS().get(iceBlockPOJO.getID()).setBlockColor4(iceBlockPOJO.getBlock4());
                     }
                     updateList();
                 }

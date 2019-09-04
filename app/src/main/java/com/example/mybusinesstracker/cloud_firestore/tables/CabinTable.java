@@ -1,13 +1,12 @@
 package com.example.mybusinesstracker.cloud_firestore.tables;
 
-import com.example.mybusinesstracker.cabin.IceBlock;
+import com.example.mybusinesstracker.cabin.ui.cabinhome.IceBlockPOJO;
 import com.example.mybusinesstracker.cabin.ui.cabinhome.CabinViewModel;
 import com.example.mybusinesstracker.cloud_firestore.DBInstance;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -26,10 +25,10 @@ public class CabinTable extends DBInstance {
 */
     }
 
-    public void updateFields(String cabinID, ArrayList<IceBlock> selected, OnFailureListener error_writing_document, OnSuccessListener<Void> onSuccessListener) {
+    public void updateFields(String cabinID, ArrayList<IceBlockPOJO> selected, OnFailureListener error_writing_document, OnSuccessListener<Void> onSuccessListener) {
         HashMap<String, Object> date = new HashMap<>();
         //date.put("0", );
-        /*IceBlock iceBlock = new IceBlock();
+        /*IceBlockPOJO iceBlock = new IceBlockPOJO();
         iceBlock.setFullBlockColor(-1);
         iceBlock.setBlockBG(2131034200);
         iceBlock.setBlockName("1");

@@ -1,4 +1,4 @@
-package com.example.mybusinesstracker.cabin;
+package com.example.mybusinesstracker.cabin.ui.cabinhome;
 
 import androidx.databinding.BaseObservable;
 
@@ -7,7 +7,7 @@ import com.example.mybusinesstracker.R;
 import java.io.Serializable;
 import java.util.Map;
 
-public class IceBlock extends BaseObservable implements Serializable {
+public class IceBlockPOJO extends BaseObservable implements Serializable {
 
     private int ID;
     private boolean inProduction = true;
@@ -18,15 +18,15 @@ public class IceBlock extends BaseObservable implements Serializable {
     private int block1, block2, block3, block4, blockBG, iceColor, selectedColor = R.color.light_gray;
     private boolean isSelected;
 
-    public IceBlock() {
+    public IceBlockPOJO() {
 
     }
-    public IceBlock(int i, String name) {
+    public IceBlockPOJO(int i, String name) {
         setID(i);
         setBlockName(name);
         setFullBlockColor(-1);
     }
-    public IceBlock(Map<String, Object> data) {
+    public IceBlockPOJO(Map<String, Object> data) {
         ID = (int) data.get("ID");
         inProduction = (boolean) data.get("inProduction");
         iceBlock = (boolean) data.get("iceBlock");

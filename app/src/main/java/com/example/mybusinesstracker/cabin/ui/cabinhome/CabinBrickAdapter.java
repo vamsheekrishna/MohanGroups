@@ -12,24 +12,23 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybusinesstracker.R;
-import com.example.mybusinesstracker.cabin.IceBlock;
 import com.example.mybusinesstracker.dashboard.ui.dashboard.DashboardViewModel;
 import com.example.mybusinesstracker.databinding.FragmentRecycleCabinBrickItemBinding;
 
 import java.util.ArrayList;
 
 public class CabinBrickAdapter extends RecyclerView.Adapter<CabinBrickViewHolder> {
-    private ArrayList<IceBlock> mIceBlocks;
+    private ArrayList<IceBlockPOJO> mIceBlockPOJOS;
     DashboardViewModel mDashboardViewModel;
     boolean isCreteCabin = false;
     private Context mContext;
-    public CabinBrickAdapter(ArrayList<IceBlock> iceBlocks, Context context) {
-        mIceBlocks = iceBlocks;
+    public CabinBrickAdapter(ArrayList<IceBlockPOJO> iceBlockPOJOS, Context context) {
+        mIceBlockPOJOS = iceBlockPOJOS;
         mContext = context;
         isCreteCabin = true;
     }
     public CabinBrickAdapter(DashboardViewModel dashboardViewModel, Context context) {
-        mIceBlocks = dashboardViewModel.getCabinViewModel().getIceBlocks();
+        mIceBlockPOJOS = dashboardViewModel.getCabinViewModel().getIceBlockPOJOS();
         mDashboardViewModel = dashboardViewModel;
         mContext = context;
         isCreteCabin = false;
@@ -48,21 +47,21 @@ public class CabinBrickAdapter extends RecyclerView.Adapter<CabinBrickViewHolder
     @Override
     public void onBindViewHolder(@NonNull CabinBrickViewHolder holder, int position) {
         holder.itemView.setTag(position);
-        holder.bind(mIceBlocks.get(position));
-        holder.view.setClickable(mIceBlocks.get(position).isClickable());
+        holder.bind(mIceBlockPOJOS.get(position));
+        holder.view.setClickable(mIceBlockPOJOS.get(position).isClickable());
     }
-    public void setIceBlocks(ArrayList<IceBlock> iceBlocks) {
-        mIceBlocks.clear();
-        mIceBlocks.addAll(iceBlocks);
+    public void setIceBlocks(ArrayList<IceBlockPOJO> iceBlockPOJOS) {
+        mIceBlockPOJOS.clear();
+        mIceBlockPOJOS.addAll(iceBlockPOJOS);
         //notifyDataSetChanged();
     }
-    ArrayList<IceBlock> getIceBlocks() {
-        return mIceBlocks;
+    ArrayList<IceBlockPOJO> getIceBlocks() {
+        return mIceBlockPOJOS;
     }
 
     @Override
     public int getItemCount() {
-        return mIceBlocks.size();
+        return mIceBlockPOJOS.size();
     }
 
     void showToast(String s) {
@@ -78,7 +77,7 @@ public class CabinBrickAdapter extends RecyclerView.Adapter<CabinBrickViewHolder
         public void onClick(View view) {
             //CabinBrickViewHolder cabinBrickViewHolder = (CabinBrickViewHolder)view;
             *//*int position = (int) view.getTag();
-            mIceBlocks.get(position).setIceBlock();*//*
+            mIceBlockPOJOS.get(position).setIceBlock();*//*
             //notifyDataSetChanged();
         }
     */
