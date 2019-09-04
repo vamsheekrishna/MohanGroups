@@ -47,6 +47,7 @@ public class CabinViewModel extends BaseObservable implements Serializable {
         for (IceBlock iceBlock : data.getIceBlocks()) {
 
             iceBlock.setSelectedColor(R.color.ice_block_out_side);
+            iceBlock.setBlockSelectedState(false);
             if(iceBlock.isIceBlock()) {
                 totalIceBlocks+=1;
                 if(iceBlock.isInProduction()) {
@@ -54,19 +55,28 @@ public class CabinViewModel extends BaseObservable implements Serializable {
                     int hours = (int) (seconds / 3600);
                     if(hours >= 48) {
                         availableBlocks+=1;
+                        iceBlock.setClickable(true);
                         iceBlock.setIceColor(R.color.ice_block_full);
+                        iceBlock.setBlockBG(R.color.ice_block_full);
                     } else if(hours>=36 && hours < 47) {
                         threeFourth+=1;
+                        iceBlock.setClickable(true);
                         iceBlock.setIceColor(R.color.ice_block_threeforth);
+                        iceBlock.setBlockBG(R.color.ice_block_threeforth);
                     } else if(hours>=24 && hours < 36) {
                         oneTwo+=1;
+                        iceBlock.setClickable(true);
                         iceBlock.setIceColor(R.color.ice_block_half);
+                        iceBlock.setBlockBG(R.color.ice_block_half);
                     } else if(hours>=12 && hours < 24) {
                         oneFourth+=1;
+                        iceBlock.setClickable(true);
                         iceBlock.setIceColor(R.color.ice_block_one_fourth);
+                        iceBlock.setBlockBG(R.color.ice_block_one_fourth);
                     } else {
                         emptyBlocks+=1;
                         iceBlock.setIceColor(R.color.ice_block_empty);
+                        iceBlock.setBlockBG(R.color.ice_block_empty);
                         iceBlock.setClickable(false);
                     }
                 } else {
@@ -133,7 +143,6 @@ public class CabinViewModel extends BaseObservable implements Serializable {
         objectHashMap.put("cabinName",cabinName);
         objectHashMap.put("totalRows",totalRows);
         objectHashMap.put("totalColumns",totalColumns);
-
         objectHashMap.put("iceBlocks",iceBlocks);
         return objectHashMap;
     }

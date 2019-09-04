@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybusinesstracker.R;
@@ -37,7 +36,7 @@ class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnCli
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void bind(IceBlock iceBlock) {
-        itemBinding.setVariable(BR.cabinRowItemView, iceBlock);
+        itemBinding.setVariable(com.example.mybusinesstracker.BR.cabinRowItemView, iceBlock);
         //itemBinding.getRoot().setTag(iceBlock);
         updateBackGround(iceBlock);
     }
@@ -45,7 +44,7 @@ class CabinBrickViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void updateBackGround(IceBlock iceBlock) {
         itemBinding.getRoot().setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
-        if(iceBlock.getBlock1() == -1) {
+        if(iceBlock.getBlock1() <= 0) {
             blockPart1.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
             blockPart2.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));
             blockPart3.setBackgroundColor(Objects.requireNonNull(context).getColor(iceBlock.getBlockBG()));

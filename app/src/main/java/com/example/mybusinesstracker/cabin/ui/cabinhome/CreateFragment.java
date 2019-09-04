@@ -135,7 +135,7 @@ public class CreateFragment extends BaseFragment implements View.OnClickListener
                         deleteRecord();
                     }
                     for (IceBlock iceBlock : mViewModel.getIceBlocks()) {
-                        iceBlock.setIceBlock();
+                        iceBlock.setIceBlock(!iceBlock.getBlockSelectedState());
                     }
                     CabinTable cabinTable = new CabinTable();
                     cabinTable.addDataField(mViewModel, new OnSuccessListener<Void>() {

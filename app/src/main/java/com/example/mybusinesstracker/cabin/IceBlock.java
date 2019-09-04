@@ -37,8 +37,8 @@ public class IceBlock extends BaseObservable implements Serializable {
         return iceBlock;
     }
 
-    public void setIceBlock() {
-        iceBlock = !isSelected;
+    public void setIceBlock(boolean isIceBlock) {
+        iceBlock = isIceBlock;
         /*
             if(iceBlock) {
                 iceBlock = false;
