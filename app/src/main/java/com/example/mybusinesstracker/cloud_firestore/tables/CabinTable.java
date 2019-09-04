@@ -27,17 +27,6 @@ public class CabinTable extends DBInstance {
     }
 
     public void updateFields(String cabinID, ArrayList<IceBlock> selected, OnFailureListener error_writing_document, OnSuccessListener<Void> onSuccessListener) {
-        HashMap<String, Object> date = new HashMap<>();
-        //date.put("0", );
-        /*IceBlockPOJO iceBlock = new IceBlockPOJO();
-        iceBlock.setFullBlockColor(-1);
-        iceBlock.setBlockBG(2131034200);
-        iceBlock.setBlockName("1");
-        iceBlock.setClickable(true);
-        iceBlock.setID(0);
-        iceBlock.setInProduction(true);
-        iceBlock.setStartedAt(1566882133161l);*/
-
         getCollection().document(BASE_DIRECTORY_DETAILS)
                 .collection(BASE_DIRECTORY_CABIN).document(cabinID).update("iceBlocks", selected)
                 .addOnSuccessListener(onSuccessListener)

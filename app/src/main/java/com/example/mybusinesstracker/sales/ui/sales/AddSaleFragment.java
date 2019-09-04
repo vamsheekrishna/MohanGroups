@@ -276,11 +276,11 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
 
     private void updateCabinData() {
         //SalesViewModel salesViewModel = mViewModel.getAddNewSales();
-        Calendar calendar = Calendar.getInstance();
+        //Calendar calendar = Calendar.getInstance();
         for (IceBlock iceBlock :  mSalesViewModel.getBlocks()) {
             mCabinViewModel.getIceBlockPOJOS().get(iceBlock.getID()).setInProduction(iceBlock.isInProduction());
-            mCabinViewModel.getIceBlockPOJOS().get(iceBlock.getID()).setStartedAt(calendar.getTimeInMillis());
-            mCabinViewModel.getIceBlockPOJOS().get(iceBlock.getID()).setFullBlockColor(-1);
+            mCabinViewModel.getIceBlockPOJOS().get(iceBlock.getID()).setStartedAt(mSalesViewModel.getDate());
+            mCabinViewModel.getIceBlockPOJOS().get(iceBlock.getID()).setFullBlockColor(0);
         }
         CabinTable cabinTable = new CabinTable();
         cabinTable.updateFields(mCabinViewModel.getCabinName(),mCabinViewModel.getIceBlock(), new OnFailureListener() {
@@ -323,6 +323,7 @@ public class AddSaleFragment extends BaseFragment implements View.OnClickListene
             //iceBlock.setFullBlockColor(mSalesViewModel.getSelectedCustomer().getColorID());
             mSalesViewModel.setCustomerColor(mSalesViewModel.getSelectedCustomer().getColorID());
             iceBlock.setInProduction(isInProduction.isChecked());
+            iceBlock.setStartedAt(mSalesViewModel.getDate());
         }
         SalesTable salesTable = new SalesTable();
         salesTable.addDataField(mSalesViewModel,this, this);

@@ -25,7 +25,7 @@ public class CabinViewModel extends BaseObservable implements Serializable {
     private int oneTwo;
     private int outSide;
     private ArrayList<IceBlockPOJO> iceBlockPOJOS = new ArrayList<>();
-    
+
     public void cloneCabinViewModel(CabinViewModel data, Calendar calendar) {
         cabinName = data.getCabinName();
         totalRows=data.getTotalRows();
@@ -65,7 +65,7 @@ public class CabinViewModel extends BaseObservable implements Serializable {
                         emptyBlocks+=1;
                         iceBlockPOJO.setIceColor(R.color.ice_block_empty);
                         iceBlockPOJO.setBlockBG(R.color.ice_block_empty);
-                        iceBlockPOJO.setClickable(false);
+                        iceBlockPOJO.setClickable(true);
                     }
                 } else {
                     outSide+=1;
