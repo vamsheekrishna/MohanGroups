@@ -28,7 +28,7 @@ public class CabinTable extends DBInstance {
 
     public void updateFields(String cabinID, ArrayList<IceBlock> selected, OnFailureListener error_writing_document, OnSuccessListener<Void> onSuccessListener) {
         getCollection().document(BASE_DIRECTORY_DETAILS)
-                .collection(BASE_DIRECTORY_CABIN).document(cabinID).update("iceBlocks", selected)
+                .collection(BASE_DIRECTORY_CABIN).document(cabinID).update("iceBlock", selected)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(error_writing_document);
     }

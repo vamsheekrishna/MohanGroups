@@ -78,6 +78,8 @@ public class CreateFragment extends BaseFragment implements View.OnClickListener
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void generateCabin() {
+
+        long time = Calendar.getInstance().getTimeInMillis();
         if(mViewModel.getCabinSize()>0) {
             mViewModel.getIceBlockPOJOS().clear();
             int total = mViewModel.getCabinSize();
@@ -86,7 +88,7 @@ public class CreateFragment extends BaseFragment implements View.OnClickListener
                 IceBlockPOJO iceBlockPOJO = new IceBlockPOJO(i, String.valueOf((i%mViewModel.getTotalColumns())+1));
                 iceBlockPOJO.setSelectedColor(R.color.light_gray);
                 iceBlockPOJO.setIceColor(R.color.blue);
-                iceBlockPOJO.setStartedAt(Calendar.getInstance().getTimeInMillis());
+                iceBlockPOJO.setStartedAt(time);
                 mViewModel.addBlock(iceBlockPOJO);
                 //iceBlocks.add();
             }
@@ -123,7 +125,6 @@ public class CreateFragment extends BaseFragment implements View.OnClickListener
 
                 break;
             case R.id.insert_cabin:
-                //Button button = (Button)view;
                 if(null== mViewModel.getCabinName() || mViewModel.getCabinName().length()<=0) {
                     Toast.makeText(getActivity(),"Please enter the cabin name.",Toast.LENGTH_SHORT).show();
                 } else if(null == mViewModel.getIceBlockPOJOS() || mViewModel.getIceBlockPOJOS().size()<=0) {
