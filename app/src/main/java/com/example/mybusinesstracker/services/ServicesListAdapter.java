@@ -12,24 +12,24 @@ import com.example.mybusinesstracker.R;
 
 class ServicesListAdapter extends BaseExpandableListAdapter {
     private Context mContext;
-    private ServicePOJO servicePOJO;
+//    private ServicePOJO servicePOJO;
     ServicesListAdapter(Context context) {
         mContext = context ;
-        servicePOJO = new ServicePOJO();
+//        servicePOJO = new ServicePOJO();
     }
     @Override
     public int getGroupCount() {
-        return servicePOJO.getType().length;
+        return 2;
     }
 
     @Override
     public int getChildrenCount(int i) {
-        return servicePOJO.getTypeDetails().length;
+        return 4;
     }
 
     @Override
     public Object getGroup(int i) {
-        return servicePOJO.getType()[i];
+        return 2;
     }
 
     @Override
@@ -59,7 +59,7 @@ class ServicesListAdapter extends BaseExpandableListAdapter {
             assert layoutInflater != null;
             convertView = layoutInflater.inflate(R.layout.services_group_item, null);
             AppCompatTextView groupName = convertView.findViewById(R.id.service_group_name);
-            groupName.setText(servicePOJO.getType()[i]);
+//            groupName.setText(servicePOJO.getType()[i]);
         }
         return convertView;
     }
@@ -70,8 +70,8 @@ class ServicesListAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             assert layoutInflater != null;
             convertView = layoutInflater.inflate(R.layout.expandable_group_list_item, null);
-            AppCompatTextView typeItemHeader = convertView.findViewById(R.id.type_header);
-            typeItemHeader.setText(servicePOJO.getTypeDetails()[i1]);
+//            AppCompatTextView typeItemHeader = convertView.findViewById(R.id.type_header);
+//            typeItemHeader.setText(servicePOJO.getTypeDetails()[i1]);
         }
         return convertView;
     }

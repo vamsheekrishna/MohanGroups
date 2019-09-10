@@ -33,6 +33,18 @@ public class CustomerListView extends BaseFragment implements View.OnClickListen
         // Required empty public constructor
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode){
+            case CustomerViewHolder.REQUEST_PHONE_CALL:
+
+                break;
+        }
+
+    }
+
     public static CustomerListView newInstance(ArrayList<Customer> customers) {
         CustomerListView fragment = new CustomerListView();
         Bundle args = new Bundle();

@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:elevation="8dp">
+
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +21,9 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:textColor="@android:color/black"
         android:padding="@dimen/header_3"
-        android:fontFamily="@font/roboto_black"
+        android:font="@font/roboto_thin_italic"
         android:textSize="20sp"/>
+
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

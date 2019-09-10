@@ -1,4 +1,4 @@
-package com.example.mybusinesstracker.power.ui.power;
+package com.example.mybusinesstracker.services;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.mybusinesstracker.R;
+import com.example.mybusinesstracker.power.ui.power.PowerViewModel;
 
 public class PowerFragment extends Fragment {
 

@@ -1,5 +1,7 @@
 package com.example.mybusinesstracker.customer.ui.customer;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> {
     public CustomerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem= layoutInflater.inflate(R.layout.customer_list_row, parent, false);
-        return new CustomerViewHolder(listItem);
+        return new CustomerViewHolder(listItem, parent.getContext());
     }
 
     @Override
@@ -33,7 +35,15 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> {
         holder.mRoot.setBackgroundColor(customer.getColorID());
 
         holder.mName.setText(customer.getCustomerName());
-        holder.mName.setBackgroundColor(customer.getColorID());
+
+        GradientDrawable gd = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[] {Color.parseColor(String.valueOf(customer.getColorID()))});
+        gd.setCornerRadius(0f);
+
+        holder.mName.setBackground(gd);
+
+//        holder.mName.setBackgroundColor(customer.getColorID());
 
         holder.mNumber.setBackgroundColor(customer.getColorID());
         holder.mNumber.setText(customer.getPhoneNumber());

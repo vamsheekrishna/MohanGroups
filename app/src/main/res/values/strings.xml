@@ -67,5 +67,19 @@
     <string name="nav_dashboard">Dashboard</string>
     <string name="restart">Restart after 30 mins</string>
     <string name="nav_services">Services</string>
+    
+    
+    <string name="roboto_black">/Users/konave1/IOL_AZURE/MohanGroups/app/src/main/res/font/Roboto_Black.ttf</string>
+    <string name="roboto_black_italic">/Users/konave1/IOL_AZURE/MohanGroups/app/src/main/res/font/Roboto_BlackItalic.ttf</string>
+    <string name="roboto_bold">/Users/konave1/IOL_AZURE/MohanGroups/app/src/main/res/font/Roboto_Bold.ttf</string>
+    <string name="roboto_bold_italic">/Users/konave1/IOL_AZURE/MohanGroups/app/src/main/res/font/Roboto_BoldItalic.ttf</string>
+    <string name="roboto_light">/Users/konave1/IOL_AZURE/MohanGroups/app/src/main/res/font/Roboto_Light.ttf</string>
+    <string name="roboto_light_italic">/Users/konave1/IOL_AZURE/MohanGroups/app/src/main/res/font/Roboto_LightItalic.ttf</string>
+    <string name="roboto_medium">/Users/konave1/IOL_AZURE/MohanGroups/app/src/main/res/font/Roboto_Medium.ttf</string>
+    <string name="roboto_medium_italic">/Users/konave1/IOL_AZURE/MohanGroups/app/src/main/res/font/Roboto_MediumItalic.ttf</string>
+    <string name="roboto_regular">/Users/konave1/IOL_AZURE/MohanGroups/app/src/main/res/font/Roboto_Regular.ttf</string>
+    <string name="roboto_regular_italic">/Users/konave1/IOL_AZURE/MohanGroups/app/src/main/res/font/Roboto_RegularItalic.ttf</string>
+    <string name="roboto_thin">/Users/konave1/IOL_AZURE/MohanGroups/app/src/main/res/font/Roboto_Thin.ttf</string>
+    <string name="roboto_thin_italic">/Users/konave1/IOL_AZURE/MohanGroups/app/src/main/res/font/Roboto_ThinItalic.ttf</string>
 
 </resources>

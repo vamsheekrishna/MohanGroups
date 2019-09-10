@@ -1,0 +1,76 @@
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    >
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="22dp"
+        android:layout_marginStart="22dp"
+        android:elevation="6dp"
+        android:layout_margin="8dp"
+        android:backgroundTint="#F1F1F6">
+
+        <TableLayout
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:id="@+id/account"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:padding="8dp">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="hcljhvh"
+                    android:id="@+id/type_account_name_header"
+                    android:gravity="start"
+                    android:textStyle="italic|bold"
+                    android:textColor="@android:color/black"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/account_name_value"
+                    android:gravity="start"
+                    android:textStyle="italic"
+                    android:textColor="@android:color/black"
+                    />
+            </TableRow>
+
+            <TableRow
+                android:padding="8dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="hcljhvh"
+                    android:id="@+id/type_account_value_header"
+                    android:gravity="start"
+                    android:textStyle="italic|bold"
+                    android:textColor="@android:color/black"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/account_value"
+                    android:gravity="start"
+                    android:textStyle="italic"
+                    android:textColor="@android:color/black"
+                    />
+            </TableRow>
+
+        </TableLayout>
+    </com.google.android.material.card.MaterialCardView>
+</RelativeLayout>
