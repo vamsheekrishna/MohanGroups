@@ -3,7 +3,6 @@ package com.example.mybusinesstracker.cabin.ui.cabinhome;
 import androidx.databinding.BaseObservable;
 
 import com.example.mybusinesstracker.R;
-import com.example.mybusinesstracker.cabin.IceBlock;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,63 +24,61 @@ public class CabinViewModel extends BaseObservable implements Serializable {
     private int emptyBlocks;
     private int oneTwo;
     private int outSide;
-    private ArrayList<IceBlock> iceBlocks = new ArrayList<>();
-
-    public CabinViewModel(Map<String, Object> data) {
-        cabinName = (String) data.get("cabinName");
-        Long temp;
-        temp = (Long) data.get("totalRows") ;
-        totalRows=temp.intValue();
-        temp = (Long) data.get("totalColumns") ;
-        totalColumns = temp.intValue();
-        ArrayList<IceBlock> iceBlocksTemp = new ArrayList<>();
-        iceBlocksTemp.addAll((Collection<? extends IceBlock>) data.get("iceBlocks"));
-
-    }
+    private ArrayList<IceBlockPOJO> iceBlockPOJOS = new ArrayList<>();
 
     public void cloneCabinViewModel(CabinViewModel data, Calendar calendar) {
         cabinName = data.getCabinName();
         totalRows=data.getTotalRows();
         totalColumns = data.totalColumns;
-        iceBlocks.clear();
-        for (IceBlock iceBlock : data.getIceBlocks()) {
-
-            iceBlock.setSelectedColor(R.color.ice_block_out_side);
-            if(iceBlock.isIceBlock()) {
+        iceBlockPOJOS.clear();
+        for (IceBlock iceBlock : data.getIceBlock()) {
+            IceBlockPOJO iceBlockPOJO = new IceBlockPOJO();
+            iceBlockPOJO.setIceBlock(iceBlock);
+            iceBlockPOJO.setSelectedColor(R.color.ice_block_out_side);
+            iceBlockPOJO.setBlockSelectedState(false);
+            if(iceBlockPOJO.isIceBlock()) {
                 totalIceBlocks+=1;
-                if(iceBlock.isInProduction()) {
-                    long seconds = (calendar.getTimeInMillis() - iceBlock.getStartedAt()) / 1000;
+                if(iceBlockPOJO.isInProduction()) {
+                    long seconds = (calendar.getTimeInMillis() - iceBlockPOJO.getStartedAt()) / 1000;
                     int hours = (int) (seconds / 3600);
                     if(hours >= 48) {
                         availableBlocks+=1;
-                        iceBlock.setIceColor(R.color.ice_block_full);
+                        iceBlockPOJO.setClickable(true);
+                        iceBlockPOJO.setIceColor(R.color.ice_block_full);
+                        iceBlockPOJO.setBlockBG(R.color.ice_block_full);
                     } else if(hours>=36 && hours < 47) {
                         threeFourth+=1;
-                        iceBlock.setIceColor(R.color.ice_block_threeforth);
+                        iceBlockPOJO.setClickable(true);
+                        iceBlockPOJO.setIceColor(R.color.ice_block_threeforth);
+                        iceBlockPOJO.setBlockBG(R.color.ice_block_threeforth);
                     } else if(hours>=24 && hours < 36) {
                         oneTwo+=1;
-                        iceBlock.setIceColor(R.color.ice_block_half);
+                        iceBlockPOJO.setClickable(true);
+                        iceBlockPOJO.setIceColor(R.color.ice_block_half);
+                        iceBlockPOJO.setBlockBG(R.color.ice_block_half);
                     } else if(hours>=12 && hours < 24) {
                         oneFourth+=1;
-                        iceBlock.setIceColor(R.color.ice_block_one_fourth);
+                        iceBlockPOJO.setClickable(true);
+                        iceBlockPOJO.setIceColor(R.color.ice_block_one_fourth);
+                        iceBlockPOJO.setBlockBG(R.color.ice_block_one_fourth);
                     } else {
                         emptyBlocks+=1;
-                        iceBlock.setIceColor(R.color.ice_block_empty);
-                        iceBlock.setClickable(false);
+                        iceBlockPOJO.setIceColor(R.color.ice_block_empty);
+                        iceBlockPOJO.setBlockBG(R.color.ice_block_empty);
+                        iceBlockPOJO.setClickable(true);
                     }
                 } else {
                     outSide+=1;
-                    iceBlock.setIceColor(R.color.ice_block_out_side);
-                    //iceBlock.setClickable(false);
+                    iceBlockPOJO.setIceColor(R.color.ice_block_out_side);
+                    //iceBlockPOJO.setClickable(false);
                 }
             } else {
-                iceBlock.setIceColor(R.color.light_gray);
-                iceBlock.setSelectedColor(R.color.light_gray);
-                iceBlock.setClickable(false);
+                iceBlockPOJO.setIceColor(R.color.light_gray);
+                iceBlockPOJO.setSelectedColor(R.color.light_gray);
+                iceBlockPOJO.setClickable(false);
             }
-            iceBlocks.add(iceBlock);
+            iceBlockPOJOS.add(iceBlockPOJO);
         }
-
     }
     public CabinViewModel() {
     }
@@ -115,13 +112,20 @@ public class CabinViewModel extends BaseObservable implements Serializable {
         return totalIceBlocks;
     }
 
-    public void addBlock(IceBlock iceBlock) {
-        iceBlocks.add(iceBlock);
+    public void addBlock(IceBlockPOJO iceBlockPOJO) {
+        iceBlockPOJOS.add(iceBlockPOJO);
     }
-    public IceBlock getIceBlock(int position) {
-        return iceBlocks.get(position);
+    public IceBlockPOJO getIceBlock(int position) {
+        return iceBlockPOJOS.get(position);
     }
-    public  ArrayList<IceBlock> getIceBlocks() {
+    public  ArrayList<IceBlockPOJO> getIceBlockPOJOS() {
+        return iceBlockPOJOS;
+    }
+    public  ArrayList<IceBlock> getIceBlock() {
+        ArrayList<IceBlock> iceBlocks = new ArrayList<>();
+        for (IceBlockPOJO iceBlockPOJO:iceBlockPOJOS) {
+            iceBlocks.add(iceBlockPOJO.getIceBlock());
+        }
         return iceBlocks;
     }
     public void setTotalColumns(int totalColumns) {
@@ -133,14 +137,28 @@ public class CabinViewModel extends BaseObservable implements Serializable {
         objectHashMap.put("cabinName",cabinName);
         objectHashMap.put("totalRows",totalRows);
         objectHashMap.put("totalColumns",totalColumns);
+        /*ArrayList<IceBlock> iceBlocks = new ArrayList<>();
+        for (IceBlockPOJO iceBlockPOJO:iceBlockPOJOS) {
 
-        objectHashMap.put("iceBlocks",iceBlocks);
+            iceBlocks.add(iceBlockPOJO.getIceBlock());
+        }*/
+        objectHashMap.put("iceBlock", getIceBlock());
         return objectHashMap;
+    }
+
+    public void setIceBlock(ArrayList<IceBlock> iceBlock) {
+        iceBlockPOJOS = new ArrayList<>();
+        for (IceBlock block:iceBlock) {
+            IceBlockPOJO iceBlockPOJO = new IceBlockPOJO();
+            iceBlockPOJO.setIceBlock(block);
+            iceBlockPOJOS.add(iceBlockPOJO);
+        }
+        //this.iceBlock = iceBlock;
     }
 
     public void addTempData(int size) {
         for(int i =0; i<size; i++) {
-            addBlock(new IceBlock(i,String.valueOf(i)));
+            addBlock(new IceBlockPOJO(i,String.valueOf(i)));
         }
     }
 }

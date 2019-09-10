@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.example.mybusinesstracker.basecalss.BaseFragment;
 import com.example.mybusinesstracker.R;
-import com.example.mybusinesstracker.cabin.IceBlock;
 import com.example.mybusinesstracker.cloud_firestore.tables.CabinTable;
 import com.example.mybusinesstracker.databinding.CreteFragmentBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -63,7 +62,7 @@ public class CreateFragment extends BaseFragment implements View.OnClickListener
 
 
         recyclerView = view.findViewById(R.id.body);
-        cabinBrickAdapter = new CabinBrickAdapter(mViewModel.getIceBlocks(), getContext());
+        cabinBrickAdapter = new CabinBrickAdapter(mViewModel.getIceBlockPOJOS(), getContext());
         creteFragmentBinding.setIceBlockAdapter(cabinBrickAdapter);
         if(isCabinUpdate) {
             cabinName = mViewModel.getCabinName();
@@ -79,17 +78,18 @@ public class CreateFragment extends BaseFragment implements View.OnClickListener
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void generateCabin() {
+
+        long time = Calendar.getInstance().getTimeInMillis();
         if(mViewModel.getCabinSize()>0) {
-            mViewModel.getIceBlocks().clear();
+            mViewModel.getIceBlockPOJOS().clear();
+            int total = mViewModel.getCabinSize();
+            for (int i = 0; i<total; i++) {
 
-            for (int i = 0; i<mViewModel.getCabinSize(); i++) {
-
-                IceBlock iceBlock = new IceBlock(i, String.valueOf((i%mViewModel.getTotalColumns())+1));
-                iceBlock.setSelectedColor(R.color.light_gray);
-                iceBlock.setIceColor(R.color.blue);
-                //iceBlock.setFullBlockColor(Objects.requireNonNull(getActivity()).getColor(R.color.blue));
-                mViewModel.addBlock(iceBlock);
-                iceBlock.setStartedAt(Calendar.getInstance().getTimeInMillis());
+                IceBlockPOJO iceBlockPOJO = new IceBlockPOJO(i, String.valueOf((i%mViewModel.getTotalColumns())+1));
+                iceBlockPOJO.setSelectedColor(R.color.light_gray);
+                iceBlockPOJO.setIceColor(R.color.blue);
+                iceBlockPOJO.setStartedAt(time);
+                mViewModel.addBlock(iceBlockPOJO);
                 //iceBlocks.add();
             }
             gridLayoutManager = new GridLayoutManager(getContext(),mViewModel.getTotalColumns(), RecyclerView.VERTICAL,false);
@@ -125,17 +125,16 @@ public class CreateFragment extends BaseFragment implements View.OnClickListener
 
                 break;
             case R.id.insert_cabin:
-                //Button button = (Button)view;
                 if(null== mViewModel.getCabinName() || mViewModel.getCabinName().length()<=0) {
                     Toast.makeText(getActivity(),"Please enter the cabin name.",Toast.LENGTH_SHORT).show();
-                } else if(null == mViewModel.getIceBlocks() || mViewModel.getIceBlocks().size()<=0) {
+                } else if(null == mViewModel.getIceBlockPOJOS() || mViewModel.getIceBlockPOJOS().size()<=0) {
                     Toast.makeText(getActivity(),"Please enter the ice blocks.",Toast.LENGTH_SHORT).show();
                 } else  {
                     if(cabinName.length()>0 && !cabinName.equalsIgnoreCase(mViewModel.getCabinName())) {
                         deleteRecord();
                     }
-                    for (IceBlock iceBlock : mViewModel.getIceBlocks()) {
-                        iceBlock.setIceBlock();
+                    for (IceBlockPOJO iceBlockPOJO : mViewModel.getIceBlockPOJOS()) {
+                        iceBlockPOJO.setIceBlock(!iceBlockPOJO.getBlockSelectedState());
                     }
                     CabinTable cabinTable = new CabinTable();
                     cabinTable.addDataField(mViewModel, new OnSuccessListener<Void>() {

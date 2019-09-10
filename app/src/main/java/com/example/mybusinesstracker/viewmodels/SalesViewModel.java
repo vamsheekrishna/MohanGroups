@@ -4,7 +4,8 @@ import android.util.Log;
 
 import androidx.databinding.BaseObservable;
 
-import com.example.mybusinesstracker.cabin.IceBlock;
+import com.example.mybusinesstracker.cabin.ui.cabinhome.IceBlock;
+import com.example.mybusinesstracker.cabin.ui.cabinhome.IceBlockPOJO;
 import com.example.mybusinesstracker.cloud_firestore.OnCloudFireStoreInteraction;
 import com.example.mybusinesstracker.customer.ui.customer.Customer;
 import com.example.mybusinesstracker.utilities.Utils;
@@ -33,6 +34,7 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     private static final String DUE_AMOUNT = "dueAmount";
     private static final String NOTE = "note";
     private static final String SELECTED_BLOCKS = "blocks";
+    private static final String CUSTOMER_COLOR = "customerColor";
 
     private ArrayList<IceBlock> blocks = new ArrayList<>();
     private int ID;
@@ -45,6 +47,9 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     @SerializedName("customerID")
     @Expose
     private String customerID = null;
+    @SerializedName("customer_color")
+    @Expose
+    private int customerColor;
     @SerializedName("salesType")
     @Expose
     private String salesType = null;
@@ -91,6 +96,7 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
         totalAmount = Integer.parseInt((String) requireNonNull(hashMap.get(TOTAL_AMOUNT)));
         paidAmount= Integer.parseInt((String) requireNonNull(hashMap.get(PAID_AMOUNT)));
         dueAmount = Integer.parseInt((String) requireNonNull(hashMap.get(DUE_AMOUNT)));
+        customerColor = Integer.parseInt((String) requireNonNull(hashMap.get(CUSTOMER_COLOR)));
         note = (String) hashMap.get(NOTE);
         blocks = (ArrayList<IceBlock>) hashMap.get(SELECTED_BLOCKS);
     }
@@ -104,6 +110,7 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
         hashMap.put(DATE, date);
         hashMap.put(CABIN_ID, cabinID);
         hashMap.put(CUSTOMER_ID, customerID);
+        hashMap.put(CUSTOMER_COLOR, customerColor);
         hashMap.put(SALES_TYPE, salesType);
         hashMap.put(TOTAL_BLOCKS, totalBlocks);
         hashMap.put(ICE_AMOUNT, iceAmount);
@@ -155,6 +162,14 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
 
     public String getCustomerID() {
         return customerID;
+    }
+
+    public int getCustomerColor() {
+        return customerColor;
+    }
+
+    public void setCustomerColor(int customerColor) {
+        this.customerColor = customerColor;
     }
 
     public void setCustomerID(String customerID) {
@@ -260,6 +275,7 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
 
     public void setSelectedCustomer(Customer selectedCustomer) {
         this.selectedCustomer = selectedCustomer;
+        setCustomerColor(selectedCustomer.getColorID());
     }
 
     private Calendar getCalendarObject() {
@@ -285,11 +301,11 @@ public class SalesViewModel extends BaseObservable implements Serializable, OnCl
     public void setBlocks(ArrayList<IceBlock> blocks) {
         this.blocks = blocks;
     }
-    public void setAddIceBlocks(IceBlock iceBlock) {
-        if(blocks.contains(iceBlock)) {
-            this.blocks.remove(iceBlock);
+    public void setAddIceBlocks(IceBlockPOJO iceBlockPOJO) {
+        if(blocks.contains(iceBlockPOJO.getIceBlock())) {
+            this.blocks.remove(iceBlockPOJO.getIceBlock());
         } else {
-            this.blocks.add(iceBlock);
+            this.blocks.add(iceBlockPOJO.getIceBlock());
         }
     }
 

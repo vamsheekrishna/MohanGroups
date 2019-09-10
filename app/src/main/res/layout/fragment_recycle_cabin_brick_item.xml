@@ -6,7 +6,7 @@
             type="android.content.Context" />
         <variable
             name="cabinRowItemView"
-            type="com.example.mybusinesstracker.cabin.IceBlock" />
+            type="com.example.mybusinesstracker.cabin.ui.cabinhome.IceBlockPOJO" />
     </data>
     <FrameLayout
         android:layout_margin="1dp"
