@@ -53,7 +53,7 @@
     <color name="white">#ffffffff</color>
     <color name="transparent">#00000000</color>
     <color name="ice_block_full">#b4cffa</color>
-    <color name="ice_block_threeforth">#caddfb</color>
+    <color name="ice_block_three_forth">#caddfb</color>
     <color name="ice_block_half">#d9e7fc</color>
     <color name="ice_block_one_fourth">#f0f5fe</color>
     <color name="ice_block_empty">#fab4cf</color>

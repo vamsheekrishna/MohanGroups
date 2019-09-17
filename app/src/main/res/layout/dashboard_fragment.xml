@@ -14,12 +14,169 @@
         android:layout_height="match_parent"
         tools:context=".cabin.ui.cabinhome.CreateFragment"
         android:background="@drawable/backgroundwhite">
-
-        <RelativeLayout
-            android:id="@+id/header"
-            android:orientation="vertical"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:id="@+id/header1"
+            android:weightSum="3"
+            android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:background="@color/blue"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="@string/total_blocks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/header_3"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textStyle="bold|italic"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/totalblocks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="250"
+                    android:textSize="@dimen/sales_header_count_size_big"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:background="@color/dark_pink"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="@string/today_sales"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/header_3"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textStyle="bold|italic"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/sales"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="100"
+                    android:textSize="@dimen/sales_header_count_size_big"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:background="@color/blue"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="@string/available"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/header_3"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textStyle="bold|italic"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/available"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:paddingStart="16dp"
+                    android:text="150"
+                    android:textSize="@dimen/sales_header_count_size_big"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_below="@+id/header1"
+            android:id="@+id/header"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:minHeight="74dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:weightSum="6"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:minHeight="70dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    style="@style/dashboard_header_ice_layout"
+                    android:background="@drawable/background_circle_full"
+                    >
+                    <TextView
+                        android:id="@+id/full"
+                        style="@style/dashboard_header_ice_text"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/dashboard_header_ice_layout"
+                    android:background="@drawable/background_circle_three_forth"
+                    >
+                    <TextView
+                        android:id="@+id/three_by_forth"
+                        style="@style/dashboard_header_ice_text"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/dashboard_header_ice_layout"
+                    android:background="@drawable/background_circle_half"
+                    >
+                    <TextView
+                        android:id="@+id/one_by_two"
+                        style="@style/dashboard_header_ice_text"/>
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/dashboard_header_ice_layout"
+                    android:background="@drawable/background_circle_one_forth"
+                    >
+                    <TextView
+                        android:id="@+id/one_by_forth"
+                        style="@style/dashboard_header_ice_text"/>
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/dashboard_header_ice_layout"
+                    android:background="@drawable/background_circle_empty"
+                    >
+                    <TextView
+                        android:id="@+id/empty"
+                        style="@style/dashboard_header_ice_text"
+                        android:text="20"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/dashboard_header_ice_layout"
+                    android:background="@drawable/background_circle_out_side"
+                    >
+                    <TextView
+                        android:id="@+id/out_side"
+                        style="@style/dashboard_header_ice_text"
+                        android:text="20"/>
+                </LinearLayout>
+            </LinearLayout>
+            <!--
             <EditText
                 android:id="@+id/cabin_name"
                 android:layout_width="wrap_content"
@@ -46,8 +203,9 @@
                 android:hint="@string/cabin_coulmn_hint"
                 android:layout_toEndOf="@+id/cabin_rows"
                 android:text="@={``+creteViewModel.cabinViewModel.totalColumns}"
-                android:inputType="number"/>
+                android:inputType="number"/>-->
             <Button
+                android:visibility="gone"
                 android:id="@+id/submit"
                 android:layout_toEndOf="@+id/cabin_column"
                 android:layout_alignParentEnd="true"
@@ -57,7 +215,7 @@
                 android:textSize="@dimen/header_3"
                 android:layout_height="wrap_content"
                 android:text="Add Sales"/>
-        </RelativeLayout>
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cabin"

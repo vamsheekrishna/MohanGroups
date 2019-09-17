@@ -7,9 +7,7 @@ import com.example.mybusinesstracker.R;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 
 public class CabinViewModel extends BaseObservable implements Serializable {
 
@@ -49,8 +47,8 @@ public class CabinViewModel extends BaseObservable implements Serializable {
                     } else if(hours>=36 && hours < 47) {
                         threeFourth+=1;
                         iceBlockPOJO.setClickable(true);
-                        iceBlockPOJO.setIceColor(R.color.ice_block_threeforth);
-                        iceBlockPOJO.setBlockBG(R.color.ice_block_threeforth);
+                        iceBlockPOJO.setIceColor(R.color.ice_block_three_forth);
+                        iceBlockPOJO.setBlockBG(R.color.ice_block_three_forth);
                     } else if(hours>=24 && hours < 36) {
                         oneTwo+=1;
                         iceBlockPOJO.setClickable(true);
@@ -154,6 +152,66 @@ public class CabinViewModel extends BaseObservable implements Serializable {
             iceBlockPOJOS.add(iceBlockPOJO);
         }
         //this.iceBlock = iceBlock;
+    }
+
+    public void setTotalIceBlocks(int totalIceBlocks) {
+        this.totalIceBlocks = totalIceBlocks;
+    }
+
+    public int getAvailableBlocks() {
+        return availableBlocks;
+    }
+
+    public void setAvailableBlocks(int availableBlocks) {
+        this.availableBlocks = availableBlocks;
+    }
+
+    public int getTodaySales() {
+        return todaySales;
+    }
+
+    public void setTodaySales(int todaySales) {
+        this.todaySales = todaySales;
+    }
+
+    public int getOneFourth() {
+        return oneFourth;
+    }
+
+    public void setOneFourth(int oneFourth) {
+        this.oneFourth = oneFourth;
+    }
+
+    public int getThreeFourth() {
+        return threeFourth;
+    }
+
+    public void setThreeFourth(int threeFourth) {
+        this.threeFourth = threeFourth;
+    }
+
+    public int getEmptyBlocks() {
+        return emptyBlocks;
+    }
+
+    public void setEmptyBlocks(int emptyBlocks) {
+        this.emptyBlocks = emptyBlocks;
+    }
+
+    public int getOneTwo() {
+        return oneTwo;
+    }
+
+    public void setOneTwo(int oneTwo) {
+        this.oneTwo = oneTwo;
+    }
+
+    public int getOutSide() {
+        return outSide;
+    }
+
+    public void setOutSide(int outSide) {
+        this.outSide = outSide;
     }
 
     public void addTempData(int size) {

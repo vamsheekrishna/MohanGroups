@@ -1,6 +1,7 @@
 package com.example.mybusinesstracker.dashboard.ui.dashboard;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
@@ -14,8 +15,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.mybusinesstracker.R;
 import com.example.mybusinesstracker.cabin.CabinActivity;
@@ -27,6 +34,7 @@ import com.example.mybusinesstracker.cabin.ui.cabinhome.OnCabinInteractionListen
 import com.example.mybusinesstracker.cloud_firestore.tables.CabinTable;
 import com.example.mybusinesstracker.cloud_firestore.tables.SalesTable;
 import com.example.mybusinesstracker.databinding.DashboardFragmentBinding;
+import com.example.mybusinesstracker.sales.ui.sales.GroupBasedSalesModel;
 import com.example.mybusinesstracker.utilities.Utils;
 import com.example.mybusinesstracker.viewmodels.SalesViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,6 +46,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class DashboardFragment extends Fragment implements View.OnClickListener {
@@ -47,7 +56,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     private CabinBrickAdapter cabinBrickAdapter;
     private RecyclerView recyclerView;
     private OnCabinInteractionListener onCabinInteractionListener;
-    private ArrayList<IceBlockPOJO> iceBlockPOJOS = new ArrayList<>();;
+    private ArrayList<IceBlockPOJO> iceBlockPOJOS = new ArrayList<>();
+    HashMap<String, CabinViewModel> allCabins = new HashMap<>();
     private IceBlockPOJO iceBlockPOJO;
     //private CabinViewModel cabinViewModel;
     public static DashboardFragment newInstance() {
@@ -167,5 +177,40 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         mViewModel.getAddNewSales().setCabinID(mViewModel.getCabinViewModel().getCabinName());
         mViewModel.getAddNewSales().setDate(mViewModel.getSelectedDate().getTimeInMillis(), Utils.DD_MMM_YYYY);
         onCabinInteractionListener.gotoSalesActivity(mViewModel);
+    }
+
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        //menu.clear();
+        inflater.inflate(R.menu.menu_sales, menu);
+
+        /*if(mGroupBasedSalesModel.getDateType().equals(month)) {
+            toggleButton.setChecked(false);
+        } else {
+            toggleButton.setChecked(true);
+        }
+        Toast.makeText(getActivity(), "Toggle is: "+toggleButton.isChecked(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Toggle is: "+toggleButton.getText().toString(),Toast.LENGTH_SHORT).show();*/
+        //nameMenuItem.setVisible(false);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.button_next:
+                myFancyMethod();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    public void myFancyMethod() {
+        Toast.makeText(getActivity(), "Next Clicked",Toast.LENGTH_SHORT).show();
     }
 }
